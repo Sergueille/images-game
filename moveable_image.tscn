@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://cdjnd360ai2p"]
+
+[ext_resource type="Script" uid="uid://blb4wv3jf3kae" path="res://MoveableImage.cs" id="1_1uxoq"]
+[ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="1_qllq3"]
+[ext_resource type="Texture2D" uid="uid://7gkyye6eyr4v" path="res://sprites/rotate.png" id="2_xvbv8"]
+[ext_resource type="Texture2D" uid="uid://bdku85rtcv6ao" path="res://sprites/scale.png" id="3_ki6yt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xvbv8"]
+size = Vector2(210, 210)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ki6yt"]
+size = Vector2(30, 30)
+
+[node name="MoveableImage" type="Node2D" unique_id=1020111675]
+script = ExtResource("1_1uxoq")
+
+[node name="Scaling" type="Node2D" parent="." unique_id=308461973]
+
+[node name="Area2D" type="Area2D" parent="Scaling" unique_id=546821160]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scaling/Area2D" unique_id=1512271835]
+shape = SubResource("RectangleShape2D_xvbv8")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Scaling/Area2D" unique_id=313806558]
+z_index = 1000
+position = Vector2(-100, -100)
+shape = SubResource("RectangleShape2D_ki6yt")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Scaling/Area2D" unique_id=1296011882]
+z_index = 1000
+position = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_ki6yt")
+
+[node name="ImageSprite" type="Sprite2D" parent="Scaling" unique_id=939161148]
+scale = Vector2(0.667, 0.667)
+texture = ExtResource("1_qllq3")
+
+[node name="ScaleHandle" type="Node2D" parent="." unique_id=762058148]
+z_index = 1000
+position = Vector2(100, 100)
+
+[node name="Sprite2D" type="Sprite2D" parent="ScaleHandle" unique_id=1744771974]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_ki6yt")
+
+[node name="Area2D" type="Area2D" parent="ScaleHandle" unique_id=329690162]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScaleHandle/Area2D" unique_id=472323408]
+z_index = 1000
+shape = SubResource("RectangleShape2D_ki6yt")
+debug_color = Color(0.48199743, 0.43719783, 1, 0.41960785)
+
+[node name="RotateHandle" type="Node2D" parent="." unique_id=840386639]
+z_index = 1000
+position = Vector2(-100, -100)
+
+[node name="Sprite2D" type="Sprite2D" parent="RotateHandle" unique_id=1271709443]
+rotation = -1.5707964
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_xvbv8")
+
+[node name="Area2D" type="Area2D" parent="RotateHandle" unique_id=313544897]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RotateHandle/Area2D" unique_id=1919730073]
+z_index = 1000
+shape = SubResource("RectangleShape2D_ki6yt")
+debug_color = Color(0.48199743, 0.43719783, 1, 0.41960785)
+
+[connection signal="mouse_entered" from="Scaling/Area2D" to="." method="OnMouseEnter"]
+[connection signal="mouse_exited" from="Scaling/Area2D" to="." method="OnMouseLeave"]
+[connection signal="input_event" from="ScaleHandle/Area2D" to="." method="OnScaleInput"]
+[connection signal="input_event" from="RotateHandle/Area2D" to="." method="OnRotateInput"]

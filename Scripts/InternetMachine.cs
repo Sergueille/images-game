@@ -96,7 +96,7 @@ public partial class InternetMachine : Node
 
         if (ok)
         {
-            DoRequest(cleanedLink, 2, 
+            DoRequest(cleanedLink, 1,
                 (body) => {
                     bool ok = HandleImageResult(body, cleanedLink);
 

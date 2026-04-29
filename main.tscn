@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://d4m1uytrknfb5" path="res://Scripts/InternetMachine.cs" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d1kaxt70x4p06" path="res://Scripts/ManagementManager.cs" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cdjnd360ai2p" path="res://moveable_image.tscn" id="3_h2yge"]
+[ext_resource type="Theme" uid="uid://ch2ivpoq2cuvu" path="res://theme.tres" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://vpktwhbybpc5" path="res://sprites/layer_top.png" id="5_lquwl"]
+[ext_resource type="Texture2D" uid="uid://bw58m5ae65hu" path="res://sprites/layer_bottom.png" id="6_7mycd"]
 
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
@@ -13,7 +17,7 @@ script = ExtResource("2_0xm2m")
 internetMachine = NodePath("../The great internet machine")
 imagesParent = NodePath("../Images container")
 testLineEdit = NodePath("../CanvasLayer/UI/LineEdit")
-imageSize = 400.0
+moveableImageScene = ExtResource("3_h2yge")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627]
 
@@ -26,6 +30,48 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 1
+
+[node name="Palette" type="Control" parent="CanvasLayer/UI" unique_id=37776356]
+anchors_preset = 0
+offset_left = 1780.0
+offset_top = 919.0
+offset_right = 1920.0
+offset_bottom = 1078.0
+
+[node name="LayerUp" type="Button" parent="CanvasLayer/UI/Palette" unique_id=1465056830]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -27.0
+offset_top = -53.5
+offset_right = 27.0
+offset_bottom = -1.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_1bvp3")
+icon = ExtResource("5_lquwl")
+expand_icon = true
+
+[node name="LayerDown" type="Button" parent="CanvasLayer/UI/Palette" unique_id=846638866]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -27.0
+offset_top = 6.5
+offset_right = 27.0
+offset_bottom = 58.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_1bvp3")
+icon = ExtResource("6_7mycd")
+expand_icon = true
 
 [node name="LineEdit" type="LineEdit" parent="CanvasLayer/UI" unique_id=495046123]
 layout_mode = 1
@@ -51,4 +97,8 @@ offset_bottom = 61.0
 grow_horizontal = 2
 text = "Go!"
 
+[connection signal="mouse_entered" from="CanvasLayer/UI/Palette" to="Management manager" method="MouseEntersPalette"]
+[connection signal="mouse_exited" from="CanvasLayer/UI/Palette" to="Management manager" method="MouseLeavesPalette"]
+[connection signal="pressed" from="CanvasLayer/UI/Palette/LayerUp" to="Management manager" method="LayerUp"]
+[connection signal="pressed" from="CanvasLayer/UI/Palette/LayerDown" to="Management manager" method="LayerDown"]
 [connection signal="pressed" from="CanvasLayer/UI/Button" to="Management manager" method="OnTestButtonPressed"]

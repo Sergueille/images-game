@@ -7,7 +7,8 @@ public partial class ManagementManager : Node
     [Export] Node2D imagesParent;
     [Export] LineEdit testLineEdit;
 
-    [Export] float imageSize;
+
+    [Export] PackedScene moveableImageScene;
     
 
     public override void _Ready()
@@ -16,22 +17,9 @@ public partial class ManagementManager : Node
 
     private void OnImageResult(Image image, string link)
     {
-        Sprite2D sprite = new Sprite2D();
-        imagesParent.AddChild(sprite); 
-
-        ImageTexture tex = ImageTexture.CreateFromImage(image);
-        sprite.Texture = tex;
-
-        Vector2 sizeVect = tex.GetSize();
-        float maxSize = Mathf.Max(sizeVect.X, sizeVect.Y);
-
-        sprite.Scale = Vector2.One * imageSize / maxSize;
-
-        RandomNumberGenerator rand = new RandomNumberGenerator();
-        rand.Randomize();
-        sprite.Position = new Vector2((rand.Randf() * 2.0f - 1.0f) * 800, (rand.Randf() * 2.0f - 1.0f) * 500);
-
-        sprite.Name = link;
+        MoveableImage moveableImage = (MoveableImage)moveableImageScene.Instantiate();
+        imagesParent.AddChild(moveableImage);
+        moveableImage.Init(image);
     }
 
     public void OnTestButtonPressed()
@@ -42,5 +30,31 @@ public partial class ManagementManager : Node
             () => { GD.PrintErr("Pas d'image = pas de burger"); },
             [new TransparencyFilter(), new PhotoFilter()]
         );
+    }
+
+    public void LayerUp()
+    {
+        if (MoveableImage.selectedImage != null)
+        {
+            MoveableImage.selectedImage.LayerUp();
+        }
+    }
+
+    public void LayerDown()
+    {
+        if (MoveableImage.selectedImage != null)
+        {
+            MoveableImage.selectedImage.LayerDown();
+        }
+    }
+
+    public void MouseEntersPalette()
+    {
+        MoveableImage.shouldNotDeselect = true;
+    }
+
+    public void MouseLeavesPalette()
+    {
+        MoveableImage.shouldNotDeselect = false;
     }
 }

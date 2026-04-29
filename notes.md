@@ -1,6 +1,6 @@
 
 
-Query to get the paintings id:
+Query to get the paintings id (on https://query.wikidata.org):
 
 ```sql
 SELECT ?item ?article1 ?pic ?name WHERE {

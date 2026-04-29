@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class ManagementManager : Node
 {
@@ -7,12 +6,29 @@ public partial class ManagementManager : Node
     [Export] Node2D imagesParent;
     [Export] LineEdit testLineEdit;
 
+    [Export] Sprite2D paintingSprite;
+
 
     [Export] PackedScene moveableImageScene;
     
 
     public override void _Ready()
     {
+        PaintingFinder.InitPaintings();
+        Painting p = PaintingFinder.GetRandomPainting();
+
+        internetMachine.DoRequest(p.imageUrl, 3, (data) => {
+            Image img = internetMachine.ImageFromData(data, p.imageUrl.Split(".")[^1]);
+            ImageTexture tex = ImageTexture.CreateFromImage(img);
+
+            paintingSprite.Texture = tex;
+
+            Vector2 sizeVector = tex.GetSize();
+            float maxSize = Mathf.Max(sizeVector.X, sizeVector.Y);
+
+            paintingSprite.Scale = Vector2.One * 300.0f / maxSize;
+
+        }, () => { /* TODO */ });
     }
 
     private void OnImageResult(Image image, string link)

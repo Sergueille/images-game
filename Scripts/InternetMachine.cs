@@ -116,7 +116,7 @@ public partial class InternetMachine : Node
     }
     private bool HandleImageResult(byte[] body, string link)
     {
-        Image img = ReadImageData(body);
+        Image img = ImageFromData(body);
 
         if (img == null)
         {
@@ -150,13 +150,13 @@ public partial class InternetMachine : Node
         return false;
     }
 
-    public Image ReadImageData(byte[] data)
+    public Image ImageFromData(byte[] data, string format="png")
     {
         Image img;
 
         try
         {
-            FileAccess f = FileAccess.Open($"user://tmp{data.GetHashCode()}.png", FileAccess.ModeFlags.Write);
+            FileAccess f = FileAccess.Open($"user://tmp{data.GetHashCode()}.{format}", FileAccess.ModeFlags.Write);
             f.StoreBuffer(data);
             f.Close();
 
@@ -226,7 +226,7 @@ public partial class InternetMachine : Node
     }
 
 
-    private void DoRequest(string url, int maxRetry, Action<byte[]> onOk, Action onFailed)
+    public void DoRequest(string url, int maxRetry, Action<byte[]> onOk, Action onFailed)
     {
         HttpRequest rec = new HttpRequest();
         AddChild(rec); 

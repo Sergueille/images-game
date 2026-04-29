@@ -14,12 +14,14 @@
 
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
 script = ExtResource("1_ig7tw")
+requestTimeout = 20.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("internetMachine", "imagesParent", "testLineEdit")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("internetMachine", "imagesParent", "testLineEdit", "paintingSprite")]
 script = ExtResource("2_0xm2m")
 internetMachine = NodePath("../The great internet machine")
 imagesParent = NodePath("../Images container")
 testLineEdit = NodePath("../CanvasLayer/UI/LineEdit")
+paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
 moveableImageScene = ExtResource("3_h2yge")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627]
@@ -43,7 +45,7 @@ rotation = -0.16312642
 scale = Vector2(1.0160915, 1.0160915)
 skew = -0.0837758
 
-[node name="Test" type="Sprite2D" parent="Easel/PaintingParent" unique_id=1374597822]
+[node name="PaintingSprite" type="Sprite2D" parent="Easel/PaintingParent" unique_id=1374597822]
 z_index = -1
 scale = Vector2(0.99999994, 1)
 texture = ExtResource("8_kek77")

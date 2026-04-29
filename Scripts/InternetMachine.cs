@@ -151,10 +151,39 @@ public partial class InternetMachine : Node
 
         GD.Print("Image successful: ", link);
 
+        // Crop the image
+        Vector2I size = img.GetSize();
+        Vector2I min = new Vector2I(int.MaxValue, int.MaxValue);
+        Vector2I max = new Vector2I(int.MinValue, int.MinValue);
+
+        for (int x = 0; x < size.X; x++)
+        {
+            for (int y = 0; y < size.Y; y++)
+            {
+                if (img.GetPixel(x, y).A > 0.1)
+                {
+                    if (x < min.X) min.X = x;
+                    if (x > max.X) max.X = x;
+                    if (y < min.Y) min.Y = y;
+                    if (y > max.Y) max.Y = y;
+                }
+            }
+        }
+
+        Image cropped = Image.CreateEmpty(max.X - min.X, max.Y - min.Y, true, Image.Format.Rgba8);
+        Vector2I newSize = cropped.GetSize();
+        for (int x = 0; x < newSize.X; x++)
+        {
+            for (int y = 0; y < newSize.Y; y++)
+            {
+                cropped.SetPixel(x, y, img.GetPixel(min.X + x, min.Y + y));
+            }
+        }
+
         if (!resultGiven)
         {
             resultGiven = true;
-            onCompleted(img, link);
+            onCompleted(cropped, link);
             isBusy = false;
             return true;
         }

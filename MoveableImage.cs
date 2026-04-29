@@ -16,7 +16,10 @@ public partial class MoveableImage : Node2D
     Node2D rotateHandle;
     Node2D scaleHandle;
     Node2D scalingNode;
+    CollisionShape2D selectionShape;
 
+    Vector2 handlePlacementMultiplier;
+    
     bool hovered = false;
     bool mousePressedLastFrame = false;
     Vector2 lastMousePosition;
@@ -32,6 +35,7 @@ public partial class MoveableImage : Node2D
         rotateHandle = GetNode<Node2D>("RotateHandle");
         scaleHandle = GetNode<Node2D>("ScaleHandle");
         scalingNode = GetNode<Node2D>("Scaling");
+        selectionShape = GetNode<CollisionShape2D>("Scaling/Area2D/CollisionShape2D");
     }
 
     public override void _EnterTree()
@@ -53,6 +57,17 @@ public partial class MoveableImage : Node2D
         float maxSize = Mathf.Max(sizeVector.X, sizeVector.Y);
 
         sprite.Scale = Vector2.One * imageDefaultSize / maxSize;
+
+        if (sizeVector.Y > sizeVector.X)
+        {
+            handlePlacementMultiplier = new Vector2(sizeVector.X / sizeVector.Y, 1.0f);
+        }
+        else
+        {
+            handlePlacementMultiplier = new Vector2(1.0f, sizeVector.Y / sizeVector.X);
+        }
+
+        selectionShape.Scale = handlePlacementMultiplier;
     }
 
     public override void _Process(double deltaTime)
@@ -101,7 +116,7 @@ public partial class MoveableImage : Node2D
             }
             else if (isScaling)
             {
-                Vector2 scaleDelta = new Vector2(delta.Dot(Transform.X), delta.Dot(Transform.Y)) * 2 / imageDefaultSize;
+                Vector2 scaleDelta = new Vector2(delta.Dot(Transform.X), delta.Dot(Transform.Y)) * 2 / imageDefaultSize / handlePlacementMultiplier;
                 scalingNode.Scale += scaleDelta;
                 scale += scaleDelta;
             }
@@ -121,9 +136,9 @@ public partial class MoveableImage : Node2D
         lastMousePosition = mousePosition;
 
         rotateHandle.Visible = selectedImage == this;
-        rotateHandle.Position = new Vector2(-1, -1) * scale * imageDefaultSize * 0.5f;
+        rotateHandle.Position = handlePlacementMultiplier * new Vector2(-1, -1) * scale * imageDefaultSize * 0.5f;
         scaleHandle.Visible = selectedImage == this;
-        scaleHandle.Position = new Vector2(1, 1) * scale * imageDefaultSize * 0.5f;
+        scaleHandle.Position = handlePlacementMultiplier * new Vector2(1, 1) * scale * imageDefaultSize * 0.5f;
 
         ZIndex = allImages.IndexOf(this);
     }
@@ -182,5 +197,15 @@ public partial class MoveableImage : Node2D
 
         allImages[myIndex] = allImages[myIndex - 1];
         allImages[myIndex - 1] = this;
+    }
+
+    public void OnHoverHandle()
+    {
+        shouldNotDeselect = true;
+    }
+
+    public void OnLeaveHandle()
+    {
+        shouldNotDeselect = false;
     }
 }

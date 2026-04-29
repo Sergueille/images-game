@@ -21,16 +21,6 @@ script = ExtResource("1_1uxoq")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scaling/Area2D" unique_id=1512271835]
 shape = SubResource("RectangleShape2D_xvbv8")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Scaling/Area2D" unique_id=313806558]
-z_index = 1000
-position = Vector2(-100, -100)
-shape = SubResource("RectangleShape2D_ki6yt")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Scaling/Area2D" unique_id=1296011882]
-z_index = 1000
-position = Vector2(100, 100)
-shape = SubResource("RectangleShape2D_ki6yt")
-
 [node name="ImageSprite" type="Sprite2D" parent="Scaling" unique_id=939161148]
 scale = Vector2(0.667, 0.667)
 texture = ExtResource("1_qllq3")
@@ -69,4 +59,8 @@ debug_color = Color(0.48199743, 0.43719783, 1, 0.41960785)
 [connection signal="mouse_entered" from="Scaling/Area2D" to="." method="OnMouseEnter"]
 [connection signal="mouse_exited" from="Scaling/Area2D" to="." method="OnMouseLeave"]
 [connection signal="input_event" from="ScaleHandle/Area2D" to="." method="OnScaleInput"]
+[connection signal="mouse_entered" from="ScaleHandle/Area2D" to="." method="OnHoverHandle"]
+[connection signal="mouse_exited" from="ScaleHandle/Area2D" to="." method="OnLeaveHandle"]
 [connection signal="input_event" from="RotateHandle/Area2D" to="." method="OnRotateInput"]
+[connection signal="mouse_entered" from="RotateHandle/Area2D" to="." method="OnHoverHandle"]
+[connection signal="mouse_exited" from="RotateHandle/Area2D" to="." method="OnLeaveHandle"]

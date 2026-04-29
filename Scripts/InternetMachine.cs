@@ -23,12 +23,15 @@ public partial class InternetMachine : Node
         }
     }
 
+    [Export] public float requestTimeout = 5.0f;
+
     private Action<Image, string> onCompleted;
     private Action onFailure;
     private ImageFilter[] filters;
     
     private int imagesRemaining;
     private bool resultGiven;
+    private bool isBusy = false;
 
     public void RequestImage(string query, Action<Image, string> onCompleted, Action onFailure, ImageFilter[] filters)
     {
@@ -40,6 +43,8 @@ public partial class InternetMachine : Node
         this.onCompleted = onCompleted;
         this.onFailure = onFailure;
         this.filters = filters;
+        isBusy = true;
+
         string fullQuery = $"https://www.bing.com/images/search?q={queryEscaped}&qft=%20filterui%3Aphoto-transparent";
 
         GD.Print(fullQuery);
@@ -51,10 +56,6 @@ public partial class InternetMachine : Node
         string html = System.Text.Encoding.UTF8.GetString(body); // A bunch of html nonsense
         Regex r = new Regex(HTML_REGEX_PREFIX + "([^&]*)");
         
-        FileAccess f = FileAccess.Open("user://tmp.html", FileAccess.ModeFlags.Write);
-        GD.Print(f.GetPathAbsolute());
-        f.StoreString(html); // TEST
-        
         Match[] matches = r.Matches(html).Distinct(new MatchComparer()).ToArray();
         imagesRemaining = matches.Length; // Probably wil a lot of duplicates
         resultGiven = false;
@@ -63,39 +64,58 @@ public partial class InternetMachine : Node
 
         Random.Shared.Shuffle(matches);
 
-        foreach (Match m in matches)
+        FetchImage(matches, 0);
+    }
+
+    private void FetchImage(Match[] urls, int index)
+    {
+        if (index >= urls.Length) { return; }
+
+        Match m = urls[index];
+
+        string uglyLink = m.Value;
+        string cleanedLink = cleanUrl(uglyLink);
+
+        bool ok = true;
+
+        foreach (ImageFilter filter in filters)
         {
-            string uglyLink = m.Value;
-            string cleanedLink = cleanUrl(uglyLink);
-
-            bool ok = true;
-
-            foreach (ImageFilter filter in filters)
+            if (!filter.FilterUrl(cleanedLink))
             {
-                if (!filter.FilterUrl(cleanedLink))
-                {
-                    GD.Print("Url rejected by ", filter.GetName(), ": ", cleanedLink);
-                    ok = false;
-                    continue;
-                }
-            }
-
-            if (!cleanedLink.Contains(".png"))
-            {
-                GD.Print("Url rejected because not a PNG: ", cleanedLink);
+                GD.Print("Url rejected by ", filter.GetName(), ": ", cleanedLink);
                 ok = false;
-            }
-
-            if (!ok)
-            {
                 continue;
             }
+        }
 
-            DoRequest(cleanedLink, 2, (body) => HandleImageResult(body, cleanedLink), () => HandleImageFailure(cleanedLink));
+        if (!cleanedLink.Contains(".png"))
+        {
+            GD.Print("Url rejected because not a PNG: ", cleanedLink);
+            ok = false;
+        }
+
+        if (ok)
+        {
+            DoRequest(cleanedLink, 2, 
+                (body) => {
+                    bool ok = HandleImageResult(body, cleanedLink);
+
+                    if (!ok)
+                        FetchImage(urls, index + 1);
+                }, 
+                () => {
+                    HandleImageFailure(cleanedLink);
+                    FetchImage(urls, index + 1);
+                }
+            );
+        }
+        else
+        {
+            FetchImage(urls, index + 1);
         }
     }
 
-    private void HandleImageResult(byte[] body, string link)
+    private bool HandleImageResult(byte[] body, string link)
     {
         Image img;
 
@@ -108,6 +128,7 @@ public partial class InternetMachine : Node
             img = Image.LoadFromFile(f.GetPath());
 
             f.Close();
+            DirAccess.RemoveAbsolute(f.GetPathAbsolute());
 
             foreach (ImageFilter filter in filters)
             {
@@ -115,26 +136,30 @@ public partial class InternetMachine : Node
                 {
                     GD.Print("Image rejected by ", filter.GetName(), ": ", link);
                     HandleImageFailure(link);
-                    return;
+                    return false;
                 }
             }
 
-            // CancelAllRequests();
+            CancelAllRequests();
         }
         catch (Exception e)
         {
             GD.Print("error while loading image: ", e);
             HandleImageFailure(link);
-            return;
+            return false;
         }
 
         GD.Print("Image successful: ", link);
 
         if (!resultGiven)
         {
-            // resultGiven = true;
+            resultGiven = true;
             onCompleted(img, link);
+            isBusy = false;
+            return true;
         }
+
+        return false;
     }
 
     private void HandleImageFailure(string link)
@@ -144,6 +169,7 @@ public partial class InternetMachine : Node
         imagesRemaining -= 1;
         if (imagesRemaining > 0) return;
         onFailure();
+        isBusy = false;
     }
 
     private void CancelAllRequests()
@@ -194,6 +220,7 @@ public partial class InternetMachine : Node
             }
         };
 
+        rec.Timeout = requestTimeout;
         rec.Request(url, customHeaders: [
             "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.3912.86",
             "Accept-Language: en-US,en"
@@ -212,6 +239,11 @@ public partial class InternetMachine : Node
                 .Replace("%3d", "=")
                 .Replace("%26", "&")
                 .Replace("%25", "%");
+    }
+
+    public bool IsBusy()
+    {
+        return isBusy;
     }
 }
 
@@ -301,7 +333,7 @@ public class PhotoFilter : ImageFilter
                     Color up = img.GetPixel(x, y+1);
                     Color right = img.GetPixel(x+1, y);
 
-                    if (up == right && right == c)
+                    if (AreColorsEqual(up, right) && AreColorsEqual(up, right))
                     {
                         badPixels += 1;
                     }
@@ -325,5 +357,13 @@ public class PhotoFilter : ImageFilter
     public string GetName()
     {
         return "photo filter";
+    }
+
+    private bool AreColorsEqual(Color a, Color b)
+    {
+        return 
+            a.R8 == b.R8 &&
+            a.G8 == b.G8 &&
+            a.B8 == b.B8;
     }
 }

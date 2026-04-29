@@ -6,6 +6,9 @@
 [ext_resource type="Theme" uid="uid://ch2ivpoq2cuvu" path="res://theme.tres" id="4_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://vpktwhbybpc5" path="res://sprites/layer_top.png" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bw58m5ae65hu" path="res://sprites/layer_bottom.png" id="6_7mycd"]
+[ext_resource type="Texture2D" uid="uid://cm3m3q8ydpl5f" path="res://sprites/easel.png" id="7_272bh"]
+[ext_resource type="Texture2D" uid="uid://co1b3x2c1gtnr" path="res://sprites/easel_back.png" id="8_5vw27"]
+[ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
 
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
@@ -22,6 +25,28 @@ moveableImageScene = ExtResource("3_h2yge")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627]
 
 [node name="Images container" type="Node2D" parent="." unique_id=342881074]
+
+[node name="Easel" type="Sprite2D" parent="." unique_id=1313461106]
+position = Vector2(-776.00006, 301.00003)
+rotation = 0.06375694
+scale = Vector2(0.8388107, 0.8388107)
+texture = ExtResource("7_272bh")
+
+[node name="Sprite2D" type="Sprite2D" parent="Easel" unique_id=1422056762]
+z_index = -5
+texture = ExtResource("8_5vw27")
+
+[node name="PaintingParent" type="Node2D" parent="Easel" unique_id=21914162]
+z_index = -1
+position = Vector2(-51.263016, 19.0746)
+rotation = -0.16312642
+scale = Vector2(1.0160915, 1.0160915)
+skew = -0.0837758
+
+[node name="Test" type="Sprite2D" parent="Easel/PaintingParent" unique_id=1374597822]
+z_index = -1
+scale = Vector2(0.99999994, 1)
+texture = ExtResource("8_kek77")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1117185760]
 

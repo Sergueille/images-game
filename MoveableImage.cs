@@ -11,6 +11,7 @@ public partial class MoveableImage : Node2D
 
     public static List<MoveableImage> allImages = new List<MoveableImage>();
     public static bool shouldNotDeselect = false;
+    public static bool mouseOverHandles = false;
 
     Sprite2D sprite;
     Node2D rotateHandle;
@@ -75,11 +76,9 @@ public partial class MoveableImage : Node2D
         Vector2 mousePosition = GetGlobalMousePosition();
 
         bool mousePressed = Input.IsMouseButtonPressed(MouseButton.Left);
-        if (mousePressed && !mousePressedLastFrame)
+        if (mousePressed && !mousePressedLastFrame && !mouseOverHandles)
         {
             hoveredImages.Sort((a, b) => {
-                if (a == selectedImage) { return -1; }
-                if (b == selectedImage) { return 1; }
                 return b.ZIndex.CompareTo(a.ZIndex);
             });
 
@@ -201,11 +200,11 @@ public partial class MoveableImage : Node2D
 
     public void OnHoverHandle()
     {
-        shouldNotDeselect = true;
+        mouseOverHandles = true;
     }
 
     public void OnLeaveHandle()
     {
-        shouldNotDeselect = false;
+        mouseOverHandles = false;
     }
 }

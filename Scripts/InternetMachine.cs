@@ -114,42 +114,61 @@ public partial class InternetMachine : Node
             FetchImage(urls, index + 1);
         }
     }
-
     private bool HandleImageResult(byte[] body, string link)
+    {
+        Image img = ReadImageData(body);
+
+        if (img == null)
+        {
+            GD.Print("Failed to parse image");
+            HandleImageFailure(link);
+            return false;
+        }
+        else
+        {
+            foreach (ImageFilter filter in filters)
+            {
+                if (!filter.FilterImage(img))
+                {
+                    GD.Print("Image rejected by ", filter.GetName());
+                    HandleImageFailure(link);
+                    return false;
+                }
+            }
+        }
+
+        CancelAllRequests();
+
+        if (!resultGiven)
+        {
+            resultGiven = true;
+            onCompleted(img, link);
+            isBusy = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    public Image ReadImageData(byte[] data)
     {
         Image img;
 
         try
         {
-            FileAccess f = FileAccess.Open($"user://tmp{body.GetHashCode()}.png", FileAccess.ModeFlags.Write);
-            f.StoreBuffer(body);
+            FileAccess f = FileAccess.Open($"user://tmp{data.GetHashCode()}.png", FileAccess.ModeFlags.Write);
+            f.StoreBuffer(data);
             f.Close();
 
             img = Image.LoadFromFile(f.GetPath());
 
             f.Close();
             DirAccess.RemoveAbsolute(f.GetPathAbsolute());
-
-            foreach (ImageFilter filter in filters)
-            {
-                if (!filter.FilterImage(img))
-                {
-                    GD.Print("Image rejected by ", filter.GetName(), ": ", link);
-                    HandleImageFailure(link);
-                    return false;
-                }
-            }
-
-            CancelAllRequests();
         }
-        catch (Exception e)
+        catch
         {
-            GD.Print("error while loading image: ", e);
-            HandleImageFailure(link);
-            return false;
+            return null;
         }
-
-        GD.Print("Image successful: ", link);
 
         // Crop the image
         Vector2I size = img.GetSize();
@@ -180,16 +199,9 @@ public partial class InternetMachine : Node
             }
         }
 
-        if (!resultGiven)
-        {
-            resultGiven = true;
-            onCompleted(cropped, link);
-            isBusy = false;
-            return true;
-        }
-
-        return false;
+        return cropped;
     }
+
 
     private void HandleImageFailure(string link)
     {

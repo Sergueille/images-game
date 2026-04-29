@@ -70,7 +70,7 @@ public partial class MoveableImage : Node2D
 
             if (hoveredImages.Count == 0)
             {
-                if (shouldNotDeselect && selectedImage == this)
+                if (!shouldNotDeselect && selectedImage == this)
                 {
                     OnDeselected();
                     selectedImage = null;

@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://btnbmdmwipk35"]
+
+[ext_resource type="Script" uid="uid://d4m1uytrknfb5" path="res://Scripts/InternetMachine.cs" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://d1kaxt70x4p06" path="res://Scripts/ManagementManager.cs" id="2_0xm2m"]
+
+[node name="Node2D" type="Node2D" unique_id=2114658958]
+
+[node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
+script = ExtResource("1_ig7tw")
+
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("internetMachine", "imagesParent", "testLineEdit")]
+script = ExtResource("2_0xm2m")
+internetMachine = NodePath("../The great internet machine")
+imagesParent = NodePath("../Images container")
+testLineEdit = NodePath("../CanvasLayer/UI/LineEdit")
+imageSize = 400.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627]
+
+[node name="Images container" type="Node2D" parent="." unique_id=342881074]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1117185760]
+
+[node name="UI" type="Control" parent="CanvasLayer" unique_id=1668619876]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/UI" unique_id=495046123]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 61.0
+grow_horizontal = 2
+placeholder_text = "Write a word..."
+
+[node name="Button" type="Button" parent="CanvasLayer/UI" unique_id=1983442557]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 106.0
+offset_top = 30.0
+offset_right = 140.0
+offset_bottom = 61.0
+grow_horizontal = 2
+text = "Go!"
+
+[connection signal="pressed" from="CanvasLayer/UI/Button" to="Management manager" method="OnTestButtonPressed"]

@@ -13,6 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://b5e7y2oeklgf8" path="res://sprites/palette.png" id="9_dg77c"]
 [ext_resource type="Texture2D" uid="uid://dvuholpkyad3b" path="res://sprites/paintbrush.png" id="9_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://d271g4ppq70xc" path="res://sprites/canvas_texture.jpg" id="10_4c57u"]
+[ext_resource type="Texture2D" uid="uid://dq0io3kll7tpn" path="res://sprites/sat_plus.png" id="14_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://cnrbjivwv14mo" path="res://sprites/hue_plus.png" id="14_074og"]
+[ext_resource type="Texture2D" uid="uid://bra7qspebsggn" path="res://sprites/hue_less.png" id="14_cegan"]
+[ext_resource type="Texture2D" uid="uid://sgyoq60s2myk" path="res://sprites/brightness_plus.png" id="14_vivmo"]
+[ext_resource type="Texture2D" uid="uid://bjforqfxyo4xx" path="res://sprites/brightness_less.png" id="15_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://cnco35c4g2aiu" path="res://sprites/sat_less.png" id="15_yaehf"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0)
@@ -196,10 +202,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -157.0
-offset_top = 19.0
-offset_right = -103.0
-offset_bottom = 71.0
+offset_left = -124.0
+offset_top = -73.0
+offset_right = -70.0
+offset_bottom = -21.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -214,10 +220,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -170.0
-offset_top = 80.0
-offset_right = -116.0
-offset_bottom = 132.0
+offset_left = -136.0
+offset_top = 1.0
+offset_right = -82.0
+offset_bottom = 53.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -225,8 +231,122 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("6_7mycd")
 expand_icon = true
 
+[node name="Hue-" type="Button" parent="Palette" unique_id=1582180546]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = -129.0
+offset_right = 11.0
+offset_bottom = -77.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("4_1bvp3")
+icon = ExtResource("14_cegan")
+expand_icon = true
+
+[node name="Hue+" type="Button" parent="Palette" unique_id=642607138]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 21.0
+offset_top = -137.0
+offset_right = 75.0
+offset_bottom = -85.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("4_1bvp3")
+icon = ExtResource("14_074og")
+expand_icon = true
+
+[node name="Sat+" type="Button" parent="Palette" unique_id=1294825800]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -68.0
+offset_right = 12.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("4_1bvp3")
+icon = ExtResource("15_yaehf")
+expand_icon = true
+
+[node name="Sat-" type="Button" parent="Palette" unique_id=2125764549]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 25.0
+offset_top = -66.0
+offset_right = 79.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("4_1bvp3")
+icon = ExtResource("14_2cqfq")
+expand_icon = true
+
+[node name="Bri+" type="Button" parent="Palette" unique_id=700208478]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -6.0
+offset_right = 2.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("4_1bvp3")
+icon = ExtResource("15_2cqfq")
+expand_icon = true
+
+[node name="Bri-" type="Button" parent="Palette" unique_id=2072378277]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = 7.0
+offset_right = 70.0
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("4_1bvp3")
+icon = ExtResource("14_vivmo")
+expand_icon = true
+
 [connection signal="pressed" from="UI/Button" to="Management manager" method="OnTestButtonPressed"]
 [connection signal="mouse_entered" from="Palette" to="Management manager" method="MouseEntersPalette"]
 [connection signal="mouse_exited" from="Palette" to="Management manager" method="MouseLeavesPalette"]
 [connection signal="pressed" from="Palette/LayerUp" to="Management manager" method="LayerUp"]
 [connection signal="pressed" from="Palette/LayerDown" to="Management manager" method="LayerDown"]
+[connection signal="pressed" from="Palette/Hue-" to="Management manager" method="HueLess"]
+[connection signal="pressed" from="Palette/Hue+" to="Management manager" method="HuePlus"]
+[connection signal="pressed" from="Palette/Sat+" to="Management manager" method="SaturationLess"]
+[connection signal="pressed" from="Palette/Sat-" to="Management manager" method="SaturationPlus"]
+[connection signal="pressed" from="Palette/Bri+" to="Management manager" method="BrightnessLess"]
+[connection signal="pressed" from="Palette/Bri-" to="Management manager" method="BrightnessPlus"]

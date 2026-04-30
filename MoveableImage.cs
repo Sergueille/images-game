@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public partial class MoveableImage : Node2D
 {
+    public enum MaterialProperty { Hue, Saturation, Brightness };
+
     private float imageDefaultSize = 200.0f; // Should match the size of the rectangle collider!!
     
     public static MoveableImage selectedImage = null;
@@ -18,6 +20,7 @@ public partial class MoveableImage : Node2D
     Node2D scaleHandle;
     Node2D scalingNode;
     CollisionShape2D selectionShape;
+    ShaderMaterial spriteMaterial;
 
     Vector2 handlePlacementMultiplier;
     
@@ -37,6 +40,8 @@ public partial class MoveableImage : Node2D
         scaleHandle = GetNode<Node2D>("ScaleHandle");
         scalingNode = GetNode<Node2D>("Scaling");
         selectionShape = GetNode<CollisionShape2D>("Scaling/Area2D/CollisionShape2D");
+
+        spriteMaterial = (ShaderMaterial)sprite.Material;
     }
 
     public override void _EnterTree()
@@ -206,5 +211,36 @@ public partial class MoveableImage : Node2D
     public void OnLeaveHandle()
     {
         mouseOverHandles = false;
+    }
+
+    public void SetMaterialProperty(MaterialProperty property, bool plusOrMinus)
+    {
+        string param = property switch
+        {
+            MaterialProperty.Hue => "hueShift",
+            MaterialProperty.Saturation => "saturation",
+            MaterialProperty.Brightness => "brightness",
+            _ => throw new  System.Diagnostics.UnreachableException(),
+        };
+
+        float currentValue = (float)spriteMaterial.GetShaderParameter(param);
+        var (min, max, step) = GetMinMaxStep(property);
+        float newValue = currentValue + (plusOrMinus ? step : -step);
+
+        if (newValue < min) newValue = min;
+        if (newValue > max) newValue = max;
+
+        spriteMaterial.SetShaderParameter(param, newValue);
+    }
+
+    public (float, float, float) GetMinMaxStep(MaterialProperty property)
+    {
+        return property switch
+        {
+            MaterialProperty.Hue => (float.MinValue, float.MaxValue, 0.05f),
+            MaterialProperty.Saturation => (-1.0f, 2.0f, 0.2f),
+            MaterialProperty.Brightness => (-1.0f, 1.0f, 0.1f),
+            _ => throw new  System.Diagnostics.UnreachableException(),
+        };
     }
 }

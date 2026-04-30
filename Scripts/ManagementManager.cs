@@ -80,4 +80,52 @@ public partial class ManagementManager : Node
     {
         MoveableImage.shouldNotDeselect = false;
     }
+
+    public void HuePlus()
+    {
+        if (MoveableImage.selectedImage != null)
+        {
+            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Hue, true);
+        }
+    }
+
+    public void HueLess()
+    {
+        if (MoveableImage.selectedImage != null)
+        {
+            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Hue, false);
+        }
+    }
+
+    public void SaturationPlus()
+    {
+        if (MoveableImage.selectedImage != null)
+        {
+            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Saturation, true);
+        }
+    }
+
+    public void SaturationLess()
+    {
+        if (MoveableImage.selectedImage != null)
+        {
+            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Saturation, false);
+        }
+    }
+
+    public void BrightnessPlus()
+    {
+        if (MoveableImage.selectedImage != null)
+        {
+            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Brightness, true);
+        }
+    }
+
+    public void BrightnessLess()
+    {
+        if (MoveableImage.selectedImage != null)
+        {
+            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Brightness, false);
+        }
+    }
 }

@@ -7,6 +7,9 @@ public partial class MoveableImage : Node2D
     public enum MaterialProperty { Hue, Saturation, Brightness };
 
     private float imageDefaultSize = 200.0f; // Should match the size of the rectangle collider!!
+
+    [Export] float squishAmount = 0.1f;
+    [Export] float squishDuration = 0.2f;
     
     public static MoveableImage selectedImage = null;
     private static List<MoveableImage> hoveredImages = new List<MoveableImage>();
@@ -161,7 +164,11 @@ public partial class MoveableImage : Node2D
 
     private void OnSelected()
     {
-        
+        Vector2 baseScale = sprite.Scale;
+        Tween tween = GetTree().CreateTween();
+        tween.TweenProperty(sprite, "scale", new Vector2(1.0f + squishAmount, 1.0f - squishAmount) * baseScale, squishDuration / 3.0f);
+        tween.TweenProperty(sprite, "scale", new Vector2(1.0f - squishAmount, 1.0f + squishAmount) * baseScale, squishDuration / 3.0f);
+        tween.TweenProperty(sprite, "scale", baseScale, squishDuration / 3.0f);
     }
 
     private void OnDeselected()

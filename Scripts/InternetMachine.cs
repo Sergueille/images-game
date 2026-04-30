@@ -111,6 +111,7 @@ public partial class InternetMachine : Node
         }
         else
         {
+            imagesRemaining -= 1;
             FetchImage(urls, index + 1);
         }
     }

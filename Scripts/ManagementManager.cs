@@ -8,6 +8,10 @@ public partial class ManagementManager : Node
 
     [Export] Sprite2D paintingSprite;
 
+    [Export] Control canvas;
+    [Export] float canvasMaxSize;
+
+
 
     [Export] PackedScene moveableImageScene;
     
@@ -27,6 +31,9 @@ public partial class ManagementManager : Node
             float maxSize = Mathf.Max(sizeVector.X, sizeVector.Y);
 
             paintingSprite.Scale = Vector2.One * 300.0f / maxSize;
+
+            canvas.Size = sizeVector / maxSize * canvasMaxSize;
+            canvas.Position = canvas.Size * -0.5f;
 
         }, () => { /* TODO */ });
     }

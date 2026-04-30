@@ -12,21 +12,31 @@
 [ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
 [ext_resource type="Texture2D" uid="uid://d271g4ppq70xc" path="res://sprites/canvas_texture.jpg" id="10_4c57u"]
 
+[sub_resource type="Gradient" id="Gradient_efxa6"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.50980395, 0.1882353, 0.21960784, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dg77c"]
+gradient = SubResource("Gradient_efxa6")
+fill_to = Vector2(1, 1)
+
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("internetMachine", "imagesParent", "testLineEdit", "paintingSprite")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("internetMachine", "imagesParent", "testLineEdit", "paintingSprite", "canvas")]
 script = ExtResource("2_0xm2m")
 internetMachine = NodePath("../The great internet machine")
 imagesParent = NodePath("../Images container")
 testLineEdit = NodePath("../UI/LineEdit")
 paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
+canvas = NodePath("../Canvas")
+canvasMaxSize = 900.0
 moveableImageScene = ExtResource("3_h2yge")
 
-[node name="Control" type="Control" parent="." unique_id=1249895171]
+[node name="Canvas" type="Control" parent="." unique_id=1249895171]
 z_index = -50
 layout_mode = 3
 anchors_preset = 0
@@ -36,7 +46,7 @@ offset_right = 481.0
 offset_bottom = 446.0
 mouse_filter = 1
 
-[node name="Canvas" type="TextureRect" parent="Control" unique_id=199746172]
+[node name="Canvas" type="TextureRect" parent="Canvas" unique_id=199746172]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,7 +57,7 @@ texture = ExtResource("10_4c57u")
 expand_mode = 1
 stretch_mode = 1
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Control" unique_id=238910880]
+[node name="NinePatchRect" type="NinePatchRect" parent="Canvas" unique_id=238910880]
 z_index = 550
 layout_mode = 1
 anchors_preset = -1
@@ -133,6 +143,7 @@ texture = ExtResource("8_kek77")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1117185760]
 
 [node name="Palette" type="Control" parent="." unique_id=37776356]
+z_index = 1500
 layout_mode = 3
 anchors_preset = 0
 offset_left = 624.0
@@ -175,6 +186,12 @@ mouse_filter = 1
 theme = ExtResource("4_1bvp3")
 icon = ExtResource("6_7mycd")
 expand_icon = true
+
+[node name="Wall" type="Sprite2D" parent="." unique_id=466320034]
+z_index = -1500
+position = Vector2(20.5, 3.9999924)
+scale = Vector2(31.453125, 20.617188)
+texture = SubResource("GradientTexture2D_dg77c")
 
 [connection signal="pressed" from="UI/Button" to="Management manager" method="OnTestButtonPressed"]
 [connection signal="mouse_entered" from="Palette" to="Management manager" method="MouseEntersPalette"]

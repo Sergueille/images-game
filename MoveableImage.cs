@@ -15,7 +15,6 @@ public partial class MoveableImage : Node2D
     private static List<MoveableImage> hoveredImages = new List<MoveableImage>();
 
     public static List<MoveableImage> allImages = new List<MoveableImage>();
-    public static bool shouldNotDeselect = false;
     public static bool mouseOverHandles = false;
 
     Sprite2D sprite;
@@ -92,7 +91,7 @@ public partial class MoveableImage : Node2D
 
             if (hoveredImages.Count == 0)
             {
-                if (!shouldNotDeselect && selectedImage == this)
+                if (selectedImage == this)
                 {
                     OnDeselected();
                     selectedImage = null;
@@ -244,7 +243,7 @@ public partial class MoveableImage : Node2D
     {
         return property switch
         {
-            MaterialProperty.Hue => (float.MinValue, float.MaxValue, 0.05f),
+            MaterialProperty.Hue => (float.MinValue, float.MaxValue, 0.025f),
             MaterialProperty.Saturation => (-1.0f, 2.0f, 0.2f),
             MaterialProperty.Brightness => (-1.0f, 1.0f, 0.1f),
             _ => throw new  System.Diagnostics.UnreachableException(),

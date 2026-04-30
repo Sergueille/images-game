@@ -73,12 +73,12 @@ public partial class ManagementManager : Node
 
     public void MouseEntersPalette()
     {
-        MoveableImage.shouldNotDeselect = true;
+        MoveableImage.mouseOverHandles = true;
     }
 
     public void MouseLeavesPalette()
     {
-        MoveableImage.shouldNotDeselect = false;
+        MoveableImage.mouseOverHandles = false;
     }
 
     public void HuePlus()

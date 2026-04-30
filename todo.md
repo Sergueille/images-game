@@ -2,6 +2,7 @@
 # TODO
 
 - machine illustration & animation
+- transparency
 - shear
 - change color of background
 - cropping

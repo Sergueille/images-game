@@ -21,7 +21,7 @@ public partial class ManagementManager : Node
         PaintingFinder.InitPaintings();
         Painting p = PaintingFinder.GetRandomPainting();
 
-        internetMachine.DoRequest(p.imageUrl, 3, (data) => {
+        internetMachine.DoRequest(p.imageUrl, 30, (data) => {
             Image img = internetMachine.ImageFromData(data, p.imageUrl.Split(".")[^1]);
             ImageTexture tex = ImageTexture.CreateFromImage(img);
 

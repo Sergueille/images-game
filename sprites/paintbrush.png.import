@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwagwickf6tra"
-path="res://.godot/imported/frame_side.png-bead334832e7e1fdc53cff40b9f47886.ctex"
+uid="uid://dvuholpkyad3b"
+path="res://.godot/imported/paintbrush.png-f720aa57f0973eb2a2b863943b1e0c27.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/frame_side.png"
-dest_files=["res://.godot/imported/frame_side.png-bead334832e7e1fdc53cff40b9f47886.ctex"]
+source_file="res://sprites/paintbrush.png"
+dest_files=["res://.godot/imported/paintbrush.png-f720aa57f0973eb2a2b863943b1e0c27.ctex"]
 
 [params]
 

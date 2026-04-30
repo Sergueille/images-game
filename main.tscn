@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://cm3m3q8ydpl5f" path="res://sprites/easel.png" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://co1b3x2c1gtnr" path="res://sprites/easel_back.png" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
+[ext_resource type="Texture2D" uid="uid://b5e7y2oeklgf8" path="res://sprites/palette.png" id="9_dg77c"]
+[ext_resource type="Texture2D" uid="uid://dvuholpkyad3b" path="res://sprites/paintbrush.png" id="9_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://d271g4ppq70xc" path="res://sprites/canvas_texture.jpg" id="10_4c57u"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
@@ -21,6 +23,12 @@ gradient = SubResource("Gradient_efxa6")
 fill_to = Vector2(1, 1)
 
 [node name="Node2D" type="Node2D" unique_id=2114658958]
+
+[node name="Wall" type="Sprite2D" parent="." unique_id=466320034]
+z_index = -1500
+position = Vector2(20.5, 3.9999924)
+scale = Vector2(31.453125, 20.617188)
+texture = SubResource("GradientTexture2D_dg77c")
 
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
 script = ExtResource("1_ig7tw")
@@ -142,14 +150,44 @@ texture = ExtResource("8_kek77")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1117185760]
 
+[node name="PaletteBg" type="Sprite2D" parent="." unique_id=185599529]
+z_index = 1400
+position = Vector2(756, 345)
+rotation = 0.119703986
+scale = Vector2(0.87026244, 0.87026244)
+texture = ExtResource("9_dg77c")
+
+[node name="Paintbrush" type="Sprite2D" parent="PaletteBg" unique_id=1377169262]
+z_index = 1600
+position = Vector2(140.52136, 32.864746)
+rotation = 0.13001505
+scale = Vector2(0.86957216, 0.86957216)
+texture = ExtResource("9_ycdy4")
+
+[node name="Paintbrush2" type="Sprite2D" parent="PaletteBg" unique_id=1387480091]
+modulate = Color(0.8217887, 0.82178867, 0.82178867, 1)
+z_index = -1
+position = Vector2(161.75098, 65.03209)
+rotation = 0.17896336
+scale = Vector2(-0.9161939, 0.7185955)
+texture = ExtResource("9_ycdy4")
+
+[node name="Paintbrush3" type="Sprite2D" parent="PaletteBg" unique_id=291096317]
+modulate = Color(0.728822, 0.72882205, 0.7288217, 1)
+z_index = -2
+position = Vector2(183.16077, 89.07624)
+rotation = 0.31072608
+scale = Vector2(-0.9744887, 0.7643177)
+texture = ExtResource("9_ycdy4")
+
 [node name="Palette" type="Control" parent="." unique_id=37776356]
 z_index = 1500
 layout_mode = 3
 anchors_preset = 0
-offset_left = 624.0
-offset_top = 308.0
-offset_right = 764.0
-offset_bottom = 467.0
+offset_left = 590.0
+offset_top = 193.0
+offset_right = 956.0
+offset_bottom = 539.0
 
 [node name="LayerUp" type="Button" parent="Palette" unique_id=1465056830]
 layout_mode = 1
@@ -158,10 +196,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -27.0
-offset_top = -53.5
-offset_right = 27.0
-offset_bottom = -1.5
+offset_left = -157.0
+offset_top = 19.0
+offset_right = -103.0
+offset_bottom = 71.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -176,22 +214,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -27.0
-offset_top = 6.5
-offset_right = 27.0
-offset_bottom = 58.5
+offset_left = -170.0
+offset_top = 80.0
+offset_right = -116.0
+offset_bottom = 132.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("4_1bvp3")
 icon = ExtResource("6_7mycd")
 expand_icon = true
-
-[node name="Wall" type="Sprite2D" parent="." unique_id=466320034]
-z_index = -1500
-position = Vector2(20.5, 3.9999924)
-scale = Vector2(31.453125, 20.617188)
-texture = SubResource("GradientTexture2D_dg77c")
 
 [connection signal="pressed" from="UI/Button" to="Management manager" method="OnTestButtonPressed"]
 [connection signal="mouse_entered" from="Palette" to="Management manager" method="MouseEntersPalette"]

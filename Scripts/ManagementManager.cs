@@ -11,6 +11,7 @@ public partial class ManagementManager : Node
     [Export] Control canvas;
     [Export] float canvasMaxSize;
 
+    [Export] ColorControllable canvasSprite;
 
 
     [Export] PackedScene moveableImageScene;
@@ -57,18 +58,12 @@ public partial class ManagementManager : Node
 
     public void LayerUp()
     {
-        if (MoveableImage.selectedImage != null)
-        {
-            MoveableImage.selectedImage.LayerUp();
-        }
+        MoveableImage.selectedImage?.LayerUp();
     }
 
     public void LayerDown()
     {
-        if (MoveableImage.selectedImage != null)
-        {
-            MoveableImage.selectedImage.LayerDown();
-        }
+        MoveableImage.selectedImage?.LayerDown();
     }
 
     public void MouseEntersPalette()
@@ -83,49 +78,31 @@ public partial class ManagementManager : Node
 
     public void HuePlus()
     {
-        if (MoveableImage.selectedImage != null)
-        {
-            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Hue, true);
-        }
+        (MoveableImage.selectedImage?.GetColorControllable() ?? canvasSprite).SetMaterialProperty(ColorControllable.MaterialProperty.Hue, true);
     }
 
     public void HueLess()
     {
-        if (MoveableImage.selectedImage != null)
-        {
-            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Hue, false);
-        }
+        (MoveableImage.selectedImage?.GetColorControllable() ?? canvasSprite).SetMaterialProperty(ColorControllable.MaterialProperty.Hue, false);
     }
 
     public void SaturationPlus()
     {
-        if (MoveableImage.selectedImage != null)
-        {
-            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Saturation, true);
-        }
+        (MoveableImage.selectedImage?.GetColorControllable() ?? canvasSprite).SetMaterialProperty(ColorControllable.MaterialProperty.Saturation, true);
     }
 
     public void SaturationLess()
     {
-        if (MoveableImage.selectedImage != null)
-        {
-            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Saturation, false);
-        }
+        (MoveableImage.selectedImage?.GetColorControllable() ?? canvasSprite).SetMaterialProperty(ColorControllable.MaterialProperty.Saturation, false);
     }
 
     public void BrightnessPlus()
     {
-        if (MoveableImage.selectedImage != null)
-        {
-            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Brightness, true);
-        }
+        (MoveableImage.selectedImage?.GetColorControllable() ?? canvasSprite).SetMaterialProperty(ColorControllable.MaterialProperty.Brightness, true);
     }
 
     public void BrightnessLess()
     {
-        if (MoveableImage.selectedImage != null)
-        {
-            MoveableImage.selectedImage.SetMaterialProperty(MoveableImage.MaterialProperty.Brightness, false);
-        }
+        (MoveableImage.selectedImage?.GetColorControllable() ?? canvasSprite).SetMaterialProperty(ColorControllable.MaterialProperty.Brightness, false);
     }
 }

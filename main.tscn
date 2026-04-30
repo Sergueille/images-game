@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://cdjnd360ai2p" path="res://moveable_image.tscn" id="3_h2yge"]
 [ext_resource type="Theme" uid="uid://ch2ivpoq2cuvu" path="res://theme.tres" id="4_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://dfus4jjn7os35" path="res://sprites/frame_corner.png" id="5_efxa6"]
+[ext_resource type="Script" uid="uid://bfx7hep8krarh" path="res://Scripts/ColorControllable.cs" id="5_getpj"]
 [ext_resource type="Texture2D" uid="uid://vpktwhbybpc5" path="res://sprites/layer_top.png" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bw58m5ae65hu" path="res://sprites/layer_bottom.png" id="6_7mycd"]
+[ext_resource type="Shader" uid="uid://clhlxo6ekh26o" path="res://moveable_image.gdshader" id="6_ryguw"]
 [ext_resource type="Texture2D" uid="uid://cm3m3q8ydpl5f" path="res://sprites/easel.png" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://co1b3x2c1gtnr" path="res://sprites/easel_back.png" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
@@ -37,6 +39,12 @@ colors = PackedColorArray(0.5, 0.46883333, 0.445, 1)
 gradient = SubResource("Gradient_cegan")
 fill_to = Vector2(1, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
+shader = ExtResource("6_ryguw")
+shader_parameter/brightness = 1.0
+shader_parameter/saturation = -1.0
+shader_parameter/hueShift = 0.0
+
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
 [node name="Wall2" type="Sprite2D" parent="." unique_id=910268609]
@@ -59,7 +67,7 @@ texture = ExtResource("1_82xsv")
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("internetMachine", "imagesParent", "testLineEdit", "paintingSprite", "canvas")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("internetMachine", "imagesParent", "testLineEdit", "paintingSprite", "canvas", "canvasSprite")]
 script = ExtResource("2_0xm2m")
 internetMachine = NodePath("../The great internet machine")
 imagesParent = NodePath("../Images container")
@@ -67,6 +75,7 @@ testLineEdit = NodePath("../UI/LineEdit")
 paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
 canvas = NodePath("../Canvas")
 canvasMaxSize = 900.0
+canvasSprite = NodePath("../Canvas/Control")
 moveableImageScene = ExtResource("3_h2yge")
 
 [node name="Canvas" type="Control" parent="." unique_id=1249895171]
@@ -79,7 +88,24 @@ offset_right = 481.0
 offset_bottom = 446.0
 mouse_filter = 1
 
-[node name="Canvas" type="TextureRect" parent="Canvas" unique_id=199746172]
+[node name="Control" type="Control" parent="Canvas" unique_id=1204868447 node_paths=PackedStringArray("canvasItem")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("5_getpj")
+canvasItem = NodePath("Canvas")
+spriteMaterial = SubResource("ShaderMaterial_d13ii")
+
+[node name="Canvas" type="TextureRect" parent="Canvas/Control" unique_id=199746172]
+material = SubResource("ShaderMaterial_d13ii")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -221,10 +247,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -124.0
-offset_top = -73.0
-offset_right = -70.0
-offset_bottom = -21.0
+offset_left = -106.99005
+offset_top = -115.99005
+offset_right = -52.99005
+offset_bottom = -63.99005
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -239,10 +265,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -136.0
-offset_top = 1.0
-offset_right = -82.0
-offset_bottom = 53.0
+offset_left = -126.99005
+offset_top = -51.99005
+offset_right = -72.99005
+offset_bottom = 0.0099487305
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -257,10 +283,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -43.0
-offset_top = -129.0
-offset_right = 11.0
-offset_bottom = -77.0
+offset_left = -39.99005
+offset_top = -158.99005
+offset_right = 14.009949
+offset_bottom = -106.99005
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -293,10 +319,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -42.0
-offset_top = -68.0
-offset_right = 12.0
-offset_bottom = -16.0
+offset_left = -41.99005
+offset_top = -94.99005
+offset_right = 12.009949
+offset_bottom = -42.99005
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -311,10 +337,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 25.0
-offset_top = -66.0
-offset_right = 79.0
-offset_bottom = -14.0
+offset_left = 21.009949
+offset_top = -71.99005
+offset_right = 75.00995
+offset_bottom = -19.990051
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -329,10 +355,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -52.0
-offset_top = -6.0
-offset_right = 2.0
-offset_bottom = 46.0
+offset_left = -48.99005
+offset_top = -28.990051
+offset_right = 5.0099487
+offset_bottom = 23.009949
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -347,10 +373,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 16.0
-offset_top = 7.0
-offset_right = 70.0
-offset_bottom = 59.0
+offset_left = 13.009949
+offset_top = -7.9900513
+offset_right = 67.00995
+offset_bottom = 44.00995
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1

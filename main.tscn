@@ -4,34 +4,114 @@
 [ext_resource type="Script" uid="uid://d1kaxt70x4p06" path="res://Scripts/ManagementManager.cs" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cdjnd360ai2p" path="res://moveable_image.tscn" id="3_h2yge"]
 [ext_resource type="Theme" uid="uid://ch2ivpoq2cuvu" path="res://theme.tres" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://dfus4jjn7os35" path="res://sprites/frame_corner.png" id="5_efxa6"]
 [ext_resource type="Texture2D" uid="uid://vpktwhbybpc5" path="res://sprites/layer_top.png" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bw58m5ae65hu" path="res://sprites/layer_bottom.png" id="6_7mycd"]
 [ext_resource type="Texture2D" uid="uid://cm3m3q8ydpl5f" path="res://sprites/easel.png" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://co1b3x2c1gtnr" path="res://sprites/easel_back.png" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
+[ext_resource type="Texture2D" uid="uid://d271g4ppq70xc" path="res://sprites/canvas_texture.jpg" id="10_4c57u"]
 
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
 script = ExtResource("1_ig7tw")
-requestTimeout = 20.0
+requestTimeout = 10.0
 
 [node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("internetMachine", "imagesParent", "testLineEdit", "paintingSprite")]
 script = ExtResource("2_0xm2m")
 internetMachine = NodePath("../The great internet machine")
 imagesParent = NodePath("../Images container")
-testLineEdit = NodePath("../CanvasLayer/UI/LineEdit")
+testLineEdit = NodePath("../UI/LineEdit")
 paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
 moveableImageScene = ExtResource("3_h2yge")
+
+[node name="Control" type="Control" parent="." unique_id=1249895171]
+z_index = -50
+layout_mode = 3
+anchors_preset = 0
+offset_left = -419.0
+offset_top = -454.0
+offset_right = 481.0
+offset_bottom = 446.0
+mouse_filter = 1
+
+[node name="Canvas" type="TextureRect" parent="Control" unique_id=199746172]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_4c57u")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control" unique_id=238910880]
+z_index = 550
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.5
+anchor_bottom = 1.5
+offset_left = -182.0
+offset_top = -182.0
+offset_right = 363.31714
+offset_bottom = 360.38232
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.667, 0.667)
+texture = ExtResource("5_efxa6")
+region_rect = Rect2(0, 0, 1000, 1000)
+patch_margin_left = 300
+patch_margin_top = 300
+patch_margin_right = 300
+patch_margin_bottom = 300
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="UI" type="Control" parent="." unique_id=1668619876]
+z_index = 800
+layout_mode = 3
+anchors_preset = 0
+offset_left = -462.0
+offset_top = -540.0
+offset_right = 462.0
+offset_bottom = -398.0
+mouse_filter = 1
+
+[node name="LineEdit" type="LineEdit" parent="UI" unique_id=495046123]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 61.0
+grow_horizontal = 2
+placeholder_text = "Write a word..."
+
+[node name="Button" type="Button" parent="UI" unique_id=1983442557]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 106.0
+offset_top = 30.0
+offset_right = 140.0
+offset_bottom = 61.0
+grow_horizontal = 2
+text = "Go!"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627]
 
 [node name="Images container" type="Node2D" parent="." unique_id=342881074]
 
 [node name="Easel" type="Sprite2D" parent="." unique_id=1313461106]
-position = Vector2(-776.00006, 301.00003)
+z_index = 600
+position = Vector2(-602, 108.99999)
 rotation = 0.06375694
-scale = Vector2(0.8388107, 0.8388107)
+scale = Vector2(1.6899285, 1.6899285)
 texture = ExtResource("7_272bh")
 
 [node name="Sprite2D" type="Sprite2D" parent="Easel" unique_id=1422056762]
@@ -52,21 +132,15 @@ texture = ExtResource("8_kek77")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1117185760]
 
-[node name="UI" type="Control" parent="CanvasLayer" unique_id=1668619876]
+[node name="Palette" type="Control" parent="." unique_id=37776356]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-mouse_filter = 1
+offset_left = 624.0
+offset_top = 308.0
+offset_right = 764.0
+offset_bottom = 467.0
 
-[node name="Palette" type="Control" parent="CanvasLayer/UI" unique_id=37776356]
-anchors_preset = 0
-offset_left = 1780.0
-offset_top = 919.0
-offset_right = 1920.0
-offset_bottom = 1078.0
-
-[node name="LayerUp" type="Button" parent="CanvasLayer/UI/Palette" unique_id=1465056830]
+[node name="LayerUp" type="Button" parent="Palette" unique_id=1465056830]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -84,7 +158,7 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("5_lquwl")
 expand_icon = true
 
-[node name="LayerDown" type="Button" parent="CanvasLayer/UI/Palette" unique_id=846638866]
+[node name="LayerDown" type="Button" parent="Palette" unique_id=846638866]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -102,32 +176,8 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("6_7mycd")
 expand_icon = true
 
-[node name="LineEdit" type="LineEdit" parent="CanvasLayer/UI" unique_id=495046123]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -100.0
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 61.0
-grow_horizontal = 2
-placeholder_text = "Write a word..."
-
-[node name="Button" type="Button" parent="CanvasLayer/UI" unique_id=1983442557]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 106.0
-offset_top = 30.0
-offset_right = 140.0
-offset_bottom = 61.0
-grow_horizontal = 2
-text = "Go!"
-
-[connection signal="mouse_entered" from="CanvasLayer/UI/Palette" to="Management manager" method="MouseEntersPalette"]
-[connection signal="mouse_exited" from="CanvasLayer/UI/Palette" to="Management manager" method="MouseLeavesPalette"]
-[connection signal="pressed" from="CanvasLayer/UI/Palette/LayerUp" to="Management manager" method="LayerUp"]
-[connection signal="pressed" from="CanvasLayer/UI/Palette/LayerDown" to="Management manager" method="LayerDown"]
-[connection signal="pressed" from="CanvasLayer/UI/Button" to="Management manager" method="OnTestButtonPressed"]
+[connection signal="pressed" from="UI/Button" to="Management manager" method="OnTestButtonPressed"]
+[connection signal="mouse_entered" from="Palette" to="Management manager" method="MouseEntersPalette"]
+[connection signal="mouse_exited" from="Palette" to="Management manager" method="MouseLeavesPalette"]
+[connection signal="pressed" from="Palette/LayerUp" to="Management manager" method="LayerUp"]
+[connection signal="pressed" from="Palette/LayerDown" to="Management manager" method="LayerDown"]

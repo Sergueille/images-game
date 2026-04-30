@@ -13,15 +13,19 @@
 [ext_resource type="Texture2D" uid="uid://cm3m3q8ydpl5f" path="res://sprites/easel.png" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://co1b3x2c1gtnr" path="res://sprites/easel_back.png" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
+[ext_resource type="Script" uid="uid://cf76hb4qgscgd" path="res://Scripts/CameraController.cs" id="9_d13ii"]
 [ext_resource type="Texture2D" uid="uid://b5e7y2oeklgf8" path="res://sprites/palette.png" id="9_dg77c"]
 [ext_resource type="Texture2D" uid="uid://dvuholpkyad3b" path="res://sprites/paintbrush.png" id="9_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://7uv658m3g5g1" path="res://sprites/bidule.png" id="10_0odxb"]
 [ext_resource type="Texture2D" uid="uid://d271g4ppq70xc" path="res://sprites/canvas_texture.jpg" id="10_4c57u"]
+[ext_resource type="Texture2D" uid="uid://dsome76q67sjc" path="res://sprites/machine_room_front.png" id="11_lswn8"]
 [ext_resource type="Texture2D" uid="uid://dq0io3kll7tpn" path="res://sprites/sat_plus.png" id="14_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://cnrbjivwv14mo" path="res://sprites/hue_plus.png" id="14_074og"]
 [ext_resource type="Texture2D" uid="uid://bra7qspebsggn" path="res://sprites/hue_less.png" id="14_cegan"]
 [ext_resource type="Texture2D" uid="uid://sgyoq60s2myk" path="res://sprites/brightness_plus.png" id="14_vivmo"]
 [ext_resource type="Texture2D" uid="uid://bjforqfxyo4xx" path="res://sprites/brightness_less.png" id="15_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://cnco35c4g2aiu" path="res://sprites/sat_less.png" id="15_yaehf"]
+[ext_resource type="Texture2D" uid="uid://dfctp3pxvr5gp" path="res://sprites/machine_room.png" id="24_1u8w0"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0)
@@ -31,6 +35,12 @@ colors = PackedColorArray(0.50980395, 0.1882353, 0.21960784, 1)
 gradient = SubResource("Gradient_efxa6")
 fill_to = Vector2(1, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
+shader = ExtResource("6_ryguw")
+shader_parameter/brightness = 1.0
+shader_parameter/saturation = -1.0
+shader_parameter/hueShift = 0.0
+
 [sub_resource type="Gradient" id="Gradient_cegan"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0.5, 0.46883333, 0.445, 1)
@@ -38,12 +48,6 @@ colors = PackedColorArray(0.5, 0.46883333, 0.445, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_82xsv"]
 gradient = SubResource("Gradient_cegan")
 fill_to = Vector2(1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
-shader = ExtResource("6_ryguw")
-shader_parameter/brightness = 1.0
-shader_parameter/saturation = -1.0
-shader_parameter/hueShift = 0.0
 
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
@@ -53,14 +57,8 @@ position = Vector2(-13.000025, 3.9999924)
 scale = Vector2(30.40625, 20.617188)
 texture = SubResource("GradientTexture2D_dg77c")
 
-[node name="Wall" type="Sprite2D" parent="." unique_id=466320034]
-z_index = -1500
-position = Vector2(1933.7499, 3.9999924)
-scale = Vector2(30.429688, 20.617188)
-texture = SubResource("GradientTexture2D_82xsv")
-
 [node name="DoorRight" type="Sprite2D" parent="." unique_id=1782784539]
-position = Vector2(709, 1)
+position = Vector2(710, 0)
 texture = ExtResource("1_82xsv")
 
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
@@ -172,7 +170,45 @@ offset_bottom = 61.0
 grow_horizontal = 2
 text = "Go!"
 
+[node name="MachineRoom" type="Node2D" parent="." unique_id=1119432853]
+
+[node name="Wall" type="Sprite2D" parent="MachineRoom" unique_id=466320034]
+z_index = -1500
+position = Vector2(1933.7499, 3.9999924)
+scale = Vector2(30.429688, 20.617188)
+texture = SubResource("GradientTexture2D_82xsv")
+
+[node name="MachineRoom" type="Sprite2D" parent="MachineRoom" unique_id=181833497]
+position = Vector2(1920, 0)
+texture = ExtResource("24_1u8w0")
+
+[node name="Bidule2" type="Sprite2D" parent="MachineRoom" unique_id=4605921]
+position = Vector2(1974.3022, -184.25195)
+rotation = 0.45810077
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_0odxb")
+
+[node name="Bidule" type="Sprite2D" parent="MachineRoom" unique_id=2097884300]
+position = Vector2(1625.3024, -188.25198)
+rotation = -0.21251976
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_0odxb")
+
+[node name="Bidule3" type="Sprite2D" parent="MachineRoom" unique_id=274823560]
+position = Vector2(1794.3021, -199.25192)
+rotation = 0.010548785
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_0odxb")
+
+[node name="MachineRoom2" type="Sprite2D" parent="MachineRoom" unique_id=72645474]
+position = Vector2(1920, 0)
+texture = ExtResource("11_lswn8")
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627]
+script = ExtResource("9_d13ii")
+screenCount = 2
+screenSize = 1920.0
+transitionDuration = 0.3
 
 [node name="Images container" type="Node2D" parent="." unique_id=342881074]
 

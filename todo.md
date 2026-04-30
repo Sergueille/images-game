@@ -11,4 +11,5 @@
 - select only feasible paintings
 - new easel sprite, and 9-sliced canvas sprite for reference
 - main room background art
+- undo/redo
 

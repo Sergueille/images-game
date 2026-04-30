@@ -171,6 +171,8 @@ public partial class InternetMachine : Node
             return null;
         }
 
+        if (img == null) { return null; }
+
         // Crop the image
         Vector2I size = img.GetSize();
         Vector2I min = new Vector2I(int.MaxValue, int.MaxValue);

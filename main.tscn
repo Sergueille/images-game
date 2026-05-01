@@ -3,8 +3,11 @@
 [ext_resource type="Texture2D" uid="uid://bani1w7ce5ptv" path="res://sprites/door_right.png" id="1_82xsv"]
 [ext_resource type="Script" uid="uid://d4m1uytrknfb5" path="res://Scripts/InternetMachine.cs" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d1kaxt70x4p06" path="res://Scripts/ManagementManager.cs" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://cjxfnts7v068m" path="res://sprites/paper.png" id="2_qsp4k"]
 [ext_resource type="PackedScene" uid="uid://cdjnd360ai2p" path="res://moveable_image.tscn" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://cnxvhjv6s3u1n" path="res://sprites/screen_reflexion.png" id="3_xuqvo"]
 [ext_resource type="Theme" uid="uid://ch2ivpoq2cuvu" path="res://theme.tres" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://bgwuxy5l2urac" path="res://sprites/fax_mask.png" id="4_kq58d"]
 [ext_resource type="Texture2D" uid="uid://dfus4jjn7os35" path="res://sprites/frame_corner.png" id="5_efxa6"]
 [ext_resource type="Script" uid="uid://bfx7hep8krarh" path="res://Scripts/ColorControllable.cs" id="5_getpj"]
 [ext_resource type="Texture2D" uid="uid://vpktwhbybpc5" path="res://sprites/layer_top.png" id="5_lquwl"]
@@ -15,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
 [ext_resource type="Script" uid="uid://cf76hb4qgscgd" path="res://Scripts/CameraController.cs" id="9_d13ii"]
 [ext_resource type="Texture2D" uid="uid://b5e7y2oeklgf8" path="res://sprites/palette.png" id="9_dg77c"]
+[ext_resource type="Script" uid="uid://clg5qo1sq18jc" path="res://Scripts/FaxManager.cs" id="9_seu75"]
 [ext_resource type="Texture2D" uid="uid://dvuholpkyad3b" path="res://sprites/paintbrush.png" id="9_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://7uv658m3g5g1" path="res://sprites/bidule.png" id="10_0odxb"]
 [ext_resource type="Texture2D" uid="uid://d271g4ppq70xc" path="res://sprites/canvas_texture.jpg" id="10_4c57u"]
@@ -65,24 +69,49 @@ position = Vector2(710, 0)
 texture = ExtResource("1_82xsv")
 
 [node name="Fax" type="Sprite2D" parent="Main room" unique_id=575923624]
+z_index = -1
 position = Vector2(-660, -240)
 texture = ExtResource("27_a6jrf")
+
+[node name="ScreenReflexion" type="Sprite2D" parent="Main room/Fax" unique_id=1715682715]
+modulate = Color(1, 1, 1, 0.5254902)
+position = Vector2(-78, -207)
+texture = ExtResource("3_xuqvo")
+
+[node name="FaxMask" type="Sprite2D" parent="Main room/Fax" unique_id=183454216]
+clip_children = 1
+texture = ExtResource("4_kq58d")
+
+[node name="Paper" type="Sprite2D" parent="Main room/Fax/FaxMask" unique_id=880845733]
+position = Vector2(-116, -194)
+texture = ExtResource("2_qsp4k")
 
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("internetMachine", "imagesParent", "testLineEdit", "paintingSprite", "canvas", "canvasSprite")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "testLineEdit", "paintingSprite", "canvas", "canvasSprite")]
 script = ExtResource("2_0xm2m")
+faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
-imagesParent = NodePath("../Images container")
 testLineEdit = NodePath("../UI/LineEdit")
 paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
 canvas = NodePath("../Canvas")
 canvasMaxSize = 900.0
 canvasCenter = Vector2(113, 0)
 canvasSprite = NodePath("../Canvas/Control")
+
+[node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask")]
+script = ExtResource("9_seu75")
+paperUpPosition = NodePath("../Positions/PaperUp")
+paperDownPosition = NodePath("../Positions/PaperDown")
+paperFallenPosition = NodePath("../Positions/PaperFallen")
+paper = NodePath("../Main room/Fax/FaxMask/Paper")
+imagesParent = NodePath("../Images container")
 moveableImageScene = ExtResource("3_h2yge")
+paperMask = NodePath("../Main room/Fax/FaxMask")
+printDuration = 2.5
+fallDuration = 0.8
 
 [node name="Canvas" type="Control" parent="." unique_id=1249895171]
 z_index = -50
@@ -429,6 +458,17 @@ mouse_filter = 1
 theme = ExtResource("4_1bvp3")
 icon = ExtResource("14_vivmo")
 expand_icon = true
+
+[node name="Positions" type="Node2D" parent="." unique_id=1435294901]
+
+[node name="PaperDown" type="Node2D" parent="Positions" unique_id=969978514]
+position = Vector2(-776, -214)
+
+[node name="PaperUp" type="Node2D" parent="Positions" unique_id=1449688358]
+position = Vector2(-776, -441)
+
+[node name="PaperFallen" type="Node2D" parent="Positions" unique_id=217298879]
+position = Vector2(-776, 73)
 
 [connection signal="pressed" from="UI/Button" to="Management manager" method="OnTestButtonPressed"]
 [connection signal="mouse_entered" from="Palette/Palette" to="Management manager" method="MouseEntersPalette"]

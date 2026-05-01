@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class MoveableImage : Node2D
 {
-    private float imageDefaultSize = 200.0f; // Should match the size of the rectangle collider!!
+    private float imageDefaultSize = 160.0f; // Should match the size of the rectangle collider!!
 
     [Export] float squishAmount = 0.1f;
     [Export] float squishDuration = 0.2f;
@@ -14,6 +14,8 @@ public partial class MoveableImage : Node2D
 
     public static List<MoveableImage> allImages = new List<MoveableImage>();
     public static bool mouseOverHandles = false;
+
+    public Action onFirstMoveCallback = null;
 
     [Export] Sprite2D sprite;
     [Export] Node2D rotateHandle;
@@ -29,6 +31,8 @@ public partial class MoveableImage : Node2D
     Vector2 lastMousePosition;
     bool isRotating = false;
     bool isScaling = false;
+
+    bool haveMovedYet = false;
 
     Vector2 scale = Vector2.One;
     int layer = 0;
@@ -116,6 +120,9 @@ public partial class MoveableImage : Node2D
             else
             {
                 Position += delta;
+
+                if (!haveMovedYet && onFirstMoveCallback != null) { onFirstMoveCallback(); }
+                haveMovedYet = true;
             }
         }
 
@@ -128,12 +135,15 @@ public partial class MoveableImage : Node2D
         mousePressedLastFrame = mousePressed;
         lastMousePosition = mousePosition;
 
-        rotateHandle.Visible = selectedImage == this;
+        rotateHandle.Visible = selectedImage == this && haveMovedYet;
         rotateHandle.Position = handlePlacementMultiplier * new Vector2(-1, -1) * scale * imageDefaultSize * 0.5f;
-        scaleHandle.Visible = selectedImage == this;
+        scaleHandle.Visible = selectedImage == this && haveMovedYet;
         scaleHandle.Position = handlePlacementMultiplier * new Vector2(1, 1) * scale * imageDefaultSize * 0.5f;
 
-        ZIndex = allImages.IndexOf(this);
+        if (haveMovedYet)
+        {
+            ZIndex = allImages.IndexOf(this);
+        }
     }
 
     private void OnMouseEnter()

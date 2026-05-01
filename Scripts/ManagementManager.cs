@@ -2,8 +2,8 @@ using Godot;
 
 public partial class ManagementManager : Node
 {
+    [Export] FaxManager faxManager;
     [Export] InternetMachine internetMachine;
-    [Export] Node2D imagesParent;
     [Export] LineEdit testLineEdit;
 
     [Export] Sprite2D paintingSprite;
@@ -13,9 +13,6 @@ public partial class ManagementManager : Node
     [Export] Vector2 canvasCenter;
 
     [Export] ColorControllable canvasSprite;
-
-
-    [Export] PackedScene moveableImageScene;
     
 
     public override void _Ready()
@@ -40,18 +37,11 @@ public partial class ManagementManager : Node
         }, () => { /* TODO */ });
     }
 
-    private void OnImageResult(Image image, string link)
-    {
-        MoveableImage moveableImage = (MoveableImage)moveableImageScene.Instantiate();
-        imagesParent.AddChild(moveableImage);
-        moveableImage.Init(image);
-    }
-
     public void OnTestButtonPressed()
     {
         internetMachine.RequestImage(
             testLineEdit.Text, 
-            OnImageResult, 
+            (img, url) => { faxManager.Print(img, url); }, 
             () => { GD.PrintErr("Pas d'image = pas de burger"); },
             [new TransparencyFilter(), new PhotoFilter()]
         );

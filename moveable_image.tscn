@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bfx7hep8krarh" path="res://Scripts/ColorControllable.cs" id="4_x46ov"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xvbv8"]
-size = Vector2(210, 210)
+size = Vector2(160, 160)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x46ov"]
 resource_local_to_scene = true
@@ -48,6 +48,7 @@ scale = Vector2(0.667, 0.667)
 texture = ExtResource("1_qllq3")
 
 [node name="ScaleHandle" type="Node2D" parent="." unique_id=762058148]
+visible = false
 z_index = 1000
 position = Vector2(100, 100)
 
@@ -63,6 +64,7 @@ shape = SubResource("RectangleShape2D_ki6yt")
 debug_color = Color(0.48199743, 0.43719783, 1, 0.41960785)
 
 [node name="RotateHandle" type="Node2D" parent="." unique_id=840386639]
+visible = false
 z_index = 1000
 position = Vector2(-100, -100)
 

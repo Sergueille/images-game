@@ -10,6 +10,7 @@ public partial class ManagementManager : Node
 
     [Export] Control canvas;
     [Export] float canvasMaxSize;
+    [Export] Vector2 canvasCenter;
 
     [Export] ColorControllable canvasSprite;
 
@@ -34,7 +35,7 @@ public partial class ManagementManager : Node
             paintingSprite.Scale = Vector2.One * 300.0f / maxSize;
 
             canvas.Size = sizeVector / maxSize * canvasMaxSize;
-            canvas.Position = canvas.Size * -0.5f;
+            canvas.Position = canvasCenter + canvas.Size * -0.5f;
 
         }, () => { /* TODO */ });
     }

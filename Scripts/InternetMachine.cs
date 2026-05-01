@@ -192,7 +192,7 @@ public partial class InternetMachine : Node
             }
         }
 
-        Image cropped = Image.CreateEmpty(max.X - min.X, max.Y - min.Y, false, Image.Format.Rgba8);
+        Image cropped = Image.CreateEmpty(max.X - min.X, max.Y - min.Y, true, Image.Format.Rgba8);
         Vector2I newSize = cropped.GetSize();
         for (int x = 0; x < newSize.X; x++)
         {

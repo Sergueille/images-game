@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://bjforqfxyo4xx" path="res://sprites/brightness_less.png" id="15_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://cnco35c4g2aiu" path="res://sprites/sat_less.png" id="15_yaehf"]
 [ext_resource type="Texture2D" uid="uid://dfctp3pxvr5gp" path="res://sprites/machine_room.png" id="24_1u8w0"]
+[ext_resource type="Texture2D" uid="uid://bf4yfpf7rjap3" path="res://sprites/fax.png" id="27_a6jrf"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0)
@@ -51,15 +52,21 @@ fill_to = Vector2(1, 1)
 
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
-[node name="Wall2" type="Sprite2D" parent="." unique_id=910268609]
+[node name="Main room" type="Node2D" parent="." unique_id=1964529579]
+
+[node name="Wall2" type="Sprite2D" parent="Main room" unique_id=910268609]
 z_index = -1500
 position = Vector2(-13.000025, 3.9999924)
 scale = Vector2(30.40625, 20.617188)
 texture = SubResource("GradientTexture2D_dg77c")
 
-[node name="DoorRight" type="Sprite2D" parent="." unique_id=1782784539]
+[node name="DoorRight" type="Sprite2D" parent="Main room" unique_id=1782784539]
 position = Vector2(710, 0)
 texture = ExtResource("1_82xsv")
+
+[node name="Fax" type="Sprite2D" parent="Main room" unique_id=575923624]
+position = Vector2(-660, -240)
+texture = ExtResource("27_a6jrf")
 
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
 script = ExtResource("1_ig7tw")
@@ -73,6 +80,7 @@ testLineEdit = NodePath("../UI/LineEdit")
 paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
 canvas = NodePath("../Canvas")
 canvasMaxSize = 900.0
+canvasCenter = Vector2(113, 0)
 canvasSprite = NodePath("../Canvas/Control")
 moveableImageScene = ExtResource("3_h2yge")
 
@@ -80,9 +88,9 @@ moveableImageScene = ExtResource("3_h2yge")
 z_index = -50
 layout_mode = 3
 anchors_preset = 0
-offset_left = -419.0
+offset_left = -337.0
 offset_top = -454.0
-offset_right = 481.0
+offset_right = 563.0
 offset_bottom = 446.0
 mouse_filter = 1
 
@@ -214,7 +222,7 @@ transitionDuration = 0.3
 
 [node name="Easel" type="Sprite2D" parent="." unique_id=1313461106]
 z_index = 600
-position = Vector2(-602, 108.99999)
+position = Vector2(-595.99994, 185)
 rotation = 0.06375694
 scale = Vector2(1.6899285, 1.6899285)
 texture = ExtResource("7_272bh")
@@ -237,21 +245,23 @@ texture = ExtResource("8_kek77")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1117185760]
 
-[node name="PaletteBg" type="Sprite2D" parent="." unique_id=185599529]
+[node name="Palette" type="Node2D" parent="." unique_id=1629020102]
+
+[node name="PaletteBg" type="Sprite2D" parent="Palette" unique_id=185599529]
 z_index = 1400
-position = Vector2(638.99005, 344.99005)
-rotation = 0.119703986
+position = Vector2(704.99005, 344.99005)
+rotation = 0.11970398
 scale = Vector2(0.87026244, 0.87026244)
 texture = ExtResource("9_dg77c")
 
-[node name="Paintbrush" type="Sprite2D" parent="PaletteBg" unique_id=1377169262]
+[node name="Paintbrush" type="Sprite2D" parent="Palette/PaletteBg" unique_id=1377169262]
 z_index = 1600
 position = Vector2(140.52136, 32.864746)
 rotation = 0.13001505
 scale = Vector2(0.86957216, 0.86957216)
 texture = ExtResource("9_ycdy4")
 
-[node name="Paintbrush2" type="Sprite2D" parent="PaletteBg" unique_id=1387480091]
+[node name="Paintbrush2" type="Sprite2D" parent="Palette/PaletteBg" unique_id=1387480091]
 modulate = Color(0.8217887, 0.82178867, 0.82178867, 1)
 z_index = -1
 position = Vector2(161.75098, 65.03209)
@@ -259,7 +269,7 @@ rotation = 0.17896336
 scale = Vector2(-0.9161939, 0.7185955)
 texture = ExtResource("9_ycdy4")
 
-[node name="Paintbrush3" type="Sprite2D" parent="PaletteBg" unique_id=291096317]
+[node name="Paintbrush3" type="Sprite2D" parent="Palette/PaletteBg" unique_id=291096317]
 modulate = Color(0.728822, 0.72882205, 0.7288217, 1)
 z_index = -2
 position = Vector2(183.16077, 89.07624)
@@ -267,16 +277,16 @@ rotation = 0.31072608
 scale = Vector2(-0.9744887, 0.7643177)
 texture = ExtResource("9_ycdy4")
 
-[node name="Palette" type="Control" parent="." unique_id=37776356]
+[node name="Palette" type="Control" parent="Palette" unique_id=37776356]
 z_index = 1500
 layout_mode = 3
 anchors_preset = 0
-offset_left = 472.99005
+offset_left = 538.99005
 offset_top = 192.99005
-offset_right = 838.99005
+offset_right = 904.99005
 offset_bottom = 538.99005
 
-[node name="LayerUp" type="Button" parent="Palette" unique_id=1465056830]
+[node name="LayerUp" type="Button" parent="Palette/Palette" unique_id=1465056830]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -294,7 +304,7 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("5_lquwl")
 expand_icon = true
 
-[node name="LayerDown" type="Button" parent="Palette" unique_id=846638866]
+[node name="LayerDown" type="Button" parent="Palette/Palette" unique_id=846638866]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -312,7 +322,7 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("6_7mycd")
 expand_icon = true
 
-[node name="Hue-" type="Button" parent="Palette" unique_id=1582180546]
+[node name="Hue-" type="Button" parent="Palette/Palette" unique_id=1582180546]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -330,7 +340,7 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("14_cegan")
 expand_icon = true
 
-[node name="Hue+" type="Button" parent="Palette" unique_id=642607138]
+[node name="Hue+" type="Button" parent="Palette/Palette" unique_id=642607138]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -348,7 +358,7 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("14_074og")
 expand_icon = true
 
-[node name="Sat+" type="Button" parent="Palette" unique_id=1294825800]
+[node name="Sat+" type="Button" parent="Palette/Palette" unique_id=1294825800]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -366,7 +376,7 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("15_yaehf")
 expand_icon = true
 
-[node name="Sat-" type="Button" parent="Palette" unique_id=2125764549]
+[node name="Sat-" type="Button" parent="Palette/Palette" unique_id=2125764549]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -384,7 +394,7 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("14_2cqfq")
 expand_icon = true
 
-[node name="Bri+" type="Button" parent="Palette" unique_id=700208478]
+[node name="Bri+" type="Button" parent="Palette/Palette" unique_id=700208478]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -402,7 +412,7 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("15_2cqfq")
 expand_icon = true
 
-[node name="Bri-" type="Button" parent="Palette" unique_id=2072378277]
+[node name="Bri-" type="Button" parent="Palette/Palette" unique_id=2072378277]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -421,13 +431,13 @@ icon = ExtResource("14_vivmo")
 expand_icon = true
 
 [connection signal="pressed" from="UI/Button" to="Management manager" method="OnTestButtonPressed"]
-[connection signal="mouse_entered" from="Palette" to="Management manager" method="MouseEntersPalette"]
-[connection signal="mouse_exited" from="Palette" to="Management manager" method="MouseLeavesPalette"]
-[connection signal="pressed" from="Palette/LayerUp" to="Management manager" method="LayerUp"]
-[connection signal="pressed" from="Palette/LayerDown" to="Management manager" method="LayerDown"]
-[connection signal="pressed" from="Palette/Hue-" to="Management manager" method="HueLess"]
-[connection signal="pressed" from="Palette/Hue+" to="Management manager" method="HuePlus"]
-[connection signal="pressed" from="Palette/Sat+" to="Management manager" method="SaturationLess"]
-[connection signal="pressed" from="Palette/Sat-" to="Management manager" method="SaturationPlus"]
-[connection signal="pressed" from="Palette/Bri+" to="Management manager" method="BrightnessLess"]
-[connection signal="pressed" from="Palette/Bri-" to="Management manager" method="BrightnessPlus"]
+[connection signal="mouse_entered" from="Palette/Palette" to="Management manager" method="MouseEntersPalette"]
+[connection signal="mouse_exited" from="Palette/Palette" to="Management manager" method="MouseLeavesPalette"]
+[connection signal="pressed" from="Palette/Palette/LayerUp" to="Management manager" method="LayerUp"]
+[connection signal="pressed" from="Palette/Palette/LayerDown" to="Management manager" method="LayerDown"]
+[connection signal="pressed" from="Palette/Palette/Hue-" to="Management manager" method="HueLess"]
+[connection signal="pressed" from="Palette/Palette/Hue+" to="Management manager" method="HuePlus"]
+[connection signal="pressed" from="Palette/Palette/Sat+" to="Management manager" method="SaturationLess"]
+[connection signal="pressed" from="Palette/Palette/Sat-" to="Management manager" method="SaturationPlus"]
+[connection signal="pressed" from="Palette/Palette/Bri+" to="Management manager" method="BrightnessLess"]
+[connection signal="pressed" from="Palette/Palette/Bri-" to="Management manager" method="BrightnessPlus"]

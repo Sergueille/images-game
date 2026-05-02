@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5g4na5h0wpp4"
-path="res://.godot/imported/machine.png-66d4df7d68965af29b6420578d2477a8.ctex"
+path="res://.godot/imported/machine.png-3f3aa7da0ebe2a14dfc064c551df5d78.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Concept/machine.png"
-dest_files=["res://.godot/imported/machine.png-66d4df7d68965af29b6420578d2477a8.ctex"]
+source_file="res://concept/machine.png"
+dest_files=["res://.godot/imported/machine.png-3f3aa7da0ebe2a14dfc064c551df5d78.ctex"]
 
 [params]
 

@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://cdjnd360ai2p"]
 
-[ext_resource type="Script" uid="uid://blb4wv3jf3kae" path="res://MoveableImage.cs" id="1_1uxoq"]
+[ext_resource type="Script" uid="uid://blb4wv3jf3kae" path="res://scripts/MoveableImage.cs" id="1_1uxoq"]
 [ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="1_qllq3"]
-[ext_resource type="Shader" uid="uid://clhlxo6ekh26o" path="res://moveable_image.gdshader" id="2_l2q4b"]
+[ext_resource type="Shader" uid="uid://clhlxo6ekh26o" path="res://shaders/moveable_image.gdshader" id="2_l2q4b"]
 [ext_resource type="Texture2D" uid="uid://7gkyye6eyr4v" path="res://sprites/rotate.png" id="2_xvbv8"]
 [ext_resource type="Texture2D" uid="uid://bdku85rtcv6ao" path="res://sprites/scale.png" id="3_ki6yt"]
-[ext_resource type="Script" uid="uid://bfx7hep8krarh" path="res://Scripts/ColorControllable.cs" id="4_x46ov"]
+[ext_resource type="Script" uid="uid://bfx7hep8krarh" path="res://scripts/ColorControllable.cs" id="4_x46ov"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xvbv8"]
 size = Vector2(160, 160)

@@ -25,6 +25,21 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Images"
 
+[input]
+
+ui_accept={
+"deadzone": 0.5,
+"events": []
+}
+ui_select={
+"deadzone": 0.5,
+"events": []
+}
+ui_cancel={
+"deadzone": 0.5,
+"events": []
+}
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

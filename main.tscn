@@ -1,25 +1,25 @@
 [gd_scene format=3 uid="uid://btnbmdmwipk35"]
 
 [ext_resource type="Texture2D" uid="uid://bani1w7ce5ptv" path="res://sprites/door_right.png" id="1_82xsv"]
-[ext_resource type="Script" uid="uid://d4m1uytrknfb5" path="res://Scripts/InternetMachine.cs" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://d1kaxt70x4p06" path="res://Scripts/ManagementManager.cs" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://d4m1uytrknfb5" path="res://scripts/InternetMachine.cs" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://d1kaxt70x4p06" path="res://scripts/ManagementManager.cs" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://cjxfnts7v068m" path="res://sprites/paper.png" id="2_qsp4k"]
 [ext_resource type="PackedScene" uid="uid://cdjnd360ai2p" path="res://moveable_image.tscn" id="3_h2yge"]
 [ext_resource type="Texture2D" uid="uid://cnxvhjv6s3u1n" path="res://sprites/screen_reflexion.png" id="3_xuqvo"]
 [ext_resource type="Theme" uid="uid://ch2ivpoq2cuvu" path="res://theme.tres" id="4_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://bgwuxy5l2urac" path="res://sprites/fax_mask.png" id="4_kq58d"]
 [ext_resource type="Texture2D" uid="uid://dfus4jjn7os35" path="res://sprites/frame_corner.png" id="5_efxa6"]
-[ext_resource type="Script" uid="uid://bfx7hep8krarh" path="res://Scripts/ColorControllable.cs" id="5_getpj"]
+[ext_resource type="Script" uid="uid://bfx7hep8krarh" path="res://scripts/ColorControllable.cs" id="5_getpj"]
 [ext_resource type="Texture2D" uid="uid://vpktwhbybpc5" path="res://sprites/layer_top.png" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bw58m5ae65hu" path="res://sprites/layer_bottom.png" id="6_7mycd"]
-[ext_resource type="Shader" uid="uid://clhlxo6ekh26o" path="res://moveable_image.gdshader" id="6_ryguw"]
+[ext_resource type="Shader" uid="uid://clhlxo6ekh26o" path="res://shaders/moveable_image.gdshader" id="6_ryguw"]
 [ext_resource type="Texture2D" uid="uid://b4wvons2b1ato" path="res://sprites/professor_room_bigger.png" id="7_4k2k6"]
 [ext_resource type="Texture2D" uid="uid://cm3m3q8ydpl5f" path="res://sprites/easel.png" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://co1b3x2c1gtnr" path="res://sprites/easel_back.png" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
-[ext_resource type="Script" uid="uid://cf76hb4qgscgd" path="res://Scripts/CameraController.cs" id="9_d13ii"]
+[ext_resource type="Script" uid="uid://cf76hb4qgscgd" path="res://scripts/CameraController.cs" id="9_d13ii"]
 [ext_resource type="Texture2D" uid="uid://b5e7y2oeklgf8" path="res://sprites/palette.png" id="9_dg77c"]
-[ext_resource type="Script" uid="uid://clg5qo1sq18jc" path="res://Scripts/FaxManager.cs" id="9_seu75"]
+[ext_resource type="Script" uid="uid://clg5qo1sq18jc" path="res://scripts/FaxManager.cs" id="9_seu75"]
 [ext_resource type="Texture2D" uid="uid://dvuholpkyad3b" path="res://sprites/paintbrush.png" id="9_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://7uv658m3g5g1" path="res://sprites/bidule.png" id="10_0odxb"]
 [ext_resource type="Texture2D" uid="uid://d271g4ppq70xc" path="res://sprites/canvas_texture.jpg" id="10_4c57u"]
@@ -32,7 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://cnco35c4g2aiu" path="res://sprites/sat_less.png" id="15_yaehf"]
 [ext_resource type="Texture2D" uid="uid://dfctp3pxvr5gp" path="res://sprites/machine_room.png" id="24_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://bf4yfpf7rjap3" path="res://sprites/fax.png" id="27_a6jrf"]
-[ext_resource type="Shader" uid="uid://c3kl7v56a741c" path="res://fax_screen.gdshader" id="32_htxhm"]
+[ext_resource type="Shader" uid="uid://c3kl7v56a741c" path="res://shaders/fax_screen.gdshader" id="32_htxhm"]
 [ext_resource type="Texture2D" uid="uid://b3nfyimykse03" path="res://sprites/desk.png" id="34_4k2k6"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
@@ -135,12 +135,12 @@ requestTimeout = 10.0
 
 [node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "canvas", "canvasSprite")]
 script = ExtResource("2_0xm2m")
+canvasMaxSize = 900.0
+canvasCenter = Vector2(113, 0)
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
 paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
 canvas = NodePath("../Canvas")
-canvasMaxSize = 900.0
-canvasCenter = Vector2(113, 0)
 canvasSprite = NodePath("../Canvas/Control")
 
 [node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("internetMachine", "paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask", "screenTextLabel")]

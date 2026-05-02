@@ -34,17 +34,11 @@ public partial class ManagementManager : Node
             canvas.Size = sizeVector / maxSize * canvasMaxSize;
             canvas.Position = canvasCenter + canvas.Size * -0.5f;
 
-        }, () => { /* TODO */ });
+        }, () => { /* TODO */ }, false);
     }
 
     public void OnTestButtonPressed()
     {
-        internetMachine.RequestImage(
-            testLineEdit.Text, 
-            (img, url) => { faxManager.Print(img, url); }, 
-            () => { GD.PrintErr("Pas d'image = pas de burger"); },
-            [new TransparencyFilter(), new PhotoFilter()]
-        );
     }
 
     public void LayerUp()

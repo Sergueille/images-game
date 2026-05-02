@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -27,13 +28,14 @@ public partial class InternetMachine : Node
 
     private Action<Image, string> onCompleted;
     private Action onFailure;
+    private Action<string> onLog;
     private ImageFilter[] filters;
     
     private int imagesRemaining;
     private bool resultGiven;
     private bool isBusy = false;
 
-    public void RequestImage(string query, Action<Image, string> onCompleted, Action onFailure, ImageFilter[] filters)
+    public void RequestImage(string query, Action<Image, string> onCompleted, Action onFailure, ImageFilter[] filters, Action<string> onLog)
     {
         CancelAllRequests();
 
@@ -42,13 +44,14 @@ public partial class InternetMachine : Node
 
         this.onCompleted = onCompleted;
         this.onFailure = onFailure;
+        this.onLog = onLog;
         this.filters = filters;
         isBusy = true;
 
         string fullQuery = $"https://www.bing.com/images/search?q={queryEscaped}&qft=%20filterui%3Aphoto-transparent";
 
         GD.Print(fullQuery);
-        DoRequest(fullQuery, 3, HandleSearchPageResult, () => { onFailure(); });
+        DoRequest(fullQuery, 3, HandleSearchPageResult, () => { onFailure(); }, true);
     }
 
     private void HandleSearchPageResult(byte[] body)
@@ -83,6 +86,7 @@ public partial class InternetMachine : Node
             if (!filter.FilterUrl(cleanedLink))
             {
                 GD.Print("Url rejected by ", filter.GetName(), ": ", cleanedLink);
+                onLog("url rejected");
                 ok = false;
                 continue;
             }
@@ -91,6 +95,7 @@ public partial class InternetMachine : Node
         if (!cleanedLink.Contains(".png"))
         {
             GD.Print("Url rejected because not a PNG: ", cleanedLink);
+            onLog("err not png");
             ok = false;
         }
 
@@ -106,7 +111,8 @@ public partial class InternetMachine : Node
                 () => {
                     HandleImageFailure(cleanedLink);
                     FetchImage(urls, index + 1);
-                }
+                },
+                true
             );
         }
         else
@@ -122,6 +128,7 @@ public partial class InternetMachine : Node
         if (img == null)
         {
             GD.Print("Failed to parse image");
+            onLog("img corrupt");
             HandleImageFailure(link);
             return false;
         }
@@ -132,6 +139,7 @@ public partial class InternetMachine : Node
                 if (!filter.FilterImage(img))
                 {
                     GD.Print("Image rejected by ", filter.GetName());
+                    onLog("img rejected");
                     HandleImageFailure(link);
                     return false;
                 }
@@ -231,8 +239,13 @@ public partial class InternetMachine : Node
     }
 
 
-    public void DoRequest(string url, int maxRetry, Action<byte[]> onOk, Action onFailed)
+    public void DoRequest(string url, int maxRetry, Action<byte[]> onOk, Action onFailed, bool log)
     {
+        string shortUrl = url;
+        shortUrl = shortUrl.Replace("https://", "").Replace("www.", "");
+        if (shortUrl.Length > 10) { shortUrl = shortUrl[..8]; }
+        if (log) { onLog("get " + shortUrl); }
+
         HttpRequest rec = new HttpRequest();
         AddChild(rec); 
 
@@ -242,6 +255,7 @@ public partial class InternetMachine : Node
 
             if (result == (long)HttpRequest.Result.Success && responseCode == 200)
             {
+                if (log) { onLog($"HTTP 200 ok"); }
                 onOk(body);
             }
             else
@@ -249,15 +263,17 @@ public partial class InternetMachine : Node
                 if (result != (long)HttpRequest.Result.Success)
                 {
                     GD.Print("Invalid result code ", result, " for: ", url);
+                    if (log) { onLog($"error {result}"); }
                 }
                 else
                 {
                     GD.Print("Invalid response code ", responseCode, " for: ", url);
+                    if (log) { onLog($"HTTP err {responseCode}"); }
                 }
 
                 if (maxRetry > 0)
                 {
-                    DoRequest(url, maxRetry - 1, onOk, onFailed);
+                    DoRequest(url, maxRetry - 1, onOk, onFailed, log);
                 }
                 else
                 {

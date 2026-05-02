@@ -121,8 +121,11 @@ public partial class MoveableImage : Node2D
             {
                 Position += delta;
 
-                if (!haveMovedYet && onFirstMoveCallback != null) { onFirstMoveCallback(); }
-                haveMovedYet = true;
+                if (delta != Vector2.Zero)
+                {
+                    if (!haveMovedYet && onFirstMoveCallback != null) { onFirstMoveCallback(); }
+                    haveMovedYet = true;
+                }
             }
         }
 

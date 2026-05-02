@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://cnco35c4g2aiu" path="res://sprites/sat_less.png" id="15_yaehf"]
 [ext_resource type="Texture2D" uid="uid://dfctp3pxvr5gp" path="res://sprites/machine_room.png" id="24_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://bf4yfpf7rjap3" path="res://sprites/fax.png" id="27_a6jrf"]
+[ext_resource type="Shader" uid="uid://c3kl7v56a741c" path="res://fax_screen.gdshader" id="32_htxhm"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0)
@@ -39,6 +40,14 @@ colors = PackedColorArray(0.50980395, 0.1882353, 0.21960784, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dg77c"]
 gradient = SubResource("Gradient_efxa6")
 fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htxhm"]
+shader = ExtResource("32_htxhm")
+shader_parameter/height = 47
+shader_parameter/reso_x = 200
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_seu75"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
 shader = ExtResource("6_ryguw")
@@ -53,6 +62,13 @@ colors = PackedColorArray(0.5, 0.46883333, 0.445, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_82xsv"]
 gradient = SubResource("Gradient_cegan")
 fill_to = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_seu75"]
+line_spacing = -12.58
+font_size = 30
+font_color = Color(0.40809998, 0.77, 0.4503217, 1)
+outline_size = 5
+outline_color = Color(0.1386, 0.77, 0.2122634, 1)
 
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
@@ -75,6 +91,7 @@ texture = ExtResource("27_a6jrf")
 
 [node name="ScreenReflexion" type="Sprite2D" parent="Main room/Fax" unique_id=1715682715]
 modulate = Color(1, 1, 1, 0.5254902)
+z_index = 700
 position = Vector2(-78, -207)
 texture = ExtResource("3_xuqvo")
 
@@ -86,23 +103,29 @@ texture = ExtResource("4_kq58d")
 position = Vector2(-116, -194)
 texture = ExtResource("2_qsp4k")
 
+[node name="Screen contents" type="Sprite2D" parent="Main room/Fax" unique_id=797416327]
+material = SubResource("ShaderMaterial_htxhm")
+position = Vector2(-115.000015, -190.49997)
+scale = Vector2(0.866, 0.866)
+texture = SubResource("ViewportTexture_seu75")
+
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "testLineEdit", "paintingSprite", "canvas", "canvasSprite")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "canvas", "canvasSprite")]
 script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
-testLineEdit = NodePath("../UI/LineEdit")
 paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
 canvas = NodePath("../Canvas")
 canvasMaxSize = 900.0
 canvasCenter = Vector2(113, 0)
 canvasSprite = NodePath("../Canvas/Control")
 
-[node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask")]
+[node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("internetMachine", "paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask", "screenTextLabel")]
 script = ExtResource("9_seu75")
+internetMachine = NodePath("../The great internet machine")
 paperUpPosition = NodePath("../Positions/PaperUp")
 paperDownPosition = NodePath("../Positions/PaperDown")
 paperFallenPosition = NodePath("../Positions/PaperFallen")
@@ -110,6 +133,8 @@ paper = NodePath("../Main room/Fax/FaxMask/Paper")
 imagesParent = NodePath("../Images container")
 moveableImageScene = ExtResource("3_h2yge")
 paperMask = NodePath("../Main room/Fax/FaxMask")
+screenTextLabel = NodePath("../SubViewport/MachineUI/Label")
+blinkDuration = 0.8
 printDuration = 2.5
 fallDuration = 0.8
 
@@ -172,40 +197,6 @@ patch_margin_right = 300
 patch_margin_bottom = 300
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
-
-[node name="UI" type="Control" parent="." unique_id=1668619876]
-z_index = 800
-layout_mode = 3
-anchors_preset = 0
-offset_left = -462.0
-offset_top = -540.0
-offset_right = 462.0
-offset_bottom = -398.0
-mouse_filter = 1
-
-[node name="LineEdit" type="LineEdit" parent="UI" unique_id=495046123]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -100.0
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 61.0
-grow_horizontal = 2
-placeholder_text = "Write a word..."
-
-[node name="Button" type="Button" parent="UI" unique_id=1983442557]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 106.0
-offset_top = 30.0
-offset_right = 140.0
-offset_bottom = 61.0
-grow_horizontal = 2
-text = "Go!"
 
 [node name="MachineRoom" type="Node2D" parent="." unique_id=1119432853]
 
@@ -470,7 +461,34 @@ position = Vector2(-776, -441)
 [node name="PaperFallen" type="Node2D" parent="Positions" unique_id=217298879]
 position = Vector2(-776, 73)
 
-[connection signal="pressed" from="UI/Button" to="Management manager" method="OnTestButtonPressed"]
+[node name="SubViewport" type="SubViewport" parent="." unique_id=623415955]
+disable_3d = true
+transparent_bg = true
+anisotropic_filtering_level = 0
+size = Vector2i(200, 100)
+
+[node name="MachineUI" type="Control" parent="SubViewport" unique_id=1668619876]
+z_index = 800
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = -5.142
+offset_right = 45.37
+offset_bottom = 89.858
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="SubViewport/MachineUI" unique_id=316225183]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 153.433
+offset_bottom = 114.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_seu75")
+autowrap_mode = 1
+
 [connection signal="mouse_entered" from="Palette/Palette" to="Management manager" method="MouseEntersPalette"]
 [connection signal="mouse_exited" from="Palette/Palette" to="Management manager" method="MouseLeavesPalette"]
 [connection signal="pressed" from="Palette/Palette/LayerUp" to="Management manager" method="LayerUp"]

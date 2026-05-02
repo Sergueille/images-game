@@ -14,31 +14,18 @@ public partial class ManagementManager : Node
 
     [Export] ColorControllable canvasSprite;
     
-
-    public override void _Ready()
+    public void SetReferencePainting(string paintingId)
     {
-        PaintingFinder.InitPaintings();
-        Painting p = PaintingFinder.GetRandomPainting();
+        Texture2D tex = PaintingFinder.GetPaintingTexture(paintingId);
+        paintingSprite.Texture = tex;
 
-        internetMachine.DoRequest(p.imageUrl, 4, (data) => {
-            Image img = internetMachine.ImageFromData(data, p.imageUrl.Split(".")[^1]);
-            ImageTexture tex = ImageTexture.CreateFromImage(img);
+        Vector2 sizeVector = tex.GetSize();
+        float maxSize = Mathf.Max(sizeVector.X, sizeVector.Y);
 
-            paintingSprite.Texture = tex;
+        paintingSprite.Scale = Vector2.One * 300.0f / maxSize;
 
-            Vector2 sizeVector = tex.GetSize();
-            float maxSize = Mathf.Max(sizeVector.X, sizeVector.Y);
-
-            paintingSprite.Scale = Vector2.One * 300.0f / maxSize;
-
-            canvas.Size = sizeVector / maxSize * canvasMaxSize;
-            canvas.Position = canvasCenter + canvas.Size * -0.5f;
-
-        }, () => { /* TODO */ }, false);
-    }
-
-    public void OnTestButtonPressed()
-    {
+        canvas.Size = sizeVector / maxSize * canvasMaxSize;
+        canvas.Position = canvasCenter + canvas.Size * -0.5f;
     }
 
     public void LayerUp()

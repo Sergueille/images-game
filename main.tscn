@@ -34,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://bf4yfpf7rjap3" path="res://sprites/fax.png" id="27_a6jrf"]
 [ext_resource type="Shader" uid="uid://c3kl7v56a741c" path="res://shaders/fax_screen.gdshader" id="32_htxhm"]
 [ext_resource type="Texture2D" uid="uid://b3nfyimykse03" path="res://sprites/desk.png" id="34_4k2k6"]
+[ext_resource type="PackedScene" uid="uid://dtiraqhn75yhy" path="res://painting_selector.tscn" id="35_0rl1p"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0)
@@ -135,12 +136,12 @@ requestTimeout = 10.0
 
 [node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "canvas", "canvasSprite")]
 script = ExtResource("2_0xm2m")
-canvasMaxSize = 900.0
-canvasCenter = Vector2(113, 0)
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
 paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
 canvas = NodePath("../Canvas")
+canvasMaxSize = 900.0
+canvasCenter = Vector2(113, 0)
 canvasSprite = NodePath("../Canvas/Control")
 
 [node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("internetMachine", "paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask", "screenTextLabel")]
@@ -258,6 +259,15 @@ script = ExtResource("9_d13ii")
 screenCount = 2
 screenSize = 1920.0
 transitionDuration = 0.3
+
+[node name="PaintingView" type="Control" parent="Camera2D" unique_id=1978836268]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
 
 [node name="Images container" type="Node2D" parent="." unique_id=342881074]
 
@@ -509,6 +519,24 @@ grow_horizontal = 2
 grow_vertical = 2
 label_settings = SubResource("LabelSettings_seu75")
 autowrap_mode = 1
+
+[node name="PaintingSelectors" type="Node2D" parent="." unique_id=795113922]
+
+[node name="PaintingSelector" parent="PaintingSelectors" unique_id=1398917621 instance=ExtResource("35_0rl1p")]
+position = Vector2(1385, 118)
+
+[node name="PaintingSelector2" parent="PaintingSelectors" unique_id=1078998144 instance=ExtResource("35_0rl1p")]
+position = Vector2(1616, 149)
+paintingID = "horatii"
+imageSize = 170.0
+
+[node name="PaintingSelector3" parent="PaintingSelectors" unique_id=593026580 instance=ExtResource("35_0rl1p")]
+position = Vector2(1193.0001, 162.00002)
+rotation = -0.61086524
+scale = Vector2(0.5, 1)
+skew = 0.61086524
+paintingID = "medusa"
+imageSize = 280.0
 
 [connection signal="mouse_entered" from="Palette/Palette" to="Management manager" method="MouseEntersPalette"]
 [connection signal="mouse_exited" from="Palette/Palette" to="Management manager" method="MouseLeavesPalette"]

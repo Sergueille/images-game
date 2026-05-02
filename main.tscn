@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://vpktwhbybpc5" path="res://sprites/layer_top.png" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bw58m5ae65hu" path="res://sprites/layer_bottom.png" id="6_7mycd"]
 [ext_resource type="Shader" uid="uid://clhlxo6ekh26o" path="res://moveable_image.gdshader" id="6_ryguw"]
+[ext_resource type="Texture2D" uid="uid://b4wvons2b1ato" path="res://sprites/professor_room_bigger.png" id="7_4k2k6"]
 [ext_resource type="Texture2D" uid="uid://cm3m3q8ydpl5f" path="res://sprites/easel.png" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://co1b3x2c1gtnr" path="res://sprites/easel_back.png" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
@@ -32,10 +33,11 @@
 [ext_resource type="Texture2D" uid="uid://dfctp3pxvr5gp" path="res://sprites/machine_room.png" id="24_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://bf4yfpf7rjap3" path="res://sprites/fax.png" id="27_a6jrf"]
 [ext_resource type="Shader" uid="uid://c3kl7v56a741c" path="res://fax_screen.gdshader" id="32_htxhm"]
+[ext_resource type="Texture2D" uid="uid://b3nfyimykse03" path="res://sprites/desk.png" id="34_4k2k6"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.50980395, 0.1882353, 0.21960784, 1)
+colors = PackedColorArray(0.54901963, 0.23921569, 0.27058825, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dg77c"]
 gradient = SubResource("Gradient_efxa6")
@@ -49,19 +51,19 @@ shader_parameter/reso_x = 200
 [sub_resource type="ViewportTexture" id="ViewportTexture_seu75"]
 viewport_path = NodePath("SubViewport")
 
+[sub_resource type="Gradient" id="Gradient_cegan"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.55, 0.242, 0.27279997, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_82xsv"]
+gradient = SubResource("Gradient_cegan")
+fill_to = Vector2(1, 1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
 shader = ExtResource("6_ryguw")
 shader_parameter/brightness = 1.0
 shader_parameter/saturation = -1.0
 shader_parameter/hueShift = 0.0
-
-[sub_resource type="Gradient" id="Gradient_cegan"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.5, 0.46883333, 0.445, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_82xsv"]
-gradient = SubResource("Gradient_cegan")
-fill_to = Vector2(1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_seu75"]
 line_spacing = -12.58
@@ -81,6 +83,7 @@ scale = Vector2(30.40625, 20.617188)
 texture = SubResource("GradientTexture2D_dg77c")
 
 [node name="DoorRight" type="Sprite2D" parent="Main room" unique_id=1782784539]
+z_index = 1010
 position = Vector2(710, 0)
 texture = ExtResource("1_82xsv")
 
@@ -108,6 +111,23 @@ material = SubResource("ShaderMaterial_htxhm")
 position = Vector2(-115.000015, -190.49997)
 scale = Vector2(0.866, 0.866)
 texture = SubResource("ViewportTexture_seu75")
+
+[node name="ProfRoom" type="Node2D" parent="." unique_id=675066848]
+
+[node name="Wall" type="Sprite2D" parent="ProfRoom" unique_id=34614960]
+z_index = -1500
+position = Vector2(1933.7499, 3.9999924)
+scale = Vector2(30.429688, 20.617188)
+texture = SubResource("GradientTexture2D_82xsv")
+
+[node name="MachineRoom" type="Sprite2D" parent="ProfRoom" unique_id=158069596]
+position = Vector2(1920, 0)
+texture = ExtResource("7_4k2k6")
+
+[node name="Desk" type="Sprite2D" parent="ProfRoom" unique_id=37954232]
+position = Vector2(1962, 331)
+scale = Vector2(0.667, 0.667)
+texture = ExtResource("34_4k2k6")
 
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
 script = ExtResource("1_ig7tw")
@@ -199,6 +219,7 @@ axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
 [node name="MachineRoom" type="Node2D" parent="." unique_id=1119432853]
+visible = false
 
 [node name="Wall" type="Sprite2D" parent="MachineRoom" unique_id=466320034]
 z_index = -1500

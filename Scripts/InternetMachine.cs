@@ -210,6 +210,7 @@ public partial class InternetMachine : Node
             }
         }
 
+        cropped.ClearMipmaps();
         cropped.GenerateMipmaps();
 
         return cropped;

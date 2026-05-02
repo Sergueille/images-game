@@ -4,12 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://yp5wnosqwj1l" path="res://paintings/mona_lisa.jpg" id="2_5bxm6"]
 [ext_resource type="Texture2D" uid="uid://0ufksn74k32h" path="res://sprites/frame_small.png" id="3_bhosi"]
 
-[node name="PaintingSelector" type="Node2D" unique_id=1398917621 node_paths=PackedStringArray("sprite", "frameControl")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mhft1"]
+size = Vector2(1, 1)
+
+[node name="PaintingSelector" type="Node2D" unique_id=1398917621 node_paths=PackedStringArray("sprite", "frameControl", "clickArea")]
 script = ExtResource("1_mhft1")
 paintingID = "mona_lisa"
 imageSize = 160.0
 sprite = NodePath("Sprite2D")
 frameControl = NodePath("Canvas")
+clickArea = NodePath("Click")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1932253946]
 scale = Vector2(0.11165387, 0.11165387)
@@ -44,3 +48,8 @@ patch_margin_left = 40
 patch_margin_top = 40
 patch_margin_right = 40
 patch_margin_bottom = 40
+
+[node name="Click" type="Area2D" parent="." unique_id=933508483]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Click" unique_id=401405651]
+shape = SubResource("RectangleShape2D_mhft1")

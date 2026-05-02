@@ -6,14 +6,19 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1rmny"]
 texture = ExtResource("1_vj6dk")
+texture_margin_left = 69.0
+texture_margin_right = 67.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mihib"]
 texture = ExtResource("2_110ce")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yin2u"]
 texture = ExtResource("3_05tig")
+texture_margin_left = 69.0
+texture_margin_right = 67.0
 
 [resource]
+Button/font_sizes/font_size = 40
 Button/styles/hover = SubResource("StyleBoxTexture_1rmny")
 Button/styles/normal = SubResource("StyleBoxTexture_mihib")
 Button/styles/pressed = SubResource("StyleBoxTexture_yin2u")

@@ -10,12 +10,14 @@ public partial class PaintingSelector : Node2D
 
     [Export] Sprite2D sprite;
     [Export] Control frameControl;
+    [Export] Area2D clickArea;
 
 
     [ExportToolButton("Force refresh painting list")] Callable ForceRefreshPaintings => Callable.From(() => {
         PaintingFinder.InitPaintings();
     });
 
+    Painting? painting = null;
 
     string editorLastPaintingId = "";
 
@@ -36,6 +38,7 @@ public partial class PaintingSelector : Node2D
     public void SetPaintingImage()
     {
         Painting? p = PaintingFinder.GetPainting(paintingID);
+        painting = p;
 
         if (p == null)
         {
@@ -56,5 +59,12 @@ public partial class PaintingSelector : Node2D
             : new Vector2(imageSize * sizeVector.X / sizeVector.Y, imageSize);
         frameControl.Size = frameSize;
         frameControl.Position = -0.5f * frameSize;
+
+        clickArea.Scale = frameSize;
+    }
+
+    public void OnClick()
+    {
+        ManagementManager.i.ShowPaintingView(painting.Value);
     }
 }

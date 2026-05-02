@@ -12,7 +12,20 @@ public partial class ManagementManager : Node
     [Export] float canvasMaxSize;
     [Export] Vector2 canvasCenter;
 
+    [Export] Node2D paintingView;
+    [Export] Sprite2D paintingViewSprite;
+    [Export] Label paintingViewTitle;
+    [Export] Label paintingViewAuthor;
+
     [Export] ColorControllable canvasSprite;
+
+    public static ManagementManager i;
+
+    public override void _Ready()
+    {
+        i = this;
+        paintingView.Visible = false;
+    }
     
     public void SetReferencePainting(string paintingId)
     {
@@ -76,5 +89,18 @@ public partial class ManagementManager : Node
     public void BrightnessLess()
     {
         (MoveableImage.selectedImage?.GetColorControllable() ?? canvasSprite).SetMaterialProperty(ColorControllable.MaterialProperty.Brightness, false);
+    }
+
+    public void ShowPaintingView(Painting painting)
+    {
+        paintingViewTitle.Text = painting.name;
+        paintingViewAuthor.Text = painting.author;
+        paintingSprite.Texture = PaintingFinder.GetPaintingTexture(painting.id);
+        paintingView.Visible = true;
+    }
+
+    public void HidePaintingView(Painting painting)
+    {
+        paintingView.Visible = false;
     }
 }

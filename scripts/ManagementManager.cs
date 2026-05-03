@@ -13,11 +13,13 @@ public partial class ManagementManager : Node
     [Export] Vector2 canvasCenter;
 
     [Export] Node2D paintingView;
-    [Export] Sprite2D paintingViewSprite;
+    [Export] PaintingSelector paintingViewPaintingSelector;
     [Export] Label paintingViewTitle;
     [Export] Label paintingViewAuthor;
 
     [Export] ColorControllable canvasSprite;
+
+    Painting paintingViewPainting;
 
     public static ManagementManager i;
 
@@ -93,14 +95,23 @@ public partial class ManagementManager : Node
 
     public void ShowPaintingView(Painting painting)
     {
+        paintingViewPainting = painting;
         paintingViewTitle.Text = painting.name;
         paintingViewAuthor.Text = painting.author;
-        paintingSprite.Texture = PaintingFinder.GetPaintingTexture(painting.id);
+        paintingViewPaintingSelector.paintingID = painting.id;
+        paintingViewPaintingSelector.SetPaintingImage();
         paintingView.Visible = true;
     }
 
-    public void HidePaintingView(Painting painting)
+    public void HidePaintingView()
     {
         paintingView.Visible = false;
+    }
+
+    public void OnPainingViewConfirm()
+    {
+        SetReferencePainting(paintingViewPainting.id);
+        HidePaintingView();
+        CameraController.i.GoToScreen(0);
     }
 }

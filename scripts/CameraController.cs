@@ -9,6 +9,12 @@ public partial class CameraController : Node2D
     [Export] float screenSize;
     [Export] float transitionDuration;
 
+    public static CameraController i;
+
+    public override void _Ready()
+    {
+        i = this;
+    }
 
     public override void _Process(double deltaTime)
     {
@@ -41,6 +47,12 @@ public partial class CameraController : Node2D
         if (currentScreen == 0) { return; }
         
         currentScreen -= 1;
+        MoveToRightPosition();
+    }
+
+    public void GoToScreen(int targetScreen)
+    {
+        currentScreen = targetScreen;
         MoveToRightPosition();
     }
 

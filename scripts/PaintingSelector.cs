@@ -5,13 +5,12 @@ using System;
 [Tool]
 public partial class PaintingSelector : Node2D
 {
-    [Export] string paintingID;
+    [Export] public string paintingID;
     [Export] float imageSize;
 
     [Export] Sprite2D sprite;
     [Export] Control frameControl;
     [Export] Area2D clickArea;
-
 
     [ExportToolButton("Force refresh painting list")] Callable ForceRefreshPaintings => Callable.From(() => {
         PaintingFinder.InitPaintings();
@@ -50,21 +49,24 @@ public partial class PaintingSelector : Node2D
         sprite.Texture = tex;
 
         Vector2 sizeVector = tex.GetSize();
-        float maxSize = Mathf.Max(sizeVector.X, sizeVector.Y);
 
-        sprite.Scale = Vector2.One * imageSize / maxSize;
+        sprite.Scale = Vector2.One * imageSize / sizeVector.Y;
 
-        Vector2 frameSize = sizeVector.X > sizeVector.Y 
-            ? new Vector2(imageSize, imageSize * sizeVector.Y / sizeVector.X)
-            : new Vector2(imageSize * sizeVector.X / sizeVector.Y, imageSize);
+        Vector2 frameSize = new Vector2(sizeVector.X / sizeVector.Y, 1.0f) * imageSize;
         frameControl.Size = frameSize;
         frameControl.Position = -0.5f * frameSize;
 
         clickArea.Scale = frameSize;
     }
 
-    public void OnClick()
+    public void OnInputEvent(Node _node, InputEvent inputEvent, int _shapeId)
     {
-        ManagementManager.i.ShowPaintingView(painting.Value);
+        if (inputEvent is InputEventMouseButton clickEvent)
+        {
+            if (clickEvent.ButtonIndex == MouseButton.Left)
+            {
+                ManagementManager.i.ShowPaintingView(painting.Value);
+            }
+        }
     }
 }

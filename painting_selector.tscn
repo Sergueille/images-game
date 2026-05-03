@@ -50,6 +50,9 @@ patch_margin_right = 40
 patch_margin_bottom = 40
 
 [node name="Click" type="Area2D" parent="." unique_id=933508483]
+scale = Vector2(107.18772, 160)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Click" unique_id=401405651]
 shape = SubResource("RectangleShape2D_mhft1")
+
+[connection signal="input_event" from="Click" to="." method="OnInputEvent"]

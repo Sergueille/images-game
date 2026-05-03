@@ -148,7 +148,7 @@ texture = ExtResource("34_4k2k6")
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "canvas", "paintingView", "paintingViewSprite", "paintingViewTitle", "paintingViewAuthor", "canvasSprite")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "canvas", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite")]
 script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
@@ -157,7 +157,7 @@ canvas = NodePath("../Canvas")
 canvasMaxSize = 900.0
 canvasCenter = Vector2(113, 0)
 paintingView = NodePath("../Camera2D/PaintingView")
-paintingViewSprite = NodePath("../Camera2D/PaintingView/PaintingSelector/Sprite2D")
+paintingViewPaintingSelector = NodePath("../Camera2D/PaintingView/PaintingSelector")
 paintingViewTitle = NodePath("../Camera2D/PaintingView/PaintingSelector/Canvas/Label")
 paintingViewAuthor = NodePath("../Camera2D/PaintingView/PaintingSelector/Canvas/Label2")
 canvasSprite = NodePath("../Canvas/Control")
@@ -306,7 +306,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_left = -234.47313
 offset_top = -350.0
-offset_right = 234.47316
+offset_right = 234.47313
 offset_bottom = 350.0
 mouse_filter = 1
 
@@ -641,7 +641,7 @@ autowrap_mode = 1
 position = Vector2(1385, 118)
 
 [node name="PaintingSelector2" parent="PaintingSelectors" unique_id=1078998144 instance=ExtResource("35_0rl1p")]
-position = Vector2(1616, 149)
+position = Vector2(1616, 137)
 paintingID = "horatii"
 imageSize = 170.0
 
@@ -651,8 +651,10 @@ rotation = -0.61086524
 scale = Vector2(0.5, 1)
 skew = 0.61086524
 paintingID = "medusa"
-imageSize = 280.0
+imageSize = 200.0
 
+[connection signal="pressed" from="Camera2D/PaintingView/Button" to="Management manager" method="OnPainingViewConfirm"]
+[connection signal="pressed" from="Camera2D/PaintingView/Button2" to="Management manager" method="HidePaintingView"]
 [connection signal="mouse_entered" from="Palette/Palette" to="Management manager" method="MouseEntersPalette"]
 [connection signal="mouse_exited" from="Palette/Palette" to="Management manager" method="MouseLeavesPalette"]
 [connection signal="pressed" from="Palette/Palette/LayerUp" to="Management manager" method="LayerUp"]

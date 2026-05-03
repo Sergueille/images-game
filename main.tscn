@@ -284,7 +284,7 @@ z_index = 3000
 
 [node name="Wall2" type="Sprite2D" parent="Camera2D/PaintingView" unique_id=1412515217]
 position = Vector2(-13.000025, 3.9999924)
-scale = Vector2(30.40625, 20.617188)
+scale = Vector2(42.051, 28.514)
 texture = SubResource("GradientTexture2D_dg77c")
 
 [node name="PaintingSelector" type="Node2D" parent="Camera2D/PaintingView" unique_id=1398917621 node_paths=PackedStringArray("sprite", "frameControl", "clickArea")]

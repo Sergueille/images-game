@@ -17,6 +17,9 @@ public partial class ManagementManager : Node
     [Export] Label paintingViewTitle;
     [Export] Label paintingViewAuthor;
 
+    [Export] float paintingViewShowAnimationAmount = 0.2f;
+    [Export] float paintingViewShowAnimationDuration = 0.3f;
+
     [Export] ColorControllable canvasSprite;
 
     Painting paintingViewPainting;
@@ -100,7 +103,11 @@ public partial class ManagementManager : Node
         paintingViewAuthor.Text = painting.author;
         paintingViewPaintingSelector.paintingID = painting.id;
         paintingViewPaintingSelector.SetPaintingImage();
+        paintingView.Scale = Vector2.One * (1.0f - paintingViewShowAnimationAmount);
         paintingView.Visible = true;
+
+        Tween t = GetTree().CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
+        t.TweenProperty(paintingView, "scale", Vector2.One, paintingViewShowAnimationDuration);
     }
 
     public void HidePaintingView()

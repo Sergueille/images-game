@@ -115,7 +115,13 @@ public partial class FaxManager : Node
         paperMask.AddChild(moveableImage);
         moveableImage.Init(image);
         
+        Tween paperTween = GetTree().CreateTween();
+        Tween imageTween = GetTree().CreateTween();
+
         moveableImage.onFirstMoveCallback = () => {
+            paperTween.Stop();
+            imageTween.Stop();
+
             Tween t = GetTree().CreateTween().SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Quad);
             t.TweenProperty(paper, "global_position", paperFallenPosition.Position, fallDuration);
             moveableImage.Reparent(imagesParent);
@@ -125,10 +131,7 @@ public partial class FaxManager : Node
         paper.GlobalPosition = paperUpPosition.Position;
         moveableImage.GlobalPosition = paperUpPosition.Position;
 
-        Tween paperTween = GetTree().CreateTween();
         paperTween.TweenProperty(paper, "global_position", paperDownPosition.Position, printDuration);
-
-        Tween imageTween = GetTree().CreateTween();
         imageTween.TweenProperty(moveableImage, "global_position", paperDownPosition.Position, printDuration);
     }
 

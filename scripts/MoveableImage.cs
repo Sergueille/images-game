@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public partial class MoveableImage : Node2D
 {
-    private float imageDefaultSize = 160.0f; // Should match the size of the rectangle collider!!
+    private const float imageDefaultSize = 160.0f; // Should match the size of the rectangle collider!!
+    private const float skewMax = 80; // Degrees
 
     [Export] float squishAmount = 0.1f;
     [Export] float squishDuration = 0.2f;
@@ -20,6 +21,7 @@ public partial class MoveableImage : Node2D
     [Export] Sprite2D sprite;
     [Export] Node2D rotateHandle;
     [Export] Node2D scaleHandle;
+    [Export] Node2D skewHandle;
     [Export] Node2D scalingNode;
     [Export] CollisionShape2D selectionShape;
     [Export] ColorControllable colorControllable;
@@ -31,10 +33,12 @@ public partial class MoveableImage : Node2D
     Vector2 lastMousePosition;
     bool isRotating = false;
     bool isScaling = false;
+    bool isSkewing = false;
 
     bool haveMovedYet = false;
 
     Vector2 scale = Vector2.One;
+    float skew = 0.0f;
     int layer = 0;
 
     public override void _EnterTree()
@@ -113,9 +117,15 @@ public partial class MoveableImage : Node2D
             }
             else if (isScaling)
             {
-                Vector2 scaleDelta = new Vector2(delta.Dot(Transform.X), delta.Dot(Transform.Y)) * 2 / imageDefaultSize / handlePlacementMultiplier;
-                scalingNode.Scale += scaleDelta;
+                Vector2 scaleDelta = new Vector2(delta.Dot(Transform.X), delta.Dot(Transform.Y + Mathf.Tan(skew) * Transform.X)) * 2 / imageDefaultSize / handlePlacementMultiplier;
                 scale += scaleDelta;
+            }
+            else if (isSkewing)
+            {
+                float newSkew = Mathf.Atan(2.0f * delta.Dot(Transform.Y) / imageDefaultSize / handlePlacementMultiplier.X / scale.X + Mathf.Tan(skew));
+                if (newSkew > skewMax * Mathf.Pi / 180) { newSkew = skewMax * Mathf.Pi / 180; }
+                if (newSkew < -skewMax * Mathf.Pi / 180) { newSkew = -skewMax * Mathf.Pi / 180; }
+                skew = newSkew;
             }
             else
             {
@@ -129,19 +139,36 @@ public partial class MoveableImage : Node2D
             }
         }
 
+        scalingNode.Scale = scale * new Vector2(1.0f / Mathf.Cos(skew), 1.0f);
+        scalingNode.Skew = skew;
+        scalingNode.Rotation = -skew;
+
         if (!mousePressed)
         {
             isRotating = false;
             isScaling = false;
+            isSkewing = false;
         }
 
         mousePressedLastFrame = mousePressed;
         lastMousePosition = mousePosition;
 
-        rotateHandle.Visible = selectedImage == this && haveMovedYet;
-        rotateHandle.Position = handlePlacementMultiplier * new Vector2(-1, -1) * scale * imageDefaultSize * 0.5f;
-        scaleHandle.Visible = selectedImage == this && haveMovedYet;
-        scaleHandle.Position = handlePlacementMultiplier * new Vector2(1, 1) * scale * imageDefaultSize * 0.5f;
+        Vector2 bx = new Vector2(1.0f, -Mathf.Tan(skew)) * scale.X * handlePlacementMultiplier.X;
+        Vector2 by = new Vector2(0.0f, 1.0f) * scale.Y * handlePlacementMultiplier.Y;
+
+        rotateHandle.Position = (-bx - by) * imageDefaultSize * 0.5f;
+        scaleHandle.Position = (bx + by) * imageDefaultSize * 0.5f;
+        skewHandle.Position = (-bx + by) * imageDefaultSize * 0.5f;
+
+        foreach (Node2D handle in new Node2D[] { rotateHandle, scaleHandle, skewHandle })
+        {
+            handle.Visible = selectedImage == this && haveMovedYet;
+            
+            handle.Scale = new Vector2(
+                scale.X < 0 ? -1.0f : 1.0f,
+                scale.Y < 0 ? -1.0f : 1.0f
+            );
+        }
 
         if (haveMovedYet)
         {
@@ -188,6 +215,14 @@ public partial class MoveableImage : Node2D
         if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
         {
             isScaling = true;                
+        }
+    }
+
+    private void OnSkewInput(Node node, InputEvent inputEvent, int id)
+    {
+        if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
+        {
+            isSkewing = true;                
         }
     }
 

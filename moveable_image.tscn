@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://7gkyye6eyr4v" path="res://sprites/rotate.png" id="2_xvbv8"]
 [ext_resource type="Texture2D" uid="uid://bdku85rtcv6ao" path="res://sprites/scale.png" id="3_ki6yt"]
 [ext_resource type="Script" uid="uid://bfx7hep8krarh" path="res://scripts/ColorControllable.cs" id="4_x46ov"]
+[ext_resource type="Texture2D" uid="uid://d1os60hn51iwp" path="res://sprites/skew.png" id="7_26cav"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xvbv8"]
 size = Vector2(160, 160)
@@ -21,11 +22,15 @@ shader_parameter/hueShift = 0.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ki6yt"]
 size = Vector2(30, 30)
 
-[node name="MoveableImage" type="Node2D" unique_id=1020111675 node_paths=PackedStringArray("sprite", "rotateHandle", "scaleHandle", "scalingNode", "selectionShape", "colorControllable")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_26cav"]
+size = Vector2(15, 30)
+
+[node name="MoveableImage" type="Node2D" unique_id=1020111675 node_paths=PackedStringArray("sprite", "rotateHandle", "scaleHandle", "skewHandle", "scalingNode", "selectionShape", "colorControllable")]
 script = ExtResource("1_1uxoq")
 sprite = NodePath("Scaling/Node2D/ImageSprite")
 rotateHandle = NodePath("RotateHandle")
 scaleHandle = NodePath("ScaleHandle")
+skewHandle = NodePath("SkewHandle")
 scalingNode = NodePath("Scaling")
 selectionShape = NodePath("Scaling/Area2D/CollisionShape2D")
 colorControllable = NodePath("Scaling/Node2D")
@@ -80,6 +85,22 @@ z_index = 1000
 shape = SubResource("RectangleShape2D_ki6yt")
 debug_color = Color(0.48199743, 0.43719783, 1, 0.41960785)
 
+[node name="SkewHandle" type="Node2D" parent="." unique_id=141441279]
+visible = false
+z_index = 1000
+position = Vector2(-100, 100)
+
+[node name="Sprite2D" type="Sprite2D" parent="SkewHandle" unique_id=1690787690]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("7_26cav")
+
+[node name="Area2D" type="Area2D" parent="SkewHandle" unique_id=574873898]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SkewHandle/Area2D" unique_id=32181296]
+z_index = 1000
+shape = SubResource("RectangleShape2D_26cav")
+debug_color = Color(0.48199743, 0.43719783, 1, 0.41960785)
+
 [connection signal="mouse_entered" from="Scaling/Area2D" to="." method="OnMouseEnter"]
 [connection signal="mouse_exited" from="Scaling/Area2D" to="." method="OnMouseLeave"]
 [connection signal="input_event" from="ScaleHandle/Area2D" to="." method="OnScaleInput"]
@@ -88,3 +109,6 @@ debug_color = Color(0.48199743, 0.43719783, 1, 0.41960785)
 [connection signal="input_event" from="RotateHandle/Area2D" to="." method="OnRotateInput"]
 [connection signal="mouse_entered" from="RotateHandle/Area2D" to="." method="OnHoverHandle"]
 [connection signal="mouse_exited" from="RotateHandle/Area2D" to="." method="OnLeaveHandle"]
+[connection signal="input_event" from="SkewHandle/Area2D" to="." method="OnSkewInput"]
+[connection signal="mouse_entered" from="SkewHandle/Area2D" to="." method="OnHoverHandle"]
+[connection signal="mouse_exited" from="SkewHandle/Area2D" to="." method="OnLeaveHandle"]

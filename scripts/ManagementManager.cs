@@ -110,6 +110,7 @@ public partial class ManagementManager : Node
 
     public void OnPainingViewConfirm()
     {
+        internetMachine.ResetVisitedUrls();
         SetReferencePainting(paintingViewPainting.id);
         HidePaintingView();
         CameraController.i.GoToScreen(0);

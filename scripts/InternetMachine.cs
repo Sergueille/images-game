@@ -1,9 +1,6 @@
 using Godot;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -34,6 +31,7 @@ public partial class InternetMachine : Node
     private int imagesRemaining;
     private bool resultGiven;
     private bool isBusy = false;
+    private HashSet<string> visitedUrls = new HashSet<string>();
 
     public void RequestImage(string query, Action<Image, string> onCompleted, Action onFailure, ImageFilter[] filters, Action<string> onLog)
     {
@@ -60,8 +58,17 @@ public partial class InternetMachine : Node
         Regex r = new Regex(HTML_REGEX_PREFIX + "([^&]*)");
         
         Match[] matches = r.Matches(html).Distinct(new MatchComparer()).ToArray();
+        matches = matches.Where(m => !visitedUrls.Contains(m.Value)).ToArray(); // Filter already visited urls
+
         imagesRemaining = matches.Length; // Probably wil a lot of duplicates
         resultGiven = false;
+
+        if (imagesRemaining == 0)
+        {
+            onLog("0 results");
+            onFailure();
+            isBusy = false;
+        }
 
         GD.Print("Result count:", imagesRemaining);
 
@@ -75,6 +82,8 @@ public partial class InternetMachine : Node
         if (index >= urls.Length) { return; }
 
         Match m = urls[index];
+
+        visitedUrls.Add(m.Value);
 
         string uglyLink = m.Value;
         string cleanedLink = cleanUrl(uglyLink);
@@ -307,6 +316,11 @@ public partial class InternetMachine : Node
     public bool IsBusy()
     {
         return isBusy;
+    }
+
+    public void ResetVisitedUrls()
+    {
+        visitedUrls.Clear();
     }
 }
 

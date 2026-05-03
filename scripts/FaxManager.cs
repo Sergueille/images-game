@@ -69,6 +69,16 @@ public partial class FaxManager : Node
             }
         }
 
+        if (keyPressed == Key.None && Input.IsKeyPressed(Key.Space))
+        {
+            keyPressed = Key.Space;
+            
+            if (keyPressedLastFrame != Key.Space)
+            {
+                inputText += ' ';
+            }
+        }
+
         if (Input.IsKeyPressed(Key.Enter))
         {
             if (acceptInput && inputText.Length >= 2)

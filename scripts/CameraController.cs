@@ -1,6 +1,6 @@
 
 using Godot;
-public partial class CameraController : Node2D
+public partial class CameraController : Camera2D
 {
     bool animating = false;
 
@@ -8,6 +8,12 @@ public partial class CameraController : Node2D
     [Export] int screenCount;
     [Export] float screenSize;
     [Export] float transitionDuration;
+
+    [Export] Node2D zoomPosition;
+    [Export] float zoomAmount;
+    [Export] float zoomTransitionDuration;
+
+    Vector2 positionBeforeZoom;
 
     public static CameraController i;
 
@@ -66,6 +72,23 @@ public partial class CameraController : Node2D
         tween.Finished += () => {
             animating = false;
         };
+    }
+
+    public void EnableAwkwardZoom()
+    {
+        positionBeforeZoom = Position;
+        Tween tPos = GetTree().CreateTween().SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Quad);
+        Tween tZoom = GetTree().CreateTween().SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Quad);
+        tPos.TweenProperty(this, "zoom", zoomAmount * Vector2.One, zoomTransitionDuration);
+        tZoom.TweenProperty(this, "position", zoomPosition.Position, zoomTransitionDuration);
+    }
+
+    public void DisableAwkwardZoom()
+    {
+        Tween tPos = GetTree().CreateTween().SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Quad);
+        Tween tZoom = GetTree().CreateTween().SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Quad);
+        tPos.TweenProperty(this, "zoom", Vector2.One, zoomTransitionDuration);
+        tZoom.TweenProperty(this, "position", positionBeforeZoom, zoomTransitionDuration);
     }
 }
 

@@ -2,3 +2,6 @@ id,en_wiki_link,title,author
 mona_lisa,https://en.wikipedia.org/wiki/Mona_Lisa,Mona Lisa,Leonardo da Vinci
 horatii,https://en.wikipedia.org/wiki/Oath_of_the_Horatii,Oath of the Horatii,Jacques-Louis David
 medusa,https://en.wikipedia.org/wiki/The_Raft_of_the_Medusa,The Raft of the Medusa,Théodore Géricault
+praxedis,https://en.wikipedia.org/wiki/Saint_Praxedis_(painting),Saint Praxedis,Johannes Vermeer
+krieg,https://en.wikipedia.org/wiki/War_(B%C3%B6cklin_painting),Der Krieg,Arnold Böcklin
+annunciate,"https://en.wikipedia.org/wiki/Virgin_Annunciate_(Antonello_da_Messina,_Palermo)",Virgin Annunciate,Antonello da Messina

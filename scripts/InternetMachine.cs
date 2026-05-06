@@ -252,7 +252,7 @@ public partial class InternetMachine : Node
     public void DoRequest(string url, int maxRetry, Action<byte[]> onOk, Action onFailed, bool log)
     {
         string shortUrl = url;
-        shortUrl = shortUrl.Replace("https://", "").Replace("www.", "");
+        shortUrl = shortUrl.Replace("https://", "").Replace("http://", "").Replace("www.", "");
         if (shortUrl.Length > 10) { shortUrl = shortUrl[..8]; }
         if (log) { onLog("get " + shortUrl); }
 

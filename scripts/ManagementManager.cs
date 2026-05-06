@@ -1,10 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class ManagementManager : Node
 {
     [Export] FaxManager faxManager;
     [Export] InternetMachine internetMachine;
-    [Export] LineEdit testLineEdit;
+    [Export] PackedScene moveableImageScene;
 
     [Export] Sprite2D paintingSprite;
 
@@ -22,7 +24,11 @@ public partial class ManagementManager : Node
 
     [Export] ColorControllable canvasSprite;
 
+    SaveManager.SaveData saveData;
+
     Painting paintingViewPainting;
+
+    public List<MoveableImage> currentMoveableImages;
 
     public static ManagementManager i;
 
@@ -30,10 +36,24 @@ public partial class ManagementManager : Node
     {
         i = this;
         paintingView.Visible = false;
+        currentMoveableImages = new List<MoveableImage>();
+
+        saveData = SaveManager.Load();
+        if (saveData.currentPaintingId != "")
+        {
+            SetCurrentPainting(saveData.currentPaintingId);
+            foreach (MoveableImage.MoveableImageState state in saveData.paintings[saveData.currentPaintingId].images)
+            {
+                MoveableImage img = (MoveableImage)moveableImageScene.Instantiate();
+                img.InitFromState(state);
+            }
+        }
     }
     
-    public void SetReferencePainting(string paintingId)
+    public void SetCurrentPainting(string paintingId)
     {
+        SetNoCurrentPainting();
+
         Texture2D tex = PaintingFinder.GetPaintingTexture(paintingId);
         paintingSprite.Texture = tex;
 
@@ -44,6 +64,9 @@ public partial class ManagementManager : Node
 
         canvas.Size = sizeVector / maxSize * canvasMaxSize;
         canvas.Position = canvasCenter + canvas.Size * -0.5f;
+
+        saveData.currentPaintingId = paintingId;
+        SaveManager.Save(saveData);
     }
 
     public void LayerUp()
@@ -118,8 +141,25 @@ public partial class ManagementManager : Node
     public void OnPainingViewConfirm()
     {
         internetMachine.ResetVisitedUrls();
-        SetReferencePainting(paintingViewPainting.id);
+        SetCurrentPainting(paintingViewPainting.id);
         HidePaintingView();
         CameraController.i.GoToScreen(0);
+    }
+
+    public void SaveCurrentPainting()
+    {
+        saveData.paintings[saveData.currentPaintingId].images = currentMoveableImages.Select(img => img.state).ToArray();
+        SaveManager.Save(saveData);
+    }
+
+    private void SetNoCurrentPainting()
+    {
+        foreach (MoveableImage img in currentMoveableImages)
+        {
+           img.QueueFree(); 
+        }
+
+        currentMoveableImages.Clear();
+        saveData.currentPaintingId = "";
     }
 }

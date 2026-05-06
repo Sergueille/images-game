@@ -143,6 +143,8 @@ public partial class FaxManager : Node
 
         paperTween.TweenProperty(paper, "global_position", paperDownPosition.Position, printDuration);
         imageTween.TweenProperty(moveableImage, "global_position", paperDownPosition.Position, printDuration);
+
+        ManagementManager.i.currentMoveableImages.Add(moveableImage);
     }
 
     public void UpdateLastLine(string newValue)

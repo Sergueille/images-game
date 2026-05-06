@@ -4,6 +4,15 @@ using System.Collections.Generic;
 
 public partial class MoveableImage : Node2D
 {
+    public struct MoveableImageState
+    {
+        public Vector2 position;
+        public Vector2 scale;
+        public float skew;
+        public string savedImageAbsolutePath;
+    }
+
+    private const string imagePathPrefix = "user://save/images/";
     private const float imageDefaultSize = 160.0f; // Should match the size of the rectangle collider!!
     private const float skewMax = 80; // Degrees
 
@@ -37,9 +46,9 @@ public partial class MoveableImage : Node2D
 
     bool haveMovedYet = false;
 
-    Vector2 scale = Vector2.One;
-    float skew = 0.0f;
     int layer = 0;
+
+    public MoveableImageState state;
 
     public override void _EnterTree()
     {
@@ -52,6 +61,24 @@ public partial class MoveableImage : Node2D
     }
 
     public void Init(Image image)
+    {
+        InitInternal(image);
+        string path = imagePathPrefix + image.GetHashCode(); 
+        byte[] buffer = image.SavePngToBuffer();
+        FileAccess file = FileAccess.Open(path, FileAccess.ModeFlags.Write);
+        file.StoreBuffer(buffer);
+        file.Close();
+        state.savedImageAbsolutePath = file.GetPathAbsolute();
+    }
+
+    public void InitFromState(MoveableImageState state)
+    {
+        this.state = state;
+        Position = state.position;
+        InitInternal(Image.LoadFromFile(state.savedImageAbsolutePath));
+    }
+
+    private void InitInternal(Image image)
     {
         ImageTexture tex = ImageTexture.CreateFromImage(image);
         sprite.Texture = tex;
@@ -117,15 +144,15 @@ public partial class MoveableImage : Node2D
             }
             else if (isScaling)
             {
-                Vector2 scaleDelta = new Vector2(delta.Dot(Transform.X), delta.Dot(Transform.Y + Mathf.Tan(skew) * Transform.X)) * 2 / imageDefaultSize / handlePlacementMultiplier;
-                scale += scaleDelta;
+                Vector2 scaleDelta = new Vector2(delta.Dot(Transform.X), delta.Dot(Transform.Y + Mathf.Tan(state.skew) * Transform.X)) * 2 / imageDefaultSize / handlePlacementMultiplier;
+                state.scale += scaleDelta;
             }
             else if (isSkewing)
             {
-                float newSkew = Mathf.Atan(2.0f * delta.Dot(Transform.Y) / imageDefaultSize / handlePlacementMultiplier.X / scale.X + Mathf.Tan(skew));
+                float newSkew = Mathf.Atan(2.0f * delta.Dot(Transform.Y) / imageDefaultSize / handlePlacementMultiplier.X / state.scale.X + Mathf.Tan(state.skew));
                 if (newSkew > skewMax * Mathf.Pi / 180) { newSkew = skewMax * Mathf.Pi / 180; }
                 if (newSkew < -skewMax * Mathf.Pi / 180) { newSkew = -skewMax * Mathf.Pi / 180; }
-                skew = newSkew;
+                state.skew = newSkew;
             }
             else
             {
@@ -139,9 +166,10 @@ public partial class MoveableImage : Node2D
             }
         }
 
-        scalingNode.Scale = scale * new Vector2(1.0f / Mathf.Cos(skew), 1.0f);
-        scalingNode.Skew = skew;
-        scalingNode.Rotation = -skew;
+        state.position = Position;
+        scalingNode.Scale = state.scale * new Vector2(1.0f / Mathf.Cos(state.skew), 1.0f);
+        scalingNode.Skew = state.skew;
+        scalingNode.Rotation = -state.skew;
 
         if (!mousePressed)
         {
@@ -153,8 +181,8 @@ public partial class MoveableImage : Node2D
         mousePressedLastFrame = mousePressed;
         lastMousePosition = mousePosition;
 
-        Vector2 bx = new Vector2(1.0f, -Mathf.Tan(skew)) * scale.X * handlePlacementMultiplier.X;
-        Vector2 by = new Vector2(0.0f, 1.0f) * scale.Y * handlePlacementMultiplier.Y;
+        Vector2 bx = new Vector2(1.0f, -Mathf.Tan(state.skew)) * state.scale.X * handlePlacementMultiplier.X;
+        Vector2 by = new Vector2(0.0f, 1.0f) * state.scale.Y * handlePlacementMultiplier.Y;
 
         rotateHandle.Position = (-bx - by) * imageDefaultSize * 0.5f;
         scaleHandle.Position = (bx + by) * imageDefaultSize * 0.5f;
@@ -165,8 +193,8 @@ public partial class MoveableImage : Node2D
             handle.Visible = selectedImage == this && haveMovedYet;
             
             handle.Scale = new Vector2(
-                scale.X < 0 ? -1.0f : 1.0f,
-                scale.Y < 0 ? -1.0f : 1.0f
+                state.scale.X < 0 ? -1.0f : 1.0f,
+                state.scale.Y < 0 ? -1.0f : 1.0f
             );
         }
 
@@ -257,5 +285,10 @@ public partial class MoveableImage : Node2D
     public ColorControllable GetColorControllable()
     {
         return colorControllable;
+    }
+
+    public static void ClearSave(MoveableImageState state)
+    {
+        DirAccess.RemoveAbsolute(state.savedImageAbsolutePath);
     }
 }

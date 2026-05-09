@@ -1,17 +1,25 @@
 
 # TODO
 
-- machine animation
-- detect when image is containing multiple images (should contain a line or a column of completely transparent pixels)
-- ake a good painting database
+## For beta 
+
+- painting room drawing
+- more paintings
 - new easel sprite, and 9-sliced canvas sprite for reference
-- more main room background art
 - sounds
-- professor's deck
-- title screen?
+- intro dialogue
+- title screen
+- save finished paintings
+
+## Other
+
+- machine animation
+- more main room background art
+- note on current painting background
 
 ## Not-Sure-I-Want-It-Features
 
+- detect when image is containing multiple images (should contain a line or a column of completely transparent pixels)
 - undo/redo
 - transparency
 - cropping

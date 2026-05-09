@@ -108,7 +108,7 @@ scale = Vector2(30.40625, 20.617188)
 texture = SubResource("GradientTexture2D_dg77c")
 
 [node name="DoorRight" type="Sprite2D" parent="Main room" unique_id=1782784539]
-z_index = 1010
+z_index = 814
 position = Vector2(710, 0)
 texture = ExtResource("1_82xsv")
 
@@ -170,6 +170,7 @@ z_index = 2
 texture = ExtResource("10_h8e4i")
 
 [node name="Dialogue" type="Control" parent="ProfRoom/Desk" unique_id=1194251170]
+visible = false
 z_index = 1200
 layout_mode = 3
 anchors_preset = 0
@@ -368,6 +369,7 @@ position = Vector2(1920, 0)
 texture = ExtResource("11_lswn8")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627 node_paths=PackedStringArray("zoomPosition")]
+visible = false
 script = ExtResource("9_d13ii")
 currentScreen = 1
 screenCount = 2
@@ -378,7 +380,6 @@ zoomAmount = 2.0
 zoomTransitionDuration = 0.3
 
 [node name="PaintingView" type="Node2D" parent="Camera2D" unique_id=1691052987]
-visible = false
 z_index = 3000
 
 [node name="Wall2" type="Sprite2D" parent="Camera2D/PaintingView" unique_id=1412515217]
@@ -396,6 +397,7 @@ frameControl = NodePath("Canvas")
 clickArea = NodePath("Click")
 
 [node name="Sprite2D" type="Sprite2D" parent="Camera2D/PaintingView/PaintingSelector" unique_id=1932253946]
+z_index = 3
 scale = Vector2(0.4884857, 0.4884857)
 texture = ExtResource("36_b1qrp")
 
@@ -408,6 +410,16 @@ offset_top = -350.0
 offset_right = 234.47313
 offset_bottom = 350.0
 mouse_filter = 1
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D/PaintingView/PaintingSelector/Canvas" unique_id=1480694956]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.3, 0.22960001, 0.16800001, 1)
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Camera2D/PaintingView/PaintingSelector/Canvas" unique_id=964677497]
 layout_mode = 1
@@ -737,10 +749,10 @@ autowrap_mode = 1
 [node name="PaintingSelectors" type="Node2D" parent="." unique_id=795113922]
 
 [node name="PaintingSelector" parent="PaintingSelectors" unique_id=1209713283 instance=ExtResource("35_0rl1p")]
-position = Vector2(1385, 118)
+position = Vector2(1368, 120)
 
 [node name="PaintingSelector2" parent="PaintingSelectors" unique_id=1078998144 instance=ExtResource("35_0rl1p")]
-position = Vector2(1616, 137)
+position = Vector2(1595, 143)
 paintingID = "horatii"
 imageSize = 170.0
 
@@ -751,6 +763,21 @@ scale = Vector2(0.5, 1)
 skew = 0.61086524
 paintingID = "medusa"
 imageSize = 200.0
+
+[node name="PaintingSelector4" parent="PaintingSelectors" unique_id=1209720271 instance=ExtResource("35_0rl1p")]
+position = Vector2(1811, 9)
+paintingID = "praxedis"
+imageSize = 120.0
+
+[node name="PaintingSelector5" parent="PaintingSelectors" unique_id=803446251 instance=ExtResource("35_0rl1p")]
+position = Vector2(2137, -39)
+paintingID = "krieg"
+imageSize = 200.0
+
+[node name="PaintingSelector6" parent="PaintingSelectors" unique_id=2079002304 instance=ExtResource("35_0rl1p")]
+position = Vector2(2266, 188)
+paintingID = "annunciate"
+imageSize = 150.0
 
 [node name="CameraZoomPosition" type="Node2D" parent="." unique_id=1941725859]
 position = Vector2(1953, 242)

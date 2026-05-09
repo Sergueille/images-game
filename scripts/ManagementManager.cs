@@ -236,12 +236,12 @@ public partial class ManagementManager : Node
                 new DialogueManager.DialogueText { text = "I was telling you about my little advert I put in the journal." },
                 new DialogueManager.DialogueText { text = "If I remind correctly, it was because I needed to hire someone to help me move my art collection in my new house, right?" },
                 new DialogueManager.DialogueText { text = "But, actually, I changed my mind." },
-                new DialogueManager.DialogueText { text = "Those paintings are way too old and start to deteriorate." },
+                new DialogueManager.DialogueText { text = "Those paintings are way too old and begin to deteriorate." },
                 new DialogueManager.DialogueText { text = "I'm afraid I will have to throw them away." },
-                new DialogueManager.DialogueText { text = "So, now I need someone to make reproductions foy my paintings for my collection." },
-                new DialogueManager.DialogueText { text = "Nothing exceptional of course! Yous see..." },
-                new DialogueManager.DialogueText { text = "... it's just a couple paintings.", unZoom = true },
-                new DialogueManager.DialogueText { text = "I know you didn't came here for this job, but, you know, I didn't want to bother putting another ad in the journal." },
+                new DialogueManager.DialogueText { text = "So, now I need someone to make reproductions of my paintings for my collection." },
+                new DialogueManager.DialogueText { text = "Nothing exceptional of course! As you can see..." },
+                new DialogueManager.DialogueText { text = "... it's just a couple of small paintings.", unZoom = true },
+                new DialogueManager.DialogueText { text = "I know you didn't came here for another job, but, you know, I didn't want to bother putting another ad in the journal." },
                 new DialogueManager.DialogueText { text = "These are getting really expensive these days!" },
                 new DialogueManager.DialogueText { text = "Anyway! Are you ready to do some painting?" },
                 new DialogueManager.DialogueText { text = "..." },
@@ -250,8 +250,8 @@ public partial class ManagementManager : Node
                 new DialogueManager.DialogueText { text = "I have build a special device to help you with this job!" },
                 new DialogueManager.DialogueText { text = "It's still a prototype, but it's fully functional." },
                 new DialogueManager.DialogueText { text = "Just type in the thing you want to draw, and the machine will do the rest!" },
-                new DialogueManager.DialogueText { text = "But keep in mind that the machine can only understand simple and generic objects." },
-                new DialogueManager.DialogueText { text = "Just give it a noun and optionally an adjective, and it should work just fine!" },
+                new DialogueManager.DialogueText { text = "But keep in mind that the machine can only handle simple and generic objects." },
+                new DialogueManager.DialogueText { text = "Just give it a word or two, and it should work just fine!" },
                 new DialogueManager.DialogueText { text = "Anyway! You should be able to figure it out on your own!" },
                 new DialogueManager.DialogueText { text = "Just take the painting you want to start with, and go to the room on your left, everything is already set up!" },
                 new DialogueManager.DialogueText { text = "Good luck! Don't hesitate to ask for advice." },
@@ -307,5 +307,16 @@ public partial class ManagementManager : Node
         }
 
         paintingImageSaveInternalTask.SetResult();
+    }
+
+    public override async void _Notification(int what)
+    {
+        if (what == NotificationWMCloseRequest)
+        {
+            await SaveCurrentPaintingImage();
+            SaveCurrentPainting();
+            SaveManager.Save(saveData);
+            GetTree().Quit();
+        }
     }
 }

@@ -15,6 +15,8 @@
 - note on current painting background
 - save color and layer order of moveableImages
 - save background color
+- game end
+- find a title
 
 ## Not-Sure-I-Want-It-Features
 

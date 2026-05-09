@@ -330,7 +330,7 @@ debug_color = Color(0.5586945, 0.5608963, 1.92523e-07, 0.41960785)
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport")]
 script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
@@ -350,6 +350,7 @@ cameraController = NodePath("../Camera2D")
 titleScreen = NodePath("../TitleScreen")
 dialogueManager = NodePath("../ProfRoom/Desk/DialogueManager")
 fadeInColorRect = NodePath("../ColorRect")
+paintingSaveViewport = NodePath("../PaintingSave")
 
 [node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("internetMachine", "paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask", "screenTextLabel")]
 script = ExtResource("9_seu75")
@@ -941,6 +942,21 @@ offset_right = 4662.0
 offset_bottom = 2863.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="PaintingSave" type="SubViewport" parent="." unique_id=350155639]
+disable_3d = true
+render_target_update_mode = 0
+
+[node name="Canvas" type="TextureRect" parent="PaintingSave" unique_id=1707282930]
+material = SubResource("ShaderMaterial_d13ii")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_4c57u")
+expand_mode = 1
+stretch_mode = 1
 
 [connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button" to="ProfRoom/Desk/DialogueManager" method="PaintingDoneButton"]
 [connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button2" to="ProfRoom/Desk/DialogueManager" method="MachineBrokenButton"]

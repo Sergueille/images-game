@@ -20,6 +20,7 @@ public partial class PaintingSelector : Node2D
 
     string editorLastPaintingId = "";
     float editorLastImageSize = -1.0f;
+    string lastSelectedPaintingID;
 
     public override void _Ready()
     {
@@ -38,21 +39,50 @@ public partial class PaintingSelector : Node2D
         if (!Engine.IsEditorHint())
         {
             sprite.Visible = ManagementManager.i.saveData.currentPaintingId != paintingID;
+
+            if (ManagementManager.i.saveData.paintings != null && ManagementManager.i.saveData.paintings.ContainsKey(paintingID))
+            {
+                string currentPaintingId = ManagementManager.i.saveData.currentPaintingId;
+                if (lastSelectedPaintingID != ManagementManager.i.saveData.currentPaintingId
+                    && (currentPaintingId == paintingID || lastSelectedPaintingID == paintingID))
+                {
+                    SetPaintingImage();
+                }
+
+                lastSelectedPaintingID = currentPaintingId;
+            }
         } 
     }
 
     public void SetPaintingImage()
     {
+        Texture2D tex;
+
         Painting? p = PaintingFinder.GetPainting(paintingID);
         painting = p;
 
-        if (p == null)
+        bool imageSaved =
+            ManagementManager.i.saveData.paintings != null 
+         && ManagementManager.i.saveData.paintings.ContainsKey(paintingID)
+         && ManagementManager.i.saveData.paintings[paintingID].imageSaved;
+
+        if (imageSaved)
         {
-            GD.Print($"Unknown painting name {paintingID}. Consider refreshing painting list.");
-            return;
+            Image img = Image.LoadFromFile(ManagementManager.paintingImagesSaveFolder + paintingID + ".png");
+            tex = ImageTexture.CreateFromImage(img);
+        }
+        else
+        {
+
+            if (p == null)
+            {
+                GD.Print($"Unknown painting name {paintingID}. Consider refreshing painting list.");
+                return;
+            }
+
+            tex = PaintingFinder.GetPaintingTexture(paintingID);
         }
 
-        Texture2D tex = PaintingFinder.GetPaintingTexture(paintingID);
         sprite.Texture = tex;
 
         Vector2 sizeVector = tex.GetSize();

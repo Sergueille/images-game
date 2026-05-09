@@ -88,8 +88,7 @@ public partial class CameraController : Camera2D
 
     public void EnableAwkwardZoom()
     {
-        if (isZooming) { return; }
-        if (!titleScreenZoom) { positionBeforeZoom = Position; }
+        if (!isZooming && !titleScreenZoom) { positionBeforeZoom = Position; }
         MoveCameraToPoint(zoomPosition.Position, zoomAmount);
         isZooming = true;
     }

@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class ManagementManager : Node
 {
+    public const string paintingImagesSaveFolder = SaveManager.saveFileFolder + "/paintings/";
+
     [Export] FaxManager faxManager;
     [Export] InternetMachine internetMachine;
     [Export] PackedScene moveableImageScene;
@@ -30,6 +34,7 @@ public partial class ManagementManager : Node
     [Export] Control titleScreen;
     [Export] DialogueManager dialogueManager;
     [Export] ColorRect fadeInColorRect;
+    [Export] SubViewport paintingSaveViewport;
 
     [Export] float saveInterval = 5.0f;
     double lastSaveTime = 0.0f;
@@ -38,6 +43,8 @@ public partial class ManagementManager : Node
 
     Painting paintingViewPainting;
     public bool isShowingPaintingView;
+
+    private TaskCompletionSource paintingImageSaveInternalTask;
 
     public List<MoveableImage> currentMoveableImages;
 
@@ -53,12 +60,16 @@ public partial class ManagementManager : Node
         if (saveData.currentPaintingId != null && saveData.currentPaintingId != "")
         {
             SetCurrentPainting(saveData.currentPaintingId);
-            foreach (MoveableImage.MoveableImageState state in saveData.paintings[saveData.currentPaintingId].images)
+
+            if (saveData.paintings[saveData.currentPaintingId].images != null)
             {
-                MoveableImage img = (MoveableImage)moveableImageScene.Instantiate();
-                imagesParent.AddChild(img);
-                currentMoveableImages.Add(img);
-                img.InitFromState(state);
+                foreach (MoveableImage.MoveableImageState state in saveData.paintings[saveData.currentPaintingId].images)
+                {
+                    MoveableImage img = (MoveableImage)moveableImageScene.Instantiate();
+                    imagesParent.AddChild(img);
+                    currentMoveableImages.Add(img);
+                    img.InitFromState(state);
+                }
             }
         }
 
@@ -175,8 +186,13 @@ public partial class ManagementManager : Node
         isShowingPaintingView = false;
     }
 
-    public void OnPainingViewConfirm()
+    public async void OnPainingViewConfirm()
     {
+        if (saveData.currentPaintingId != null)
+        {
+            await SaveCurrentPaintingImage();
+        }
+
         internetMachine.ResetVisitedUrls();
         SetNoCurrentPainting();
         SetCurrentPainting(paintingViewPainting.id);
@@ -187,7 +203,6 @@ public partial class ManagementManager : Node
 
     public void SaveCurrentPainting()
     {
-        GD.Print(">>>>", saveData.currentPaintingId);
         if (saveData.currentPaintingId == null) return;
         
         saveData.paintings[saveData.currentPaintingId].images = currentMoveableImages.Select(img => img.state).ToArray();
@@ -244,5 +259,53 @@ public partial class ManagementManager : Node
 
             saveData.state = SaveManager.GameState.Beginning;
         };
+    }
+
+    public Task SaveCurrentPaintingImage()
+    {
+        paintingImageSaveInternalTask = new TaskCompletionSource();
+
+        if (saveData.currentPaintingId == null || currentMoveableImages.Count == 0)
+        { 
+            paintingImageSaveInternalTask.SetResult(); 
+            return paintingImageSaveInternalTask.Task;
+        }
+
+        SaveCurrentPainting();
+        paintingSaveViewport.Size = new Vector2I((int)canvas.Size.X, (int)canvas.Size.Y);
+
+        foreach (MoveableImage mi in currentMoveableImages)
+        {
+            Vector2 pos = mi.Position - canvas.Position;
+            mi.Reparent(paintingSaveViewport);
+            mi.Position = pos;
+        }
+
+        DirAccess.MakeDirAbsolute(ProjectSettings.GlobalizePath(paintingImagesSaveFolder));
+        
+        paintingSaveViewport.RenderTargetUpdateMode = SubViewport.UpdateMode.Once;
+
+        RenderingServer.FramePostDraw += SavePaintingImageInternalCallback;
+
+        return paintingImageSaveInternalTask.Task;
+    }
+
+    private void SavePaintingImageInternalCallback() 
+    {
+        string userPath = paintingImagesSaveFolder + saveData.currentPaintingId + ".png";
+        RenderingServer.FramePostDraw -= SavePaintingImageInternalCallback;
+        Texture2D tex = paintingSaveViewport.GetTexture();
+        Image image = tex.GetImage();
+        image.SavePng(userPath);
+        saveData.paintings[saveData.currentPaintingId].imageSaved = true;
+
+        foreach (MoveableImage mi in currentMoveableImages)
+        {
+            Vector2 pos = mi.Position + canvas.Position;
+            mi.Reparent(imagesParent);
+            mi.Position = pos;
+        }
+
+        paintingImageSaveInternalTask.SetResult();
     }
 }

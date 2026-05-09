@@ -7,7 +7,7 @@ using Godot;
 
 public static class SaveManager
 {
-    private const string saveFileFolder = "user://save";
+    public const string saveFileFolder = "user://save";
     private const string saveFilePath = "user://save/data.json";
 
     public enum GameState
@@ -26,6 +26,7 @@ public static class SaveManager
     public class PaintingState
     {
         [JsonInclude] public MoveableImage.MoveableImageState[] images;
+        [JsonInclude] public bool imageSaved;
     }
 
     public static void Save(SaveData save)

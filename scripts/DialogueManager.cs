@@ -235,7 +235,10 @@ public partial class DialogueManager : Node
     {
         if (inputEvent is InputEventMouseButton buttonEvent)
         {
-            if (buttonEvent.ButtonIndex == MouseButton.Left && buttonEvent.Pressed && !ManagementManager.i.isShowingPaintingView)
+            if (buttonEvent.ButtonIndex == MouseButton.Left 
+             && buttonEvent.Pressed 
+             && !ManagementManager.i.isShowingPaintingView
+             && !ManagementManager.i.cameraController.isZooming)
             {
                 ShowButtonsAndZoom();
             }

@@ -43,7 +43,7 @@ public partial class CameraController : Camera2D
 
     public void GoRight()
     {
-        if (animating) { return; }
+        if (animating || isZooming || ManagementManager.i.isShowingPaintingView) { return; }
         if (currentScreen == screenCount - 1) { return; }
 
         currentScreen += 1;
@@ -52,7 +52,7 @@ public partial class CameraController : Camera2D
 
     public void GoLeft()
     {
-        if (animating) { return; }
+        if (animating || isZooming || ManagementManager.i.isShowingPaintingView) { return; }
         if (currentScreen == 0) { return; }
         
         currentScreen -= 1;
@@ -88,6 +88,7 @@ public partial class CameraController : Camera2D
 
     public void EnableAwkwardZoom()
     {
+        if (isZooming) { return; }
         if (!titleScreenZoom) { positionBeforeZoom = Position; }
         MoveCameraToPoint(zoomPosition.Position, zoomAmount);
         isZooming = true;

@@ -29,6 +29,13 @@ public partial class ColorControllable : Node
         spriteMaterial.SetShaderParameter(param, newValue);
     }
 
+    public void ResetMaterialPropertyToWhite()
+    {
+        spriteMaterial.SetShaderParameter("hueShift", 0.0f);
+        spriteMaterial.SetShaderParameter("saturation", -1.0f);
+        spriteMaterial.SetShaderParameter("brightness", 1.0f);
+    }
+
     public (float, float, float) GetMinMaxStep(MaterialProperty property)
     {
         return property switch

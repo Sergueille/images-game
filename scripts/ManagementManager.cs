@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using Godot;
 
 public partial class ManagementManager : Node
@@ -12,6 +13,7 @@ public partial class ManagementManager : Node
     [Export] Node2D imagesParent;
 
     [Export] Control canvas;
+    [Export] ColorControllable canvasColorControllable;
     [Export] float canvasMaxSize;
     [Export] Vector2 canvasCenter;
 
@@ -27,6 +29,7 @@ public partial class ManagementManager : Node
     [Export] public CameraController cameraController;
     [Export] Control titleScreen;
     [Export] DialogueManager dialogueManager;
+    [Export] ColorRect fadeInColorRect;
 
     [Export] float saveInterval = 5.0f;
     double lastSaveTime = 0.0f;
@@ -65,6 +68,10 @@ public partial class ManagementManager : Node
             cameraController.EnableTitleScreenZoom();
         }
         titleScreen.Visible = saveData.state == SaveManager.GameState.TitleScreen;
+
+        fadeInColorRect.Visible = true;
+        Tween t = GetTree().CreateTween();
+        t.TweenProperty(fadeInColorRect, "color", new Color(0.0f, 0.0f, 0.0f, 0.0f), 2.0f);
     }
 
     public override void _Process(double delta)
@@ -190,6 +197,8 @@ public partial class ManagementManager : Node
     private void SetNoCurrentPainting()
     {
         SaveCurrentPainting();
+
+        canvasColorControllable.ResetMaterialPropertyToWhite(); 
 
         foreach (MoveableImage img in currentMoveableImages)
         {

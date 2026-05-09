@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 public partial class InternetMachine : Node
 {
     const string HTML_REGEX_PREFIX = "mediaurl=";
+    const string HTML_TMP_FILE = "user://tmp.html";
 
     class MatchComparer : IEqualityComparer<Match>
     {
@@ -33,6 +34,8 @@ public partial class InternetMachine : Node
     private bool isBusy = false;
     private HashSet<string> visitedUrls = new HashSet<string>();
 
+    private Dictionary<string, string> cookies;
+
     public void RequestImage(string query, Action<Image, string> onCompleted, Action onFailure, ImageFilter[] filters, Action<string> onLog)
     {
         CancelAllRequests();
@@ -56,6 +59,9 @@ public partial class InternetMachine : Node
     {
         string html = System.Text.Encoding.UTF8.GetString(body); // A bunch of html nonsense
         Regex r = new Regex(HTML_REGEX_PREFIX + "([^&]*)");
+
+        FileAccess f = FileAccess.Open(HTML_TMP_FILE, FileAccess.ModeFlags.Write);
+        f.StoreString(html);
         
         Match[] matches = r.Matches(html).Distinct(new MatchComparer()).ToArray();
         matches = matches.Where(m => !visitedUrls.Contains(m.Value)).ToArray(); // Filter already visited urls
@@ -79,7 +85,11 @@ public partial class InternetMachine : Node
 
     private void FetchImage(Match[] urls, int index)
     {
-        if (index >= urls.Length) { return; }
+        if (index >= urls.Length) { 
+            onFailure(); 
+            isBusy = false;
+            return; 
+        }
 
         Match m = urls[index];
 
@@ -266,6 +276,21 @@ public partial class InternetMachine : Node
             if (result == (long)HttpRequest.Result.Success && responseCode == 200)
             {
                 if (log) { onLog($"HTTP 200 ok"); }
+
+                // Store cookies to make bing believe we're a good client
+                string[] setCookieInstructions = headers
+                    .Where(h => h.ToLower().Contains("set-cookie:"))
+                    .Select(h => h.Split(":")[1].Split(";")[0])
+                    .ToArray();
+
+                foreach (string instr in setCookieInstructions)
+                {
+                    GD.Print(instr);
+                    string cookieName = instr.Split("=")[0].Trim();
+                    string cookieValue = instr.Replace(cookieName + "=", "").Trim();
+                    cookies[cookieName] = cookieValue;
+                }
+
                 onOk(body);
             }
             else
@@ -292,10 +317,23 @@ public partial class InternetMachine : Node
             }
         };
 
+        if (cookies == null) { cookies = new Dictionary<string, string>(); }
+
+        string cookieHeader = "Cookie:" + string.Join("; ", cookies.Select(pair => $"{pair.Key}={pair.Value}"));
+        GD.Print(cookieHeader);
+
+        // Pretend to be firefox by sending a bunch of random headers
         rec.Timeout = requestTimeout;
         rec.Request(url, customHeaders: [
-            "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.3912.86",
-            "Accept-Language: en-US,en"
+            "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0",
+            "Accept-Language: en-US,en",
+            "Pragma: no-cache",
+            "Cache-Control: no-cache",
+            "Sec-Fetch-Dest: document",
+            "Sec-Fetch-Mode: navigate",
+            "Sec-Fetch-Site: none",
+            "Sec-Fetch-User: ?1",
+            cookieHeader,
         ]);
     }
 
@@ -444,3 +482,46 @@ public class PhotoFilter : ImageFilter
             a.B8 == b.B8;
     }
 }
+
+/* TODO
+
+/// <summary>
+/// Checks that the image is a single image
+/// </summary>
+public class SingleImageFilter : ImageFilter
+{
+    public bool FilterImage(Image img)
+    {
+        Vector2I size = img.GetSize();
+        int croppedStart = 0; int croppedEnd = 0;
+        for (int x = 0; x < size.X - 1; x++)
+        {
+            bool columnEmpty = true;
+            for (int y = 0; y < size.Y - 1; y++)
+            {
+                if (img.GetPixel(x, y).A > 0.1f)
+                {
+                    columnEmpty = false;
+                    break;
+                }
+            }
+
+            if (columnEmpty)
+            {
+                
+            }
+        }
+    }
+
+    public bool FilterUrl(string url)
+    {
+        return true;
+    }
+
+    public string GetName()
+    {
+        return "single image filter";
+    }
+}
+
+*/

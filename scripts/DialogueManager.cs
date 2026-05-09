@@ -39,6 +39,7 @@ public partial class DialogueManager : Node
         textParentBottomPosition = textParent.Position + textParent.Size.Y * Vector2.Down;
 
         // TEST
+        /*
         await Wait(1.0f);
 
         DoDialogue([
@@ -46,6 +47,7 @@ public partial class DialogueManager : Node
             new DialogueText{ text = "Je vais parler super longtemps pour être sure que le retour à la ligne marche, fonctionne!" },
             new DialogueText{ text = "Je n'ai aucune idée de ce que je raconte..." }
         ]);
+        */
     }
 
     public override void _Process(double delta)

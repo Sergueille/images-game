@@ -6,6 +6,7 @@ using Godot;
 
 public static class SaveManager
 {
+    private const string saveFileFolder = "user://save";
     private const string saveFilePath = "user://save/data.json";
 
     public class SaveData
@@ -21,8 +22,11 @@ public static class SaveManager
 
     public static void Save(SaveData save)
     {
+        DirAccess.MakeDirAbsolute(ProjectSettings.GlobalizePath(saveFileFolder));
+
         string content = JsonSerializer.Serialize(save);
         FileAccess file = FileAccess.Open(saveFilePath, FileAccess.ModeFlags.Write);
+        GD.Print($"Saving at {file.GetPathAbsolute()}");
         file.StoreString(content);
         file.Close();
     }

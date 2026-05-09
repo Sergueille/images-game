@@ -39,7 +39,7 @@ public partial class ManagementManager : Node
         currentMoveableImages = new List<MoveableImage>();
 
         saveData = SaveManager.Load();
-        if (saveData.currentPaintingId != "")
+        if (saveData.currentPaintingId != null && saveData.currentPaintingId != "")
         {
             SetCurrentPainting(saveData.currentPaintingId);
             foreach (MoveableImage.MoveableImageState state in saveData.paintings[saveData.currentPaintingId].images)

@@ -63,12 +63,14 @@ public partial class MoveableImage : Node2D
     public void Init(Image image)
     {
         InitInternal(image);
+        DirAccess.MakeDirAbsolute(ProjectSettings.GlobalizePath(imagePathPrefix));
         string path = imagePathPrefix + image.GetHashCode(); 
         byte[] buffer = image.SavePngToBuffer();
         FileAccess file = FileAccess.Open(path, FileAccess.ModeFlags.Write);
         file.StoreBuffer(buffer);
         file.Close();
         state.savedImageAbsolutePath = file.GetPathAbsolute();
+        state.scale = Vector2.One;
     }
 
     public void InitFromState(MoveableImageState state)

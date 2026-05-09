@@ -7,8 +7,6 @@
 - more paintings
 - new easel sprite, and 9-sliced canvas sprite for reference
 - sounds
-- intro dialogue
-- title screen
 - save finished paintings
 
 ## Other

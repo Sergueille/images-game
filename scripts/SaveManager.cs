@@ -10,10 +10,17 @@ public static class SaveManager
     private const string saveFileFolder = "user://save";
     private const string saveFilePath = "user://save/data.json";
 
+    public enum GameState
+    {
+        TitleScreen,
+        Beginning
+    };
+
     public class SaveData
     {
         [JsonInclude] public string currentPaintingId;
         [JsonInclude] public Dictionary<string, PaintingState> paintings;
+        [JsonInclude] public GameState state;
     }
 
     public class PaintingState
@@ -52,12 +59,13 @@ public static class SaveManager
             return GetStartSaveData();
         }
     }
-    
+
     private static SaveData GetStartSaveData()
     {
         return new SaveData
         {
-            paintings = new Dictionary<string, PaintingState>()   
+            paintings = new Dictionary<string, PaintingState>(),
+            state = GameState.TitleScreen,
         };
     }
 }

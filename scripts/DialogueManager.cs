@@ -9,7 +9,8 @@ public partial class DialogueManager : Node
     [Export] Label textLabel;
     [Export] Button continueButton;
     [Export] Node2D professor;
-
+    [Export] Control buttonsParent;
+    [Export] Area2D clickPreventionArea;
     [Export] float professorAnimationAmount;
     [Export] float professorAnimationDuration;
 
@@ -24,7 +25,10 @@ public partial class DialogueManager : Node
     Tween professorAnimationTween;
     bool shouldContinueProfessorAnimation = false;
 
-    public abstract class DialogueItem { };
+    public abstract class DialogueItem 
+    { 
+        public bool unZoom = false;
+    };
     
     public class DialogueText : DialogueItem
     {
@@ -35,6 +39,8 @@ public partial class DialogueManager : Node
     {
         textParent.Scale = Vector2.Zero;
         continueButton.Scale = Vector2.Zero;
+        clickPreventionArea.Visible = false;
+        buttonsParent.Visible = false;
 
         textParentBottomPosition = textParent.Position + textParent.Size.Y * Vector2.Down;
 
@@ -57,21 +63,35 @@ public partial class DialogueManager : Node
 
     public async void DoDialogue(IEnumerable<DialogueItem> dialogue)
     {
-        CameraController.i.EnableAwkwardZoom();
+        clickPreventionArea.Visible = true;
+        ManagementManager.i.cameraController.EnableAwkwardZoom();
         
         await Wait(sizeChangeDuration);
 
         foreach (DialogueItem item in dialogue)
         {
+            if (item.unZoom)
+            {
+                ManagementManager.i.cameraController.DisableAwkwardZoom();    
+                await Wait(ManagementManager.i.cameraController.transitionDuration);
+            }
+
             await HandleDialogueItem(item);
 
             SetThingVisible(continueButton, true);
             await ToSignal(continueButton, "pressed");
             SetThingVisible(continueButton, false);
+
+            if (item.unZoom)
+            {
+                ManagementManager.i.cameraController.EnableAwkwardZoom();
+                await Wait(ManagementManager.i.cameraController.transitionDuration);
+            }
         }
 
         SetThingVisible(textParent, false);
-        CameraController.i.DisableAwkwardZoom();
+        ManagementManager.i.cameraController.DisableAwkwardZoom();
+        clickPreventionArea.Visible = false;
     }
 
     public async Task HandleDialogueItem(DialogueItem item)
@@ -146,6 +166,80 @@ public partial class DialogueManager : Node
     private void StopProfessorAnimation()
     {
         shouldContinueProfessorAnimation = false;
+    }
+
+    public void PaintingDoneButton()
+    {
+        HideButtons();
+        DoDialogue([
+           new DialogueText { text = "You're done already? Great!" }, 
+           new DialogueText { text = "Feel free to pick another painting." }, 
+           new DialogueText { text = "You don't need to tell me each time you finish one, just do them all in the order you like." },
+        ]);
+    }
+
+    public void MachineBrokenButton()
+    {
+        HideButtons();
+        DoDialogue([
+           new DialogueText { text = "Aha! Having trouble with my creation?" },
+           new DialogueText { text = "So, you've figured out how to type text into the machine, with your keyboard, right?" },
+           new DialogueText { text = "Okay, and the machine refuses to print anything? It can happen sometimes." },
+           new DialogueText { text = "The machine needs to communicate with the internet, you know, and sometimes the reception isn't good enough." },
+           new DialogueText { text = "Try to *think very hard* about the internet reception, and it might solve the problem." },
+           new DialogueText { text = "Also, it could be because the thing you asked is way too far-fetched and the machine doesn't understand." },
+           new DialogueText { text = "If you're sure it's not because one of these reasons, then maybe the machine is simply broken." },
+           new DialogueText { text = "As the old saying goes, \"The search engine's gift is never true, for its API's old before it's new\"." },
+        ]);
+    }
+
+    public void MachineBadButton()
+    {
+        HideButtons();
+        DoDialogue([
+           new DialogueText { text = "Not getting the images you want?" },
+           new DialogueText { text = "Try to stick with simple words and adjectives." },
+           new DialogueText { text = "If you have something specific in mind, always try to ask for small image parts." },
+           new DialogueText { text = "You can ask for a body part instead of a whole person, or a branch instead of the whole tree." },
+           new DialogueText { text = "Try to be creative!" },
+        ]);
+    }
+
+    public void PaletteHelpButton()
+    {
+        HideButtons();
+        DoDialogue([
+           new DialogueText { text = "Dialogue coming soon™!" },
+        ]);
+    }
+
+    public void ShowButtonsAndZoom()
+    {
+        clickPreventionArea.Visible = true;
+        ManagementManager.i.cameraController.EnableAwkwardZoom();
+        buttonsParent.Visible = true;
+    }
+
+    public void HideButtons()
+    {
+        buttonsParent.Visible = false;
+    }
+
+    public void CancelButtons()
+    {
+        HideButtons();
+        ManagementManager.i.cameraController.DisableAwkwardZoom();
+    }
+
+    public void DialogueAreaMouseEvent(Node _0, InputEvent inputEvent, int _1)
+    {
+        if (inputEvent is InputEventMouseButton buttonEvent)
+        {
+            if (buttonEvent.ButtonIndex == MouseButton.Left && buttonEvent.Pressed && !ManagementManager.i.isShowingPaintingView)
+            {
+                ShowButtonsAndZoom();
+            }
+        }
     }
 }
 

@@ -30,7 +30,7 @@ offset_bottom = 80.0
 mouse_filter = 1
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Canvas" unique_id=964677497]
-z_index = 550
+z_index = 700
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

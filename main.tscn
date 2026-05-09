@@ -29,6 +29,8 @@
 [ext_resource type="Texture2D" uid="uid://dsome76q67sjc" path="res://sprites/machine_room_front.png" id="11_lswn8"]
 [ext_resource type="Texture2D" uid="uid://c6h40nik44aco" path="res://sprites/dialog_bg.png" id="12_0cp0l"]
 [ext_resource type="Script" uid="uid://sq0d6c0ckgid" path="res://scripts/DialogueManager.cs" id="12_gngh3"]
+[ext_resource type="FontFile" uid="uid://mb2w4x8615u7" path="res://cattos-handwriting.ttf" id="13_0n3wm"]
+[ext_resource type="LabelSettings" uid="uid://dkroxxq6i1t7n" path="res://label_settings.tres" id="13_qnost"]
 [ext_resource type="Texture2D" uid="uid://dq0io3kll7tpn" path="res://sprites/sat_plus.png" id="14_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://cnrbjivwv14mo" path="res://sprites/hue_plus.png" id="14_074og"]
 [ext_resource type="Texture2D" uid="uid://bra7qspebsggn" path="res://sprites/hue_less.png" id="14_cegan"]
@@ -69,9 +71,11 @@ colors = PackedColorArray(0.55, 0.242, 0.27279997, 1)
 gradient = SubResource("Gradient_cegan")
 fill_to = Vector2(1, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_0cp0l"]
-font_size = 32
-font_color = Color(0, 0, 0, 1)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qnost"]
+size = Vector2(631.1843, 401.79907)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wnkbs"]
+size = Vector2(1599.7003, 1041.979)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
 shader = ExtResource("6_ryguw")
@@ -96,6 +100,18 @@ font_size = 30
 font_color = Color(0.40809998, 0.77, 0.4503217, 1)
 outline_size = 5
 outline_color = Color(0.1386, 0.77, 0.2122634, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wnkbs"]
+line_spacing = -3.0
+font = ExtResource("13_0n3wm")
+font_size = 80
+outline_size = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qnost"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wnkbs"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6a44"]
 
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
@@ -169,8 +185,62 @@ texture = ExtResource("9_come4")
 z_index = 2
 texture = ExtResource("10_h8e4i")
 
+[node name="DialogueButtons" type="Control" parent="ProfRoom/Desk" unique_id=1912567303]
+z_index = 1200
+layout_mode = 3
+anchors_preset = 0
+offset_left = -353.823
+offset_top = -475.2624
+offset_right = 356.8213
+offset_bottom = -181.40933
+pivot_offset = Vector2(350.005, 237.51)
+theme = ExtResource("4_1bvp3")
+
+[node name="Button" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=1564724187]
+layout_mode = 0
+offset_left = -1.4992504
+offset_top = 14.992504
+offset_right = 298.35086
+offset_bottom = 118.99251
+text = "I'm done with 
+the painting!"
+
+[node name="Button2" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=452914442]
+layout_mode = 0
+offset_left = 308.84555
+offset_top = 31.48426
+offset_right = 661.1693
+offset_bottom = 135.48425
+text = "The machine 
+doesn't do anything!"
+
+[node name="Button3" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=72380152]
+layout_mode = 0
+offset_left = -22.488785
+offset_top = 142.42877
+offset_right = 359.82007
+offset_bottom = 246.42877
+text = "I need help 
+using the palette"
+
+[node name="Button5" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=1107717568]
+layout_mode = 0
+offset_left = 20.98954
+offset_top = 262.36884
+offset_right = 265.36746
+offset_bottom = 335.83212
+text = "Nevermind"
+
+[node name="Button4" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=1062178799]
+layout_mode = 0
+offset_left = 352.32382
+offset_top = 160.4198
+offset_right = 694.15295
+offset_bottom = 264.4198
+text = "How to get 
+better images?"
+
 [node name="Dialogue" type="Control" parent="ProfRoom/Desk" unique_id=1194251170]
-visible = false
 z_index = 1200
 layout_mode = 3
 anchors_preset = 0
@@ -204,7 +274,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Bonjour, ceci est une dialogue de test! Il est vraiment long, pour voir si des fois ça le ferait déborder de la bulle..."
-label_settings = SubResource("LabelSettings_0cp0l")
+label_settings = ExtResource("13_qnost")
 autowrap_mode = 3
 clip_text = true
 visible_characters_behavior = 1
@@ -227,22 +297,40 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("14_d2t1y")
 expand_icon = true
 
-[node name="DialogueManager" type="Node2D" parent="ProfRoom/Desk" unique_id=581262809 node_paths=PackedStringArray("textParent", "textLabel", "continueButton", "professor")]
+[node name="DialogueManager" type="Node2D" parent="ProfRoom/Desk" unique_id=581262809 node_paths=PackedStringArray("textParent", "textLabel", "continueButton", "professor", "buttonsParent", "clickPreventionArea")]
 script = ExtResource("12_gngh3")
 textParent = NodePath("../Dialogue")
 textLabel = NodePath("../Dialogue/Label")
 continueButton = NodePath("../Dialogue/Button")
 professor = NodePath("../Professor")
+buttonsParent = NodePath("../DialogueButtons")
+clickPreventionArea = NodePath("../ClickPrevention")
 professorAnimationAmount = 0.05
 professorAnimationDuration = 0.2
 wordDelay = 0.1
 sizeChangeDuration = 0.3
 
+[node name="Area2D" type="Area2D" parent="ProfRoom/Desk" unique_id=343345890]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProfRoom/Desk/Area2D" unique_id=659532148]
+position = Vector2(3.7480469, -31.484253)
+shape = SubResource("RectangleShape2D_qnost")
+
+[node name="ClickPrevention" type="Area2D" parent="ProfRoom/Desk" unique_id=1735123259]
+z_index = 700
+priority = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProfRoom/Desk/ClickPrevention" unique_id=880030248]
+z_index = 100
+position = Vector2(62.218994, -120.6897)
+shape = SubResource("RectangleShape2D_wnkbs")
+debug_color = Color(0.5586945, 0.5608963, 1.92523e-07, 0.41960785)
+
 [node name="The great internet machine" type="Node" parent="." unique_id=1094011426]
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "imagesParent", "canvas", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "imagesParent", "canvas", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite", "cameraController", "titleScreen", "dialogueManager")]
 script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
@@ -257,6 +345,9 @@ paintingViewPaintingSelector = NodePath("../Camera2D/PaintingView/PaintingSelect
 paintingViewTitle = NodePath("../Camera2D/PaintingView/PaintingSelector/Canvas/Label")
 paintingViewAuthor = NodePath("../Camera2D/PaintingView/PaintingSelector/Canvas/Label2")
 canvasSprite = NodePath("../Canvas/Control")
+cameraController = NodePath("../Camera2D")
+titleScreen = NodePath("../TitleScreen")
+dialogueManager = NodePath("../ProfRoom/Desk/DialogueManager")
 
 [node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("internetMachine", "paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask", "screenTextLabel")]
 script = ExtResource("9_seu75")
@@ -368,15 +459,17 @@ texture = ExtResource("10_0odxb")
 position = Vector2(1920, 0)
 texture = ExtResource("11_lswn8")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627 node_paths=PackedStringArray("zoomPosition")]
-visible = false
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627 node_paths=PackedStringArray("zoomPosition", "titleScreenZoomPosition")]
+position = Vector2(-1194, 1441)
 script = ExtResource("9_d13ii")
 currentScreen = 1
 screenCount = 2
 screenSize = 1920.0
 transitionDuration = 0.3
 zoomPosition = NodePath("../CameraZoomPosition")
+titleScreenZoomPosition = NodePath("../CameraTitleScreenPosition")
 zoomAmount = 2.0
+titleScreenZoomAmount = 9.0
 zoomTransitionDuration = 0.3
 
 [node name="PaintingView" type="Node2D" parent="Camera2D" unique_id=1691052987]
@@ -422,6 +515,7 @@ mouse_filter = 1
 color = Color(0.3, 0.22960001, 0.16800001, 1)
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Camera2D/PaintingView/PaintingSelector/Canvas" unique_id=964677497]
+z_index = 200
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -441,6 +535,7 @@ patch_margin_right = 120
 patch_margin_bottom = 104
 
 [node name="Label" type="Label" parent="Camera2D/PaintingView/PaintingSelector/Canvas" unique_id=1494344184]
+z_index = 250
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -457,6 +552,7 @@ label_settings = SubResource("LabelSettings_b1qrp")
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="Camera2D/PaintingView/PaintingSelector/Canvas" unique_id=1993022015]
+z_index = 250
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -749,12 +845,12 @@ autowrap_mode = 1
 [node name="PaintingSelectors" type="Node2D" parent="." unique_id=795113922]
 
 [node name="PaintingSelector" parent="PaintingSelectors" unique_id=1209713283 instance=ExtResource("35_0rl1p")]
-position = Vector2(1368, 120)
+position = Vector2(1394, 125)
 
 [node name="PaintingSelector2" parent="PaintingSelectors" unique_id=1078998144 instance=ExtResource("35_0rl1p")]
-position = Vector2(1595, 143)
+position = Vector2(1417, -87)
 paintingID = "horatii"
-imageSize = 170.0
+imageSize = 150.0
 
 [node name="PaintingSelector3" parent="PaintingSelectors" unique_id=593026580 instance=ExtResource("35_0rl1p")]
 position = Vector2(1193.0001, 162.00002)
@@ -765,7 +861,7 @@ paintingID = "medusa"
 imageSize = 200.0
 
 [node name="PaintingSelector4" parent="PaintingSelectors" unique_id=1209720271 instance=ExtResource("35_0rl1p")]
-position = Vector2(1811, 9)
+position = Vector2(1825, -6)
 paintingID = "praxedis"
 imageSize = 120.0
 
@@ -779,9 +875,67 @@ position = Vector2(2266, 188)
 paintingID = "annunciate"
 imageSize = 150.0
 
+[node name="PaintingSelector7" parent="PaintingSelectors" unique_id=941518183 instance=ExtResource("35_0rl1p")]
+position = Vector2(1625, 143)
+paintingID = "emmaus"
+imageSize = 150.0
+
 [node name="CameraZoomPosition" type="Node2D" parent="." unique_id=1941725859]
 position = Vector2(1953, 242)
 
+[node name="CameraTitleScreenPosition" type="Node2D" parent="." unique_id=709913969]
+position = Vector2(1626, 127)
+
+[node name="TitleScreen" type="Control" parent="." unique_id=1714307020]
+z_index = 4096
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1518.0
+offset_top = 66.00001
+offset_right = 3438.0
+offset_bottom = 1146.0
+scale = Vector2(0.111, 0.111)
+theme = ExtResource("4_1bvp3")
+
+[node name="Label" type="Label" parent="TitleScreen" unique_id=1251633568]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -391.3506
+offset_top = 90.09001
+offset_right = 391.3506
+offset_bottom = 303.09003
+grow_horizontal = 2
+text = "Pas de titre = pas 
+de burger"
+label_settings = SubResource("LabelSettings_wnkbs")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="TitleScreen" unique_id=1537661032]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -278.0
+offset_top = -213.0
+offset_right = 278.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_qnost")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wnkbs")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f6a44")
+text = "Click here to start"
+
+[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button" to="ProfRoom/Desk/DialogueManager" method="PaintingDoneButton"]
+[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button2" to="ProfRoom/Desk/DialogueManager" method="MachineBrokenButton"]
+[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button3" to="ProfRoom/Desk/DialogueManager" method="MachineBadButton"]
+[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button5" to="ProfRoom/Desk/DialogueManager" method="CancelButtons"]
+[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button4" to="ProfRoom/Desk/DialogueManager" method="PaletteHelpButton"]
+[connection signal="input_event" from="ProfRoom/Desk/Area2D" to="ProfRoom/Desk/DialogueManager" method="DialogueAreaMouseEvent"]
 [connection signal="pressed" from="Camera2D/PaintingView/Button" to="Management manager" method="OnPainingViewConfirm"]
 [connection signal="pressed" from="Camera2D/PaintingView/Button2" to="Management manager" method="HidePaintingView"]
 [connection signal="mouse_entered" from="Palette/Palette" to="Management manager" method="MouseEntersPalette"]
@@ -794,3 +948,4 @@ position = Vector2(1953, 242)
 [connection signal="pressed" from="Palette/Palette/Sat-" to="Management manager" method="SaturationPlus"]
 [connection signal="pressed" from="Palette/Palette/Bri+" to="Management manager" method="BrightnessLess"]
 [connection signal="pressed" from="Palette/Palette/Bri-" to="Management manager" method="BrightnessPlus"]
+[connection signal="pressed" from="TitleScreen/Button" to="Management manager" method="OnTitleScreenStart"]

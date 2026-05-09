@@ -70,7 +70,10 @@ public partial class PaintingSelector : Node2D
     {
         if (inputEvent is InputEventMouseButton clickEvent)
         {
-            if (clickEvent.ButtonIndex == MouseButton.Left)
+            if (clickEvent.ButtonIndex == MouseButton.Left 
+             && clickEvent.Pressed 
+             && !ManagementManager.i.cameraController.isZooming
+             && !ManagementManager.i.isShowingPaintingView)
             {
                 ManagementManager.i.ShowPaintingView(painting.Value);
             }

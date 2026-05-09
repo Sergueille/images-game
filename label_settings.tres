@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://dkroxxq6i1t7n"]
+
+[ext_resource type="FontFile" uid="uid://mb2w4x8615u7" path="res://cattos-handwriting.ttf" id="1_8aso4"]
+
+[resource]
+line_spacing = -3.0
+font = ExtResource("1_8aso4")
+font_size = 38
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)

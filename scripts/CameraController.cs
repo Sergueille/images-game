@@ -7,20 +7,21 @@ public partial class CameraController : Camera2D
     [Export] int currentScreen = 0;
     [Export] int screenCount;
     [Export] float screenSize;
-    [Export] float transitionDuration;
+    [Export] public float transitionDuration;
 
     [Export] Node2D zoomPosition;
+    [Export] Node2D titleScreenZoomPosition;
     [Export] float zoomAmount;
+    [Export] float titleScreenZoomAmount;
     [Export] float zoomTransitionDuration;
 
     Vector2 positionBeforeZoom;
+    public bool isZooming = false;
 
-    public static CameraController i;
+    bool titleScreenZoom = false;
 
-    public override void _Ready()
+    public void InitPosition()
     {
-        i = this;
-
         Position = new Vector2(currentScreen * screenSize, 0.0f);
     }
 
@@ -76,21 +77,34 @@ public partial class CameraController : Camera2D
         };
     }
 
-    public void EnableAwkwardZoom()
+    public void EnableTitleScreenZoom()
     {
         positionBeforeZoom = Position;
-        Tween tPos = GetTree().CreateTween().SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Quad);
-        Tween tZoom = GetTree().CreateTween().SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Quad);
-        tPos.TweenProperty(this, "zoom", zoomAmount * Vector2.One, zoomTransitionDuration);
-        tZoom.TweenProperty(this, "position", zoomPosition.Position, zoomTransitionDuration);
+        titleScreenZoom = true;
+        Zoom = titleScreenZoomAmount * Vector2.One;
+        Position = titleScreenZoomPosition.Position;
+        isZooming = true;
+    }
+
+    public void EnableAwkwardZoom()
+    {
+        if (!titleScreenZoom) { positionBeforeZoom = Position; }
+        MoveCameraToPoint(zoomPosition.Position, zoomAmount);
+        isZooming = true;
     }
 
     public void DisableAwkwardZoom()
     {
+        MoveCameraToPoint(positionBeforeZoom, 1.0f);
+        isZooming = false;
+    }
+
+    public void MoveCameraToPoint(Vector2 position, float zoom)
+    {
         Tween tPos = GetTree().CreateTween().SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Quad);
         Tween tZoom = GetTree().CreateTween().SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Quad);
-        tPos.TweenProperty(this, "zoom", Vector2.One, zoomTransitionDuration);
-        tZoom.TweenProperty(this, "position", positionBeforeZoom, zoomTransitionDuration);
+        tPos.TweenProperty(this, "zoom", zoom * Vector2.One, zoomTransitionDuration);
+        tZoom.TweenProperty(this, "position", position, zoomTransitionDuration);
     }
 }
 

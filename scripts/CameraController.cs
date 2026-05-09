@@ -20,6 +20,8 @@ public partial class CameraController : Camera2D
     public override void _Ready()
     {
         i = this;
+
+        Position = new Vector2(currentScreen * screenSize, 0.0f);
     }
 
     public override void _Process(double deltaTime)

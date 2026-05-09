@@ -49,6 +49,17 @@ patch_margin_top = 40
 patch_margin_right = 40
 patch_margin_bottom = 40
 
+[node name="ColorRect" type="ColorRect" parent="Canvas" unique_id=1883094390]
+z_index = 48
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.3, 0.22960001, 0.16800001, 1)
+
 [node name="Click" type="Area2D" parent="." unique_id=933508483]
 scale = Vector2(107.18772, 160)
 

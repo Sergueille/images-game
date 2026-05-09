@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Godot;
 
 public static class SaveManager
@@ -11,13 +12,13 @@ public static class SaveManager
 
     public class SaveData
     {
-        public string currentPaintingId;
-        public Dictionary<string, PaintingState> paintings;
+        [JsonInclude] public string currentPaintingId;
+        [JsonInclude] public Dictionary<string, PaintingState> paintings;
     }
 
     public class PaintingState
     {
-        public MoveableImage.MoveableImageState[] images;
+        [JsonInclude] public MoveableImage.MoveableImageState[] images;
     }
 
     public static void Save(SaveData save)
@@ -29,31 +30,29 @@ public static class SaveManager
         GD.Print($"Saving at {file.GetPathAbsolute()}");
         file.StoreString(content);
         file.Close();
+
+        GD.Print("> Saved");
     }
 
     public static SaveData Load()
-    {
-        string absolutePath = ProjectSettings.GlobalizePath(saveFilePath);
-        
-        if (DirAccess.DirExistsAbsolute(absolutePath))
+    {        
+        if (DirAccess.DirExistsAbsolute(ProjectSettings.GlobalizePath(saveFileFolder)))
         {
             FileAccess file = FileAccess.Open(saveFilePath, FileAccess.ModeFlags.Read);
             string content = file.GetAsText();
             file.Close();
 
+            GD.Print("> Loaded from file");
+
             return JsonSerializer.Deserialize<SaveData>(content);
         }
         else
         {
+            GD.Print("> Created default save");
             return GetStartSaveData();
         }
     }
-
-    public static void SaveMoveableImages(SaveData save, string paintingId, IEnumerable<MoveableImage> images)
-    {
-        save.paintings[paintingId].images = images.Select(img => img.state).ToArray();
-    }
-
+    
     private static SaveData GetStartSaveData()
     {
         return new SaveData

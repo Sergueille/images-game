@@ -1,15 +1,16 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 public partial class MoveableImage : Node2D
 {
     public struct MoveableImageState
     {
-        public Vector2 position;
-        public Vector2 scale;
-        public float skew;
-        public string savedImageAbsolutePath;
+        [JsonInclude] [JsonConverter(typeof(Vector2JsonConverter))] public Vector2 position;
+        [JsonInclude] [JsonConverter(typeof(Vector2JsonConverter))] public Vector2 scale;
+        [JsonInclude] public float skew;
+        [JsonInclude] public string savedImagePath;
     }
 
     private const string imagePathPrefix = "user://save/images/";
@@ -64,12 +65,12 @@ public partial class MoveableImage : Node2D
     {
         InitInternal(image);
         DirAccess.MakeDirAbsolute(ProjectSettings.GlobalizePath(imagePathPrefix));
-        string path = imagePathPrefix + image.GetHashCode(); 
+        string path = imagePathPrefix + image.GetHashCode() + ".png"; 
         byte[] buffer = image.SavePngToBuffer();
         FileAccess file = FileAccess.Open(path, FileAccess.ModeFlags.Write);
         file.StoreBuffer(buffer);
         file.Close();
-        state.savedImageAbsolutePath = file.GetPathAbsolute();
+        state.savedImagePath = path;
         state.scale = Vector2.One;
     }
 
@@ -77,7 +78,8 @@ public partial class MoveableImage : Node2D
     {
         this.state = state;
         Position = state.position;
-        InitInternal(Image.LoadFromFile(state.savedImageAbsolutePath));
+        InitInternal(Image.LoadFromFile(state.savedImagePath));
+        haveMovedYet = true;
     }
 
     private void InitInternal(Image image)
@@ -291,6 +293,6 @@ public partial class MoveableImage : Node2D
 
     public static void ClearSave(MoveableImageState state)
     {
-        DirAccess.RemoveAbsolute(state.savedImageAbsolutePath);
+        DirAccess.RemoveAbsolute(state.savedImagePath);
     }
 }

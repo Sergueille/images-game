@@ -19,6 +19,7 @@ public partial class PaintingSelector : Node2D
     Painting? painting = null;
 
     string editorLastPaintingId = "";
+    float editorLastImageSize = -1.0f;
 
     public override void _Ready()
     {
@@ -27,11 +28,17 @@ public partial class PaintingSelector : Node2D
 
     public override void _Process(double delta)
     {
-        if (Engine.IsEditorHint() && editorLastPaintingId != paintingID)
+        if (Engine.IsEditorHint() && (editorLastPaintingId != paintingID || imageSize != editorLastImageSize))
         {
             SetPaintingImage();
             editorLastPaintingId = paintingID;
+            editorLastImageSize = imageSize;
         }
+
+        if (!Engine.IsEditorHint())
+        {
+            sprite.Visible = ManagementManager.i.saveData.currentPaintingId != paintingID;
+        } 
     }
 
     public void SetPaintingImage()

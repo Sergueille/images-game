@@ -35,6 +35,7 @@ public partial class MoveableImage : Node2D
     [Export] Node2D scalingNode;
     [Export] CollisionShape2D selectionShape;
     [Export] ColorControllable colorControllable;
+    [Export] AudioStreamPlayer stretchPlayer;
 
     Vector2 handlePlacementMultiplier;
     
@@ -150,6 +151,9 @@ public partial class MoveableImage : Node2D
             {
                 Vector2 scaleDelta = new Vector2(delta.Dot(Transform.X), delta.Dot(Transform.Y + Mathf.Tan(state.skew) * Transform.X)) * 2 / imageDefaultSize / handlePlacementMultiplier;
                 state.scale += scaleDelta;
+
+                double len = scaleDelta.Length() / deltaTime;
+                stretchPlayer.VolumeDb = len == 0.0f ? -1000.0f : (len > 20.0f ? 0.0f : ((float)len - 20.0f) / 20.0f * 20.0f);
             }
             else if (isSkewing)
             {
@@ -168,6 +172,10 @@ public partial class MoveableImage : Node2D
                     haveMovedYet = true;
                 }
             }
+        }
+        else
+        {
+            stretchPlayer.VolumeDb = -1000.0f;
         }
 
         state.position = Position;
@@ -222,16 +230,20 @@ public partial class MoveableImage : Node2D
 
     private void OnSelected()
     {
+        stretchPlayer.Play();
+        stretchPlayer.VolumeDb = -1000.0f;
         Vector2 baseScale = sprite.Scale;
         Tween tween = GetTree().CreateTween();
         tween.TweenProperty(sprite, "scale", new Vector2(1.0f + squishAmount, 1.0f - squishAmount) * baseScale, squishDuration / 3.0f);
         tween.TweenProperty(sprite, "scale", new Vector2(1.0f - squishAmount, 1.0f + squishAmount) * baseScale, squishDuration / 3.0f);
         tween.TweenProperty(sprite, "scale", baseScale, squishDuration / 3.0f);
+
+        Utils.PlaySound(this, "Select", 0.2f);
     }
 
     private void OnDeselected()
     {
-        
+        stretchPlayer.Stop(); 
     }
 
     private void OnRotateInput(Node node, InputEvent inputEvent, int id)
@@ -246,7 +258,7 @@ public partial class MoveableImage : Node2D
     {
         if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
         {
-            isScaling = true;                
+            isScaling = true;  
         }
     }
 

@@ -48,6 +48,8 @@ public partial class CameraController : Camera2D
 
         currentScreen += 1;
         MoveToRightPosition();
+
+        Utils.PlayRandomSound(this, "Door", 3, 0.2f);
     }
 
     public void GoLeft()
@@ -57,6 +59,8 @@ public partial class CameraController : Camera2D
         
         currentScreen -= 1;
         MoveToRightPosition();
+
+        Utils.PlayRandomSound(this, "Door", 3, 0.2f);
     }
 
     public void GoToScreen(int targetScreen)
@@ -89,6 +93,8 @@ public partial class CameraController : Camera2D
     public void EnableAwkwardZoom()
     {
         if (!isZooming && !titleScreenZoom) { positionBeforeZoom = Position; }
+
+        if (!isZooming || titleScreenZoom) { Utils.PlaySound(this, "Whoosh", 0.2f); }
         MoveCameraToPoint(zoomPosition.Position, zoomAmount);
         isZooming = true;
     }
@@ -96,6 +102,8 @@ public partial class CameraController : Camera2D
     public void DisableAwkwardZoom()
     {
         MoveCameraToPoint(positionBeforeZoom, 1.0f);
+        if (isZooming) { Utils.PlaySound(this, "Whoosh", 0.2f); }
+
         isZooming = false;
     }
 

@@ -23,3 +23,25 @@ public class Vector2JsonConverter : JsonConverter<Vector2>
     }
 }
 
+public static class Utils
+{
+    public static void PlaySound(Node parent, string name, float randPitch)
+    {
+        RandomNumberGenerator rand = new RandomNumberGenerator();
+        rand.Randomize();
+        AudioStreamPlayer player = parent.GetNode<AudioStreamPlayer>(name);
+        player.PitchScale = 1.0f + rand.RandfRange(-randPitch, randPitch);
+        player.Play();
+    }
+    
+    public static void PlayRandomSound(Node parent, string name, int soundCount, float randPitch)
+    {
+        RandomNumberGenerator rand = new RandomNumberGenerator();
+        rand.Randomize();
+        int soundId = rand.RandiRange(1, soundCount);
+        AudioStreamPlayer player = parent.GetNode<AudioStreamPlayer>(name + soundId.ToString());
+        player.PitchScale = 1.0f + rand.RandfRange(-randPitch, randPitch);
+        player.Play();
+    }
+}
+

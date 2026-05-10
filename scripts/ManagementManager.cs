@@ -178,12 +178,15 @@ public partial class ManagementManager : Node
 
         Tween t = GetTree().CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
         t.TweenProperty(paintingView, "scale", Vector2.One, paintingViewShowAnimationDuration);
+        
+        Utils.PlaySound(this, "Whoosh", 0.2f);
     }
 
     public void HidePaintingView()
     {
         paintingView.Visible = false;
         isShowingPaintingView = false;
+        Utils.PlaySound(this, "Whoosh", 0.2f);
     }
 
     public async void OnPainingViewConfirm()
@@ -313,8 +316,8 @@ public partial class ManagementManager : Node
     {
         if (what == NotificationWMCloseRequest)
         {
-            await SaveCurrentPaintingImage();
             SaveCurrentPainting();
+            await SaveCurrentPaintingImage();
             SaveManager.Save(saveData);
             GetTree().Quit();
         }

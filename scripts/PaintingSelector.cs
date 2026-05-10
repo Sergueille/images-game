@@ -62,7 +62,8 @@ public partial class PaintingSelector : Node2D
         painting = p;
 
         bool imageSaved =
-            ManagementManager.i.saveData.paintings != null 
+         !Engine.IsEditorHint()
+         && ManagementManager.i.saveData.paintings != null 
          && ManagementManager.i.saveData.paintings.ContainsKey(paintingID)
          && ManagementManager.i.saveData.paintings[paintingID].imageSaved;
 

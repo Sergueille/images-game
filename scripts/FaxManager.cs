@@ -55,6 +55,7 @@ public partial class FaxManager : Node
                 if (keyPressedLastFrame != (Key)i)
                 {
                     inputText += (char)i;
+                    Utils.PlayRandomSound(this, "Key", 5, 0.2f);
                 }
             }
         }
@@ -66,6 +67,7 @@ public partial class FaxManager : Node
             if (keyPressedLastFrame != Key.Backspace && inputText.Length > 0)
             {
                 inputText = inputText[0..^1];
+                Utils.PlayRandomSound(this, "Key", 5, 0.2f);
             }
         }
 
@@ -76,6 +78,7 @@ public partial class FaxManager : Node
             if (keyPressedLastFrame != Key.Space)
             {
                 inputText += ' ';
+                Utils.PlayRandomSound(this, "Key", 5, 0.2f);
             }
         }
 
@@ -83,18 +86,33 @@ public partial class FaxManager : Node
         {
             if (acceptInput && inputText.Length >= 2)
             {
+                Utils.PlayRandomSound(this, "Key", 5, 0.2f);
                 acceptInput = false;
 
                 ClearScreen();
 
+                GetNode<AudioStreamPlayer>("Fan").Play();
+                GetNode<AudioStreamPlayer>("Memory").Play();
+                GetNode<AudioStreamPlayer>("Beeps").Play();
+                
                 internetMachine.RequestImage(
                     inputText.ToLower(), 
                     (img, url) => { 
+                        GetNode<AudioStreamPlayer>("Fan").Stop();
+                        GetNode<AudioStreamPlayer>("Memory").Stop();
+                        GetNode<AudioStreamPlayer>("Beeps").Stop();
+                        GetNode<AudioStreamPlayer>("MemoryEnd").Play();
+
                         Print(img, url); 
                         ClearScreen();
                         AddLine("Done. Please take sheet");
                     }, 
                     () => {
+                        GetNode<AudioStreamPlayer>("Fan").Stop();
+                        GetNode<AudioStreamPlayer>("Memory").Stop();
+                        GetNode<AudioStreamPlayer>("Beeps").Stop();
+                        GetNode<AudioStreamPlayer>("MemoryEnd").Play();
+                        GetNode<AudioStreamPlayer>("Error").Play();
                         ClearScreen();
                         AddLine("Failed. Check your internet.");
                         SceneTreeTimer t = GetTree().CreateTimer(3.0f); // TODO: blink
@@ -104,7 +122,11 @@ public partial class FaxManager : Node
                         };
                     },
                     [new TransparencyFilter(), new PhotoFilter()],
-                    (logMessage) => {
+                    async (logMessage) => {
+                        GetNode<AudioStreamPlayer>("Logs").Play();
+                        screenTextLabel.Position = new Vector2(0.0f, -9.0f);
+                        await ToSignal(GetTree(), "process_frame");
+                        screenTextLabel.Position = new Vector2(0.0f, 0.0f);
                         AddLine(logMessage);
                     }
                 );
@@ -121,6 +143,9 @@ public partial class FaxManager : Node
 
     public void Print(Image image, string url)
     {
+        GetNode<AudioStreamPlayer>("Print").Play();
+        GetNode<AudioStreamPlayer>("Ding").Play();
+
         MoveableImage moveableImage = (MoveableImage)moveableImageScene.Instantiate();
         paperMask.AddChild(moveableImage);
         moveableImage.Init(image);
@@ -131,6 +156,8 @@ public partial class FaxManager : Node
         moveableImage.onFirstMoveCallback = () => {
             paperTween.Stop();
             imageTween.Stop();
+
+            Utils.PlaySound(this, "Paper", 0.2f);
 
             Tween t = GetTree().CreateTween().SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Quad);
             t.TweenProperty(paper, "global_position", paperFallenPosition.Position, fallDuration);

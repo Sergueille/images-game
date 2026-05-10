@@ -49,4 +49,4 @@ ui_cancel={
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.56779295, 0.40276492, 0.52137285, 0)
+environment/defaults/default_clear_color=Color(0.0924, 0.22, 0.09665333, 0.21960784)

@@ -1,4 +1,19 @@
 
+Images:
+    Canvas texture: created by V.Hartikainen, under CC-BY 3.0: https://tiled-bg.blogspot.com/2013/02/rough-fabric-seamless-pattern.html
 
-Canvas texture: V.Hartikainen, under CC BY 3.0: https://tiled-bg.blogspot.com/2013/02/rough-fabric-seamless-pattern.html
-Font: "catto's handwriting" by Erik Koev, under CC BY SA 3.0: https://fontstruct.com/fontstructions/show/2567191/cattos-handwriting
+
+Font: 
+    "catto's handwriting" by Erik Koev, under CC-BY-SA 3.0: https://fontstruct.com/fontstructions/show/2567191/cattos-handwriting
+
+
+Sound:
+    image stretch: created by bassimat, under CC0: https://freesound.org/people/bassimat/sounds/831455/
+    print: azumarill, under CC0: https://freesound.org/people/azumarill/sounds/345057/
+    ding: created by JohnsonBrandEditing, under CC0: https://freesound.org/people/JohnsonBrandEditing/sounds/173932/
+    machine sound: created by jaegrover, under CC0: https://freesound.org/people/jaegrover/sounds/262872/*
+    error beep: created by EtherAudio, under CC-BY 4.0: https://freesound.org/people/EtherAudio/sounds/750933/
+    door: created by InspectorJ, under CC-BY 4.0: https://freesound.org/people/InspectorJ/sounds/271562/
+    keyboard: created by M4taiori, under CC-BY 3.0: und.org/people/M4taiori/sounds/331428/
+    camera movement sound, created by Vilkas_Sound, under CC-BY 4.0: https://freesound.org/people/Vilkas_Sound/sounds/460472/
+    and many other sounds under CC0 I forgot to add here, sorry!

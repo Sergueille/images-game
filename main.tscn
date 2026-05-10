@@ -65,6 +65,7 @@
 [ext_resource type="AudioStream" uid="uid://cik6wnrihhhf" path="res://sounds/door2.wav" id="40_e71vb"]
 [ext_resource type="AudioStream" uid="uid://danxagj8hu2sp" path="res://sounds/door3.wav" id="41_rnkwl"]
 [ext_resource type="AudioStream" uid="uid://ch44ej6horo35" path="res://sounds/whoosh.wav" id="47_pjyto"]
+[ext_resource type="Texture2D" uid="uid://bkdic2mp0lm0a" path="res://sprites/paper_in_progress.png" id="48_uatky"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0)
@@ -673,6 +674,7 @@ scale = Vector2(42.051, 28.514)
 texture = SubResource("GradientTexture2D_dg77c")
 
 [node name="PaintingSelector" type="Node2D" parent="Camera2D/PaintingView" unique_id=1398917621 node_paths=PackedStringArray("sprite", "frameControl", "clickArea")]
+z_index = 5
 position = Vector2(0, -111)
 script = ExtResource("35_ok6jj")
 paintingID = "mona_lisa"
@@ -682,6 +684,7 @@ frameControl = NodePath("Canvas")
 clickArea = NodePath("Click")
 
 [node name="Sprite2D" type="Sprite2D" parent="Camera2D/PaintingView/PaintingSelector" unique_id=1932253946]
+visible = false
 z_index = 3
 scale = Vector2(0.4884857, 0.4884857)
 texture = ExtResource("36_b1qrp")
@@ -765,6 +768,12 @@ scale = Vector2(468.94626, 700)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/PaintingView/PaintingSelector/Click" unique_id=401405651]
 shape = SubResource("RectangleShape2D_mhft1")
+
+[node name="PaperInProgress" type="Sprite2D" parent="Camera2D/PaintingView/PaintingSelector" unique_id=618666428]
+modulate = Color(0.66, 0.66, 0.66, 1)
+z_index = 2
+position = Vector2(-3, 13)
+texture = ExtResource("48_uatky")
 
 [node name="Button" type="Button" parent="Camera2D/PaintingView" unique_id=634599158]
 z_index = 2

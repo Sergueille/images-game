@@ -1134,6 +1134,11 @@ position = Vector2(2173, -287)
 paintingID = "arles"
 imageSize = 140.0
 
+[node name="PaintingSelector12" parent="PaintingSelectors" unique_id=1196188312 instance=ExtResource("35_0rl1p")]
+position = Vector2(2544, -126)
+paintingID = "torment"
+imageSize = 150.0
+
 [node name="CameraZoomPosition" type="Node2D" parent="." unique_id=1941725859]
 position = Vector2(1953, 242)
 

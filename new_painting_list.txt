@@ -10,3 +10,4 @@ garden,"https://en.wikipedia.org/wiki/Garden_at_Sainte-Adresse",Garden at Sainte
 writing,"https://en.wikipedia.org/wiki/Lady_Writing_a_Letter_with_her_Maid",Lady Writing a Letter with her Maid,Johannes Vermeer
 general,"https://en.wikipedia.org/wiki/Portrait_of_a_General",Portrait of a General,Titian
 arles,"https://en.wikipedia.org/wiki/Bedroom_in_Arles",Bedroom in Arles (third version),Vincent van Gogh
+torment,"https://en.wikipedia.org/wiki/The_Torment_of_Saint_Anthony",The Torment of Saint Anthony,Michelangelo

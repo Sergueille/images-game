@@ -122,11 +122,8 @@ public partial class FaxManager : Node
                         };
                     },
                     [new TransparencyFilter(), new PhotoFilter()],
-                    async (logMessage) => {
+                    (logMessage) => {
                         GetNode<AudioStreamPlayer>("Logs").Play();
-                        screenTextLabel.Position = new Vector2(0.0f, -9.0f);
-                        await ToSignal(GetTree(), "process_frame");
-                        screenTextLabel.Position = new Vector2(0.0f, 0.0f);
                         AddLine(logMessage);
                     }
                 );

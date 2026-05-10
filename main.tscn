@@ -981,6 +981,28 @@ position = Vector2(1625, 143)
 paintingID = "emmaus"
 imageSize = 150.0
 
+[node name="PaintingSelector8" parent="PaintingSelectors" unique_id=1592895833 instance=ExtResource("35_0rl1p")]
+position = Vector2(2484, 75)
+paintingID = "garden"
+imageSize = 150.0
+
+[node name="PaintingSelector9" parent="PaintingSelectors" unique_id=2122916185 instance=ExtResource("35_0rl1p")]
+position = Vector2(2725.0002, 108)
+rotation = 0.5235988
+skew = -0.5235988
+paintingID = "general"
+imageSize = 150.0
+
+[node name="PaintingSelector10" parent="PaintingSelectors" unique_id=17351426 instance=ExtResource("35_0rl1p")]
+position = Vector2(1644, -80)
+paintingID = "writing"
+imageSize = 190.0
+
+[node name="PaintingSelector11" parent="PaintingSelectors" unique_id=635035265 instance=ExtResource("35_0rl1p")]
+position = Vector2(2173, -287)
+paintingID = "arles"
+imageSize = 140.0
+
 [node name="CameraZoomPosition" type="Node2D" parent="." unique_id=1941725859]
 position = Vector2(1953, 242)
 

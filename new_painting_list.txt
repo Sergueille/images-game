@@ -6,3 +6,7 @@ praxedis,https://en.wikipedia.org/wiki/Saint_Praxedis_(painting),Saint Praxedis,
 krieg,https://en.wikipedia.org/wiki/War_(B%C3%B6cklin_painting),Der Krieg,Arnold Böcklin
 annunciate,"https://en.wikipedia.org/wiki/Virgin_Annunciate_(Antonello_da_Messina,_Palermo)",Virgin Annunciate,Antonello da Messina
 emmaus,"https://en.wikipedia.org/wiki/Supper_at_Emmaus_(Caravaggio,_London)",Supper at Emmaus,Caravaggio
+garden,"https://en.wikipedia.org/wiki/Garden_at_Sainte-Adresse",Garden at Sainte-Adresse,Claude Monet
+writing,"https://en.wikipedia.org/wiki/Lady_Writing_a_Letter_with_her_Maid",Lady Writing a Letter with her Maid,Johannes Vermeer
+general,"https://en.wikipedia.org/wiki/Portrait_of_a_General",Portrait of a General,Titian
+arles,"https://en.wikipedia.org/wiki/Bedroom_in_Arles",Bedroom in Arles (third version),Vincent van Gogh

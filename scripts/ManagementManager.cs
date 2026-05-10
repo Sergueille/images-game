@@ -260,7 +260,7 @@ public partial class ManagementManager : Node
                 new DialogueManager.DialogueText { text = "..." },
                 new DialogueManager.DialogueText { text = "What do you mean, \"you can't draw\"?" },
                 new DialogueManager.DialogueText { text = "Of course, I won't let you on your own." },
-                new DialogueManager.DialogueText { text = "I have build a special device to help you with this job!" },
+                new DialogueManager.DialogueText { text = "I have built a special device to help you with this job!" },
                 new DialogueManager.DialogueText { text = "It's still a prototype, but it's fully functional." },
                 new DialogueManager.DialogueText { text = "Just type in the thing you want to draw, and the machine will do the rest!" },
                 new DialogueManager.DialogueText { text = "But keep in mind that the machine can only handle simple and generic objects." },

@@ -1,22 +1,19 @@
 
 # TODO
 
-## For beta 
-
-- painting room drawing
-- more paintings
-- new easel sprite, and 9-sliced canvas sprite for reference
-- sounds
-
-## Other
-
+- more sounds
 - machine animation
 - more main room background art
-- note on current painting background
-- save color and layer order of moveableImages
-- save background color
+- full saving
+    - save color and layer order of moveableImages
+    - save background color
 - game end
 - find a title
+- default to opaque images when no transparent images found
+- mor intuitive background color control
+- more dialogue animations
+- show machine blueprint during intro dialogue
+- do palette dialogue
 
 ## Not-Sure-I-Want-It-Features
 

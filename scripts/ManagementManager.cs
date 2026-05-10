@@ -277,12 +277,17 @@ public partial class ManagementManager : Node
         SaveCurrentPainting();
         paintingSaveViewport.Size = new Vector2I((int)canvas.Size.X, (int)canvas.Size.Y);
 
-        foreach (MoveableImage mi in currentMoveableImages)
+        List<MoveableImage> imagesListBackup = MoveableImage.allImages.ToList();
+
+        for (int i = 0; i < currentMoveableImages.Count; i++)
         {
+            MoveableImage mi = currentMoveableImages[i];
             Vector2 pos = mi.Position - canvas.Position;
             mi.Reparent(paintingSaveViewport);
             mi.Position = pos;
         }
+
+        MoveableImage.allImages = imagesListBackup;
 
         DirAccess.MakeDirAbsolute(ProjectSettings.GlobalizePath(paintingImagesSaveFolder));
         
@@ -293,7 +298,7 @@ public partial class ManagementManager : Node
         return paintingImageSaveInternalTask.Task;
     }
 
-    private void SavePaintingImageInternalCallback() 
+    private async void SavePaintingImageInternalCallback() 
     {
         string userPath = paintingImagesSaveFolder + saveData.currentPaintingId + ".png";
         RenderingServer.FramePostDraw -= SavePaintingImageInternalCallback;
@@ -302,12 +307,20 @@ public partial class ManagementManager : Node
         image.SavePng(userPath);
         saveData.paintings[saveData.currentPaintingId].imageSaved = true;
 
-        foreach (MoveableImage mi in currentMoveableImages)
+        List<MoveableImage> imagesListBackup = MoveableImage.allImages.ToList();
+
+        for (int i = 0; i < currentMoveableImages.Count; i++)
         {
+            MoveableImage mi = currentMoveableImages[i];
             Vector2 pos = mi.Position + canvas.Position;
             mi.Reparent(imagesParent);
             mi.Position = pos;
+            mi.ZIndex = imagesListBackup.IndexOf(mi);
         }
+        
+        MoveableImage.allImages = imagesListBackup;
+        
+        await ToSignal(GetTree(), "process_frame");
 
         paintingImageSaveInternalTask.SetResult();
     }

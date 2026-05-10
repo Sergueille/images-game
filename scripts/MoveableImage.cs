@@ -60,6 +60,7 @@ public partial class MoveableImage : Node2D
     public override void _ExitTree()
     {
         allImages.Remove(this);
+        GD.Print("Exit");
     }
 
     public void Init(Image image)

@@ -14,10 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bw58m5ae65hu" path="res://sprites/layer_bottom.png" id="6_7mycd"]
 [ext_resource type="Shader" uid="uid://clhlxo6ekh26o" path="res://shaders/moveable_image.gdshader" id="6_ryguw"]
 [ext_resource type="Texture2D" uid="uid://b4wvons2b1ato" path="res://sprites/professor_room_bigger.png" id="7_4k2k6"]
-[ext_resource type="Texture2D" uid="uid://cm3m3q8ydpl5f" path="res://sprites/easel.png" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://baadiqdc6av6a" path="res://sprites/wallpaper.png" id="7_b17eg"]
-[ext_resource type="Texture2D" uid="uid://co1b3x2c1gtnr" path="res://sprites/easel_back.png" id="8_5vw27"]
-[ext_resource type="Texture2D" uid="uid://wtap3j5sjldk" path="res://test.png" id="8_kek77"]
 [ext_resource type="Texture2D" uid="uid://c56rj4xijgiuv" path="res://sprites/professor.png" id="9_come4"]
 [ext_resource type="Script" uid="uid://cf76hb4qgscgd" path="res://scripts/CameraController.cs" id="9_d13ii"]
 [ext_resource type="Texture2D" uid="uid://b5e7y2oeklgf8" path="res://sprites/palette.png" id="9_dg77c"]
@@ -66,6 +63,8 @@
 [ext_resource type="AudioStream" uid="uid://danxagj8hu2sp" path="res://sounds/door3.wav" id="41_rnkwl"]
 [ext_resource type="AudioStream" uid="uid://ch44ej6horo35" path="res://sounds/whoosh.wav" id="47_pjyto"]
 [ext_resource type="Texture2D" uid="uid://bkdic2mp0lm0a" path="res://sprites/paper_in_progress.png" id="48_uatky"]
+[ext_resource type="Texture2D" uid="uid://bs8eixotgcxo1" path="res://sprites/canvas_border.png" id="67_rqtf5"]
+[ext_resource type="Texture2D" uid="uid://csnroh2ldjbi3" path="res://sprites/easel_but_better.png" id="68_1vm84"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0)
@@ -394,7 +393,7 @@ modulate = Color(1, 1, 1, 0.15686275)
 z_index = -1499
 offset_left = 1272.0
 offset_top = -559.0
-offset_right = 5808.666
+offset_right = 5788.666
 offset_bottom = 2391.0
 scale = Vector2(0.3, 0.3)
 mouse_filter = 2
@@ -424,9 +423,9 @@ skew = -0.61086524
 [node name="wallpaper2" type="TextureRect" parent="ProfRoom/Node2D2" unique_id=1727490763]
 modulate = Color(1, 1, 1, 0.15686275)
 z_index = -1499
-offset_left = 3215.2803
+offset_left = 3207.5142
 offset_top = -2621.6692
-offset_right = 4238.369
+offset_right = 4256.4897
 offset_bottom = 1105.1692
 scale = Vector2(0.3, 0.3)
 mouse_filter = 2
@@ -469,7 +468,7 @@ script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
 moveableImageScene = ExtResource("3_h2yge")
-paintingSprite = NodePath("../Easel/PaintingParent/PaintingSprite")
+paintingSprite = NodePath("../NewEasel/Node2D/Control/TextureRect")
 imagesParent = NodePath("../Images container")
 canvas = NodePath("../Canvas")
 canvasColorControllable = NodePath("../Canvas/Control")
@@ -823,29 +822,6 @@ volume_db = -13.828
 
 [node name="Images container" type="Node2D" parent="." unique_id=342881074]
 
-[node name="Easel" type="Sprite2D" parent="." unique_id=1313461106]
-z_index = 600
-position = Vector2(-595.99994, 185)
-rotation = 0.06375694
-scale = Vector2(1.6899285, 1.6899285)
-texture = ExtResource("7_272bh")
-
-[node name="Sprite2D" type="Sprite2D" parent="Easel" unique_id=1422056762]
-z_index = -5
-texture = ExtResource("8_5vw27")
-
-[node name="PaintingParent" type="Node2D" parent="Easel" unique_id=21914162]
-z_index = -1
-position = Vector2(-51.263016, 19.0746)
-rotation = -0.16312642
-scale = Vector2(1.0160915, 1.0160915)
-skew = -0.0837758
-
-[node name="PaintingSprite" type="Sprite2D" parent="Easel/PaintingParent" unique_id=1374597822]
-z_index = -1
-scale = Vector2(0.99999994, 1)
-texture = ExtResource("8_kek77")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1117185760]
 
 [node name="Palette" type="Node2D" parent="." unique_id=1629020102]
@@ -1042,7 +1018,7 @@ position = Vector2(-776, -214)
 position = Vector2(-776, -441)
 
 [node name="PaperFallen" type="Node2D" parent="Positions" unique_id=217298879]
-position = Vector2(-776, 73)
+position = Vector2(-776, 287)
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=623415955]
 disable_3d = true
@@ -1098,12 +1074,12 @@ paintingID = "praxedis"
 imageSize = 120.0
 
 [node name="PaintingSelector5" parent="PaintingSelectors" unique_id=803446251 instance=ExtResource("35_0rl1p")]
-position = Vector2(2137, -60)
+position = Vector2(2137, -128)
 paintingID = "krieg"
 imageSize = 200.0
 
 [node name="PaintingSelector6" parent="PaintingSelectors" unique_id=2079002304 instance=ExtResource("35_0rl1p")]
-position = Vector2(2266, 188)
+position = Vector2(2266, 120)
 paintingID = "annunciate"
 imageSize = 150.0
 
@@ -1130,14 +1106,14 @@ paintingID = "writing"
 imageSize = 190.0
 
 [node name="PaintingSelector11" parent="PaintingSelectors" unique_id=635035265 instance=ExtResource("35_0rl1p")]
-position = Vector2(2173, -287)
+position = Vector2(2347, -140)
 paintingID = "arles"
 imageSize = 140.0
 
 [node name="PaintingSelector12" parent="PaintingSelectors" unique_id=1196188312 instance=ExtResource("35_0rl1p")]
 position = Vector2(2544, -126)
 paintingID = "torment"
-imageSize = 150.0
+imageSize = 140.0
 
 [node name="CameraZoomPosition" type="Node2D" parent="." unique_id=1941725859]
 position = Vector2(1953, 242)
@@ -1213,6 +1189,70 @@ grow_vertical = 2
 texture = ExtResource("10_4c57u")
 expand_mode = 1
 stretch_mode = 1
+
+[node name="NewEasel" type="Node2D" parent="." unique_id=1046109709]
+z_index = 600
+position = Vector2(-714, 281)
+
+[node name="EaselButBetter" type="Sprite2D" parent="NewEasel" unique_id=1594075985]
+position = Vector2(73, 22)
+texture = ExtResource("68_1vm84")
+
+[node name="Node2D" type="Node2D" parent="NewEasel" unique_id=565156301]
+z_index = 100
+position = Vector2(-8.000002, 38)
+rotation = -0.17453292
+scale = Vector2(1.05, 1.05)
+skew = 0.13962634
+
+[node name="Control" type="Control" parent="NewEasel/Node2D" unique_id=2003531144]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -112.331245
+offset_top = -290.04895
+offset_right = 190.62805
+offset_bottom = 120.7301
+
+[node name="TextureRect" type="TextureRect" parent="NewEasel/Node2D/Control" unique_id=523979805]
+z_index = -1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49500003
+anchor_top = 1.0
+anchor_right = 0.49500003
+anchor_bottom = 1.0
+offset_left = 9.112045
+offset_top = 6.512329
+offset_right = 549.11206
+offset_bottom = 506.51233
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(-1, -1)
+pivot_offset_ratio = Vector2(0.25, 0)
+texture = ExtResource("36_b1qrp")
+expand_mode = 1
+flip_h = true
+flip_v = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NewEasel/Node2D/Control/TextureRect" unique_id=257121039]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.85962
+offset_top = -14.404892
+offset_right = 19.225708
+offset_bottom = 13.886993
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("67_rqtf5")
+region_rect = Rect2(0, 0, 200, 199)
+patch_margin_left = 33
+patch_margin_top = 40
+patch_margin_right = 32
+patch_margin_bottom = 27
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button" to="ProfRoom/Desk/DialogueManager" method="PaintingDoneButton"]
 [connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button2" to="ProfRoom/Desk/DialogueManager" method="MachineBrokenButton"]

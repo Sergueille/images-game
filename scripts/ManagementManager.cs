@@ -13,7 +13,7 @@ public partial class ManagementManager : Node
     [Export] InternetMachine internetMachine;
     [Export] PackedScene moveableImageScene;
 
-    [Export] Sprite2D paintingSprite;
+    [Export] TextureRect paintingSprite;
     [Export] Node2D imagesParent;
 
     [Export] Control canvas;
@@ -101,8 +101,9 @@ public partial class ManagementManager : Node
 
         Vector2 sizeVector = tex.GetSize();
         float maxSize = Mathf.Max(sizeVector.X, sizeVector.Y);
+        float paintingRefScale = Mathf.Min(540.0f / sizeVector.X, 500.0f / sizeVector.Y);
 
-        paintingSprite.Scale = Vector2.One * 300.0f / maxSize;
+        paintingSprite.Size = sizeVector * paintingRefScale;
 
         canvas.Size = sizeVector / maxSize * canvasMaxSize;
         canvas.Position = canvasCenter + canvas.Size * -0.5f;

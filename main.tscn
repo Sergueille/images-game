@@ -380,10 +380,6 @@ dialogueManager = NodePath("../ProfRoom/Desk/DialogueManager")
 fadeInColorRect = NodePath("../ColorRect")
 paintingSaveViewport = NodePath("../PaintingSave")
 
-[node name="Whoosh" type="AudioStreamPlayer" parent="Management manager" unique_id=1660592666]
-stream = ExtResource("47_pjyto")
-volume_db = -13.828
-
 [node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("internetMachine", "paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask", "screenTextLabel")]
 script = ExtResource("9_seu75")
 internetMachine = NodePath("../The great internet machine")

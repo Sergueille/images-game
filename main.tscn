@@ -524,6 +524,7 @@ volume_db = -13.612
 
 [node name="Error" type="AudioStreamPlayer" parent="Fax manager" unique_id=933798048]
 stream = ExtResource("25_uypp3")
+volume_db = -24.041
 
 [node name="Beeps" type="AudioStreamPlayer" parent="Fax manager" unique_id=154980614]
 stream = ExtResource("26_abqjc")

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 public partial class InternetMachine : Node
 {
@@ -121,8 +123,8 @@ public partial class InternetMachine : Node
         if (ok)
         {
             DoRequest(cleanedLink, 1,
-                (body) => {
-                    bool ok = HandleImageResult(body, cleanedLink);
+                async (body) => {
+                    bool ok = await HandleImageResult(body, cleanedLink);
 
                     if (!ok)
                         FetchImage(urls, index + 1);
@@ -140,29 +142,24 @@ public partial class InternetMachine : Node
             FetchImage(urls, index + 1);
         }
     }
-    private bool HandleImageResult(byte[] body, string link)
-    {
-        Image img = ImageFromData(body);
 
-        if (img == null)
+    private async Task<bool> HandleImageResult(byte[] body, string link)
+    {
+        (int resultCode, Image img) = await HandleImageResultAsync(body);
+
+        if (resultCode == 0)
         {
             GD.Print("Failed to parse image");
             onLog("img corrupt");
             HandleImageFailure(link);
             return false;
         }
-        else
+        else if (resultCode == 1)
         {
-            foreach (ImageFilter filter in filters)
-            {
-                if (!filter.FilterImage(img))
-                {
-                    GD.Print("Image rejected by ", filter.GetName());
-                    onLog("img rejected");
-                    HandleImageFailure(link);
-                    return false;
-                }
-            }
+            GD.Print("Image rejected by filter");
+            onLog("img rejected");
+            HandleImageFailure(link);
+            return false;
         }
 
         CancelAllRequests();
@@ -173,9 +170,41 @@ public partial class InternetMachine : Node
             onCompleted(img, link);
             isBusy = false;
             return true;
-        }
+        }        
 
         return false;
+    }
+
+    private Task<(int, Image)> HandleImageResultAsync(byte[] body)
+    {
+        TaskCompletionSource<(int, Image)> task = new TaskCompletionSource<(int, Image)>();
+
+        Thread t = new Thread(() => {
+            Image img = ImageFromData(body);
+
+            if (img == null)
+            {
+                task.SetResult((0, null));
+                return;
+            }
+            else
+            {
+                foreach (ImageFilter filter in filters)
+                {
+                    if (!filter.FilterImage(img))
+                    {
+                        task.SetResult((1, null));
+                        return;
+                    }
+                }
+            }
+
+            task.SetResult((2, img));
+        });
+
+        t.Start();
+
+        return task.Task;
     }
 
     public Image ImageFromData(byte[] data, string format="png")
@@ -277,6 +306,8 @@ public partial class InternetMachine : Node
             {
                 if (log) { onLog($"HTTP 200 ok"); }
 
+                bool hasCookieBefore = cookies.Count == 0;
+
                 // Store cookies to make bing believe we're a good client
                 string[] setCookieInstructions = headers
                     .Where(h => h.ToLower().Contains("set-cookie:"))
@@ -289,6 +320,12 @@ public partial class InternetMachine : Node
                     string cookieName = instr.Split("=")[0].Trim();
                     string cookieValue = instr.Replace(cookieName + "=", "").Trim();
                     cookies[cookieName] = cookieValue;
+                }
+
+                if (hasCookieBefore && cookies.Count != 0) // New cookies added, retry
+                {
+                    DoRequest(url, maxRetry, onOk, onFailed, log);
+                    return;
                 }
 
                 onOk(body);

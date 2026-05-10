@@ -1194,6 +1194,7 @@ stretch_mode = 1
 [node name="NewEasel" type="Node2D" parent="." unique_id=1046109709]
 z_index = 600
 position = Vector2(-714, 281)
+rotation = -0.03015162
 
 [node name="EaselButBetter" type="Sprite2D" parent="NewEasel" unique_id=1594075985]
 position = Vector2(73, 22)

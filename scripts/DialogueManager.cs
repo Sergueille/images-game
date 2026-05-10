@@ -72,7 +72,8 @@ public partial class DialogueManager : Node
         {
             if (item.unZoom)
             {
-                ManagementManager.i.cameraController.DisableAwkwardZoom();    
+                ManagementManager.i.cameraController.DisableAwkwardZoom();   
+                ManagementManager.i.cameraController.isZooming = true; // Make the camera controller believe it's zoomed to prevent clicks
                 await Wait(ManagementManager.i.cameraController.transitionDuration);
             }
 

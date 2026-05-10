@@ -53,12 +53,18 @@ public partial class ManagementManager : Node
     public override void _Ready()
     {
         i = this;
+
+        GetTree().AutoAcceptQuit = false;
+
         paintingView.Visible = false;
+        paintingSprite.Visible = false;
         currentMoveableImages = new List<MoveableImage>();
 
         saveData = SaveManager.Load();
         if (saveData.currentPaintingId != null && saveData.currentPaintingId != "")
         {
+            saveData.currentPaintingId = null; // Temporary fix: do not load current painting
+            /*
             SetCurrentPainting(saveData.currentPaintingId);
 
             if (saveData.paintings[saveData.currentPaintingId].images != null)
@@ -71,6 +77,7 @@ public partial class ManagementManager : Node
                     img.InitFromState(state);
                 }
             }
+            */
         }
 
         cameraController.InitPosition();
@@ -98,6 +105,7 @@ public partial class ManagementManager : Node
     {
         Texture2D tex = PaintingFinder.GetPaintingTexture(paintingId);
         paintingSprite.Texture = tex;
+        paintingSprite.Visible = true;
 
         Vector2 sizeVector = tex.GetSize();
         float maxSize = Mathf.Max(sizeVector.X, sizeVector.Y);
@@ -226,6 +234,7 @@ public partial class ManagementManager : Node
 
         currentMoveableImages.Clear();
         saveData.currentPaintingId = "";
+        paintingSprite.Visible = false;
     }
 
     public void OnTitleScreenStart()
@@ -245,8 +254,8 @@ public partial class ManagementManager : Node
                 new DialogueManager.DialogueText { text = "So, now I need someone to make reproductions of my paintings for my collection." },
                 new DialogueManager.DialogueText { text = "Nothing exceptional of course! As you can see..." },
                 new DialogueManager.DialogueText { text = "... it's just a couple of small paintings.", unZoom = true },
-                new DialogueManager.DialogueText { text = "I know you didn't came here for another job, but, you know, I didn't want to bother putting another ad in the journal." },
-                new DialogueManager.DialogueText { text = "These are getting really expensive these days!" },
+                new DialogueManager.DialogueText { text = "I know you didn't came here for this specific job, but, you know, I didn't want to bother putting another ad in the journal." },
+                new DialogueManager.DialogueText { text = "They're getting really expensive these days!" },
                 new DialogueManager.DialogueText { text = "Anyway! Are you ready to do some painting?" },
                 new DialogueManager.DialogueText { text = "..." },
                 new DialogueManager.DialogueText { text = "What do you mean, \"you can't draw\"?" },

@@ -1,19 +1,20 @@
 
 # TODO
 
+- fix background color not being saved (and in rare case not being reset)
 - more sounds
 - machine animation
 - more main room background art
-- full saving
-    - save color and layer order of moveableImages
-    - save background color
 - game end
 - find a title
 - default to opaque images when no transparent images found
-- mor intuitive background color control
 - more dialogue animations
 - show machine blueprint during intro dialogue
 - do palette dialogue
+- skip non intersecting images when changing layer
+- force simple painting to start
+- change saturation icons
+- buttons to change background color directly
 
 ## Not-Sure-I-Want-It-Features
 
@@ -21,5 +22,6 @@
 - undo/redo
 - transparency
 - cropping
+- painting filter
 
 

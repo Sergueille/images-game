@@ -9,8 +9,11 @@ public partial class MoveableImage : Node2D
     {
         [JsonInclude] [JsonConverter(typeof(Vector2JsonConverter))] public Vector2 position;
         [JsonInclude] [JsonConverter(typeof(Vector2JsonConverter))] public Vector2 scale;
+        [JsonInclude] public float rotation;
         [JsonInclude] public float skew;
         [JsonInclude] public string savedImagePath;
+        [JsonInclude] public int layerIndex;
+        [JsonInclude] public Dictionary<string, float> colorProperties;
     }
 
     private const string imagePathPrefix = "user://save/images/";
@@ -76,12 +79,17 @@ public partial class MoveableImage : Node2D
         state.scale = Vector2.One;
     }
 
+    /// <summary>
+    /// Note: does not initialize layer index
+    /// </summary>
     public void InitFromState(MoveableImageState state)
     {
         this.state = state;
         Position = state.position;
+        Rotation = state.rotation;
         InitInternal(Image.LoadFromFile(state.savedImagePath));
         haveMovedYet = true;
+        colorControllable.ApplyProperties(state.colorProperties);
     }
 
     private void InitInternal(Image image)
@@ -180,6 +188,7 @@ public partial class MoveableImage : Node2D
         }
 
         state.position = Position;
+        state.rotation = Rotation;
         scalingNode.Scale = state.scale * new Vector2(1.0f / Mathf.Cos(state.skew), 1.0f);
         scalingNode.Skew = state.skew;
         scalingNode.Rotation = -state.skew;
@@ -211,10 +220,14 @@ public partial class MoveableImage : Node2D
             );
         }
 
+        state.layerIndex = allImages.IndexOf(this);
+
         if (haveMovedYet)
         {
-            ZIndex = allImages.IndexOf(this);
+            ZIndex = state.layerIndex;
         }
+
+        state.colorProperties = colorControllable.properties;
     }
 
     private void OnMouseEnter()

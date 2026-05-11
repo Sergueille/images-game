@@ -63,21 +63,7 @@ public partial class ManagementManager : Node
         saveData = SaveManager.Load();
         if (saveData.currentPaintingId != null && saveData.currentPaintingId != "")
         {
-            saveData.currentPaintingId = null; // Temporary fix: do not load current painting
-            /*
-            SetCurrentPainting(saveData.currentPaintingId);
-
-            if (saveData.paintings[saveData.currentPaintingId].images != null)
-            {
-                foreach (MoveableImage.MoveableImageState state in saveData.paintings[saveData.currentPaintingId].images)
-                {
-                    MoveableImage img = (MoveableImage)moveableImageScene.Instantiate();
-                    imagesParent.AddChild(img);
-                    currentMoveableImages.Add(img);
-                    img.InitFromState(state);
-                }
-            }
-            */
+            LoadPaintingFromCurrentSaveData();
         }
 
         cameraController.InitPosition();
@@ -202,12 +188,19 @@ public partial class ManagementManager : Node
     {
         if (saveData.currentPaintingId != null)
         {
+            SaveCurrentPainting();
             await SaveCurrentPaintingImage();
         }
-
-        internetMachine.ResetVisitedUrls();
+                
         SetNoCurrentPainting();
         SetCurrentPainting(paintingViewPainting.id);
+        internetMachine.ResetVisitedUrls();
+
+        if (saveData.currentPaintingId != null && saveData.currentPaintingId != "")
+        {
+            LoadPaintingFromCurrentSaveData();
+        }
+
         SaveManager.Save(saveData);
         HidePaintingView();
         cameraController.GoToScreen(0);
@@ -218,6 +211,7 @@ public partial class ManagementManager : Node
         if (saveData.currentPaintingId == null) return;
         
         saveData.paintings[saveData.currentPaintingId].images = currentMoveableImages.Select(img => img.state).ToArray();
+        saveData.paintings[saveData.currentPaintingId].backgroundColorProperties = canvasColorControllable.properties;
         SaveManager.Save(saveData);
     }
 
@@ -331,6 +325,9 @@ public partial class ManagementManager : Node
         MoveableImage.allImages = imagesListBackup;
         
         await ToSignal(GetTree(), "process_frame");
+        await ToSignal(GetTree(), "process_frame");
+
+        GD.Print("save end");
 
         paintingImageSaveInternalTask.SetResult();
     }
@@ -344,5 +341,25 @@ public partial class ManagementManager : Node
             SaveManager.Save(saveData);
             GetTree().Quit();
         }
+    }
+
+    public void LoadPaintingFromCurrentSaveData()
+    {
+        SetCurrentPainting(saveData.currentPaintingId);
+        
+        if (saveData.paintings[saveData.currentPaintingId].images != null)
+        {
+            Array.Sort(saveData.paintings[saveData.currentPaintingId].images, (a, b) => a.layerIndex.CompareTo(b.layerIndex));
+
+            foreach (MoveableImage.MoveableImageState state in saveData.paintings[saveData.currentPaintingId].images)
+            {
+                MoveableImage img = (MoveableImage)moveableImageScene.Instantiate();
+                imagesParent.AddChild(img);
+                currentMoveableImages.Add(img);
+                img.InitFromState(state);
+            }
+        }
+
+        canvasColorControllable.ApplyProperties(saveData.paintings[saveData.currentPaintingId].backgroundColorProperties);
     }
 }

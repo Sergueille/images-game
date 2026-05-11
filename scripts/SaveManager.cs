@@ -27,6 +27,7 @@ public static class SaveManager
     {
         [JsonInclude] public MoveableImage.MoveableImageState[] images;
         [JsonInclude] public bool imageSaved;
+        [JsonInclude] public Dictionary<string, float> backgroundColorProperties;
     }
 
     public static void Save(SaveData save)

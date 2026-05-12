@@ -1164,7 +1164,7 @@ grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_qnost")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_wnkbs")
 theme_override_styles/hover = SubResource("StyleBoxTexture_f6a44")
-text = "Click here to start"
+text = "Start"
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1976928093]
 visible = false

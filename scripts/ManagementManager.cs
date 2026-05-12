@@ -48,6 +48,8 @@ public partial class ManagementManager : Node
 
     public List<MoveableImage> currentMoveableImages;
 
+    bool gameStartClicked = false;
+
     public static ManagementManager i;
 
     public override void _Ready()
@@ -233,6 +235,9 @@ public partial class ManagementManager : Node
 
     public void OnTitleScreenStart()
     {
+        if (gameStartClicked) { return; }
+        gameStartClicked = true;
+        
         Tween t = GetTree().CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Expo);
         t.TweenProperty(titleScreen, "modulate", new Color(1.0f, 1.0f, 1.0f, 0.0f), 3.0f);
         t.Finished += () => {

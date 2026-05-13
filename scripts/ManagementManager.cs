@@ -213,7 +213,7 @@ public partial class ManagementManager : Node
         if (saveData.currentPaintingId == null) return;
         
         saveData.paintings[saveData.currentPaintingId].images = currentMoveableImages.Select(img => img.state).ToArray();
-        saveData.paintings[saveData.currentPaintingId].backgroundColorProperties = canvasColorControllable.properties;
+        saveData.paintings[saveData.currentPaintingId].backgroundColorProperties = canvasColorControllable.properties.ToDictionary();
         SaveManager.Save(saveData);
     }
 

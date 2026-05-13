@@ -63,6 +63,8 @@
 [ext_resource type="AudioStream" uid="uid://danxagj8hu2sp" path="res://sounds/door3.wav" id="41_rnkwl"]
 [ext_resource type="AudioStream" uid="uid://ch44ej6horo35" path="res://sounds/whoosh.wav" id="47_pjyto"]
 [ext_resource type="Texture2D" uid="uid://bkdic2mp0lm0a" path="res://sprites/paper_in_progress.png" id="48_uatky"]
+[ext_resource type="Texture2D" uid="uid://fj0bclqymb53" path="res://sprites/hand_pointing.png" id="66_uatky"]
+[ext_resource type="Script" uid="uid://x1atr8adeycy" path="res://scripts/Oscillator.cs" id="67_1vm84"]
 [ext_resource type="Texture2D" uid="uid://bs8eixotgcxo1" path="res://sprites/canvas_border.png" id="67_rqtf5"]
 [ext_resource type="Texture2D" uid="uid://csnroh2ldjbi3" path="res://sprites/easel_but_better.png" id="68_1vm84"]
 
@@ -463,7 +465,7 @@ region_rect = Rect2(338, 0, 164, 1000)
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport", "handPointingDoor")]
 script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
@@ -484,6 +486,7 @@ titleScreen = NodePath("../TitleScreen")
 dialogueManager = NodePath("../ProfRoom/Desk/DialogueManager")
 fadeInColorRect = NodePath("../ColorRect")
 paintingSaveViewport = NodePath("../PaintingSave")
+handPointingDoor = NodePath("../HandPointing")
 
 [node name="Whoosh" type="AudioStreamPlayer" parent="Management manager" unique_id=1261691229]
 stream = ExtResource("47_pjyto")
@@ -1255,6 +1258,13 @@ patch_margin_right = 32
 patch_margin_bottom = 27
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
+
+[node name="HandPointing" type="Sprite2D" parent="." unique_id=174768852]
+modulate = Color(1, 1, 1, 0.39215687)
+z_index = 1000
+position = Vector2(1209, 296)
+texture = ExtResource("66_uatky")
+script = ExtResource("67_1vm84")
 
 [connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button" to="ProfRoom/Desk/DialogueManager" method="PaintingDoneButton"]
 [connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button2" to="ProfRoom/Desk/DialogueManager" method="MachineBrokenButton"]

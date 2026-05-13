@@ -65,6 +65,11 @@ public partial class CameraController : Camera2D
 
     public void GoToScreen(int targetScreen)
     {
+        if (currentScreen != targetScreen)
+        {
+            Utils.PlayRandomSound(this, "Door", 3, 0.2f);
+        }
+
         currentScreen = targetScreen;
         MoveToRightPosition();
     }
@@ -73,6 +78,8 @@ public partial class CameraController : Camera2D
     {
         animating = true;
         float targetX = currentScreen * screenSize;
+        
+        ManagementManager.i.handPointingDoor.Visible = false;
 
         Tween tween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.InOut);
         tween.TweenProperty(this, "position", new Vector2(targetX, 0.0f), transitionDuration);

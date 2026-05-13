@@ -35,6 +35,12 @@ public partial class DialogueManager : Node
         public string text;
     };
 
+    public class CallFunction : DialogueItem
+    {
+        public Action action;
+    };
+
+
     public override async void _Ready()
     {
         textParent.Scale = Vector2.Zero;
@@ -110,6 +116,10 @@ public partial class DialogueManager : Node
                 await Wait(wordDelay);
             }
             StopProfessorAnimation();
+        }
+        else if (item is CallFunction callFunctionItem)
+        {
+            callFunctionItem.action();
         }
         else { throw new NotImplementedException(); }
     }

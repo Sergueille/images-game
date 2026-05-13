@@ -35,6 +35,7 @@ public partial class ManagementManager : Node
     [Export] DialogueManager dialogueManager;
     [Export] ColorRect fadeInColorRect;
     [Export] SubViewport paintingSaveViewport;
+    [Export] public Node2D handPointingDoor;
 
     [Export] float saveInterval = 5.0f;
     double lastSaveTime = 0.0f;
@@ -60,6 +61,7 @@ public partial class ManagementManager : Node
 
         paintingView.Visible = false;
         paintingSprite.Visible = false;
+        handPointingDoor.Visible = false;
         currentMoveableImages = new List<MoveableImage>();
 
         saveData = SaveManager.Load();
@@ -213,7 +215,10 @@ public partial class ManagementManager : Node
         if (saveData.currentPaintingId == null) return;
         
         saveData.paintings[saveData.currentPaintingId].images = currentMoveableImages.Select(img => img.state).ToArray();
-        saveData.paintings[saveData.currentPaintingId].backgroundColorProperties = canvasColorControllable.properties.ToDictionary();
+
+        if (canvasColorControllable.properties != null)
+            saveData.paintings[saveData.currentPaintingId].backgroundColorProperties = canvasColorControllable.properties.ToDictionary();
+        
         SaveManager.Save(saveData);
     }
 
@@ -237,6 +242,8 @@ public partial class ManagementManager : Node
     {
         if (gameStartClicked) { return; }
         gameStartClicked = true;
+
+        SetCurrentPainting("annunciate");
         
         Tween t = GetTree().CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Expo);
         t.TweenProperty(titleScreen, "modulate", new Color(1.0f, 1.0f, 1.0f, 0.0f), 3.0f);
@@ -265,8 +272,9 @@ public partial class ManagementManager : Node
                 new DialogueManager.DialogueText { text = "But keep in mind that the machine can only handle simple and generic objects." },
                 new DialogueManager.DialogueText { text = "Just give it a word or two, and it should work just fine!" },
                 new DialogueManager.DialogueText { text = "Anyway! You should be able to figure it out on your own!" },
-                new DialogueManager.DialogueText { text = "Just take the painting you want to start with, and go to the room on your left, everything is already set up!" },
+                new DialogueManager.DialogueText { text = "Just go to the room on your left, everything is already set up!" },
                 new DialogueManager.DialogueText { text = "Good luck! Don't hesitate to ask for advice." },
+                new DialogueManager.CallFunction { action = () => handPointingDoor.Visible = true },
             ]);
 
             saveData.state = SaveManager.GameState.Beginning;

@@ -122,7 +122,8 @@ public partial class FaxManager : Node
                             SetReady();
                         };
                     },
-                    [new TransparencyFilter(), new PhotoFilter()],
+                    [new PhotoFilter()],
+                    [new TransparencyFilter()],
                     (logMessage) => {
                         GetNode<AudioStreamPlayer>("Logs").Play();
                         AddLine(logMessage);

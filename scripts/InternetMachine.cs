@@ -30,15 +30,17 @@ public partial class InternetMachine : Node
     private Action onFailure;
     private Action<string> onLog;
     private ImageFilter[] filters;
+    private ImageFilter[] lastChanceFilters;
+
+    private List<(Image, string)> lastChanceImages;
     
-    private int imagesRemaining;
     private bool resultGiven;
     private bool isBusy = false;
     private HashSet<string> visitedUrls = new HashSet<string>();
 
     private Dictionary<string, string> cookies;
 
-    public void RequestImage(string query, Action<Image, string> onCompleted, Action onFailure, ImageFilter[] filters, Action<string> onLog)
+    public void RequestImage(string query, Action<Image, string> onCompleted, Action onFailure, ImageFilter[] filters, ImageFilter[] lastChanceFilters, Action<string> onLog)
     {
         CancelAllRequests();
 
@@ -49,7 +51,10 @@ public partial class InternetMachine : Node
         this.onFailure = onFailure;
         this.onLog = onLog;
         this.filters = filters;
+        this.lastChanceFilters = lastChanceFilters;
         isBusy = true;
+
+        lastChanceImages = new List<(Image, string)>();
 
         string fullQuery = $"https://www.bing.com/images/search?q={queryEscaped}&qft=%20filterui%3Aphoto-transparent";
 
@@ -66,19 +71,18 @@ public partial class InternetMachine : Node
         f.StoreString(html);
         
         Match[] matches = r.Matches(html).Distinct(new MatchComparer()).ToArray();
-        matches = matches.Where(m => !visitedUrls.Contains(m.Value)).ToArray(); // Filter already visited urls
+        matches = matches.Where(m => !visitedUrls.Contains(cleanUrl(m.Value))).ToArray(); // Filter already visited urls
 
-        imagesRemaining = matches.Length; // Probably wil a lot of duplicates
         resultGiven = false;
 
-        if (imagesRemaining == 0)
+        if (matches.Length == 0)
         {
             onLog("0 results");
             onFailure();
             isBusy = false;
         }
 
-        GD.Print("Result count:", imagesRemaining);
+        GD.Print("Result count:", matches.Length);
 
         Random.Shared.Shuffle(matches);
 
@@ -87,15 +91,22 @@ public partial class InternetMachine : Node
 
     private void FetchImage(Match[] urls, int index)
     {
-        if (index >= urls.Length) { 
-            onFailure(); 
-            isBusy = false;
-            return; 
+        if (index >= urls.Length) {
+            if (lastChanceImages.Count > 0)
+            {
+                visitedUrls.Add(lastChanceImages[0].Item2);
+                ReturnResult(lastChanceImages[0].Item1);
+                return;
+            }
+            else
+            {
+                onFailure(); 
+                isBusy = false;
+                return; 
+            }
         }
 
         Match m = urls[index];
-
-        visitedUrls.Add(m.Value);
 
         string uglyLink = m.Value;
         string cleanedLink = cleanUrl(uglyLink);
@@ -130,7 +141,6 @@ public partial class InternetMachine : Node
                         FetchImage(urls, index + 1);
                 }, 
                 () => {
-                    HandleImageFailure(cleanedLink);
                     FetchImage(urls, index + 1);
                 },
                 true
@@ -138,7 +148,7 @@ public partial class InternetMachine : Node
         }
         else
         {
-            imagesRemaining -= 1;
+            visitedUrls.Add(cleanedLink);
             FetchImage(urls, index + 1);
         }
     }
@@ -149,30 +159,41 @@ public partial class InternetMachine : Node
 
         if (resultCode == 0)
         {
-            GD.Print("Failed to parse image");
+            GD.Print("Failed to parse image: ", link);
             onLog("img corrupt");
-            HandleImageFailure(link);
+            visitedUrls.Add(link);
             return false;
         }
         else if (resultCode == 1)
         {
-            GD.Print("Image rejected by filter");
+            GD.Print("Image rejected by filter: ", link);
             onLog("img rejected");
-            HandleImageFailure(link);
+            visitedUrls.Add(link);
+            return false;
+        }
+        else if (resultCode == 3)
+        {
+            GD.Print("Image used for last chance: ", link);
+            onLog("img bad");
+            lastChanceImages.Add((img, link));
             return false;
         }
 
+        visitedUrls.Add(link);
+        ReturnResult(img);
+        return true;
+    }
+
+    private void ReturnResult(Image img)
+    {
         CancelAllRequests();
 
         if (!resultGiven)
         {
             resultGiven = true;
-            onCompleted(img, link);
+            onCompleted(img, "url not available :(");
             isBusy = false;
-            return true;
-        }        
-
-        return false;
+        }
     }
 
     private Task<(int, Image)> HandleImageResultAsync(byte[] body)
@@ -194,6 +215,15 @@ public partial class InternetMachine : Node
                     if (!filter.FilterImage(img))
                     {
                         task.SetResult((1, null));
+                        return;
+                    }
+                }
+                
+                foreach (ImageFilter filter in lastChanceFilters)
+                {
+                    if (!filter.FilterImage(img))
+                    {
+                        task.SetResult((3, img));
                         return;
                     }
                 }
@@ -262,17 +292,6 @@ public partial class InternetMachine : Node
         cropped.GenerateMipmaps();
 
         return cropped;
-    }
-
-
-    private void HandleImageFailure(string link)
-    {
-        GD.Print("Image failed: ", link);
-
-        imagesRemaining -= 1;
-        if (imagesRemaining > 0) return;
-        onFailure();
-        isBusy = false;
     }
 
     private void CancelAllRequests()

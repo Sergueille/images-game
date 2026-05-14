@@ -10,7 +10,6 @@
 - show machine blueprint during intro dialogue
 - do palette dialogue
 - skip non intersecting images when changing layer
-- change saturation icons
 - buttons to change background color directly
 
 ## Not-Sure-I-Want-It-Features

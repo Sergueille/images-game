@@ -30,13 +30,11 @@
 [ext_resource type="FontFile" uid="uid://mb2w4x8615u7" path="res://cattos-handwriting.ttf" id="13_0n3wm"]
 [ext_resource type="LabelSettings" uid="uid://dkroxxq6i1t7n" path="res://label_settings.tres" id="13_qnost"]
 [ext_resource type="Shader" uid="uid://c4tvni1wbhcgj" path="res://cloud.gdshader" id="14_1vm84"]
-[ext_resource type="Texture2D" uid="uid://dq0io3kll7tpn" path="res://sprites/sat_plus.png" id="14_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://cnrbjivwv14mo" path="res://sprites/hue_plus.png" id="14_074og"]
 [ext_resource type="Texture2D" uid="uid://bra7qspebsggn" path="res://sprites/hue_less.png" id="14_cegan"]
 [ext_resource type="Texture2D" uid="uid://cmvuct8q8iquw" path="res://sprites/dialogue_next.png" id="14_d2t1y"]
 [ext_resource type="Texture2D" uid="uid://sgyoq60s2myk" path="res://sprites/brightness_plus.png" id="14_vivmo"]
 [ext_resource type="Texture2D" uid="uid://bjforqfxyo4xx" path="res://sprites/brightness_less.png" id="15_2cqfq"]
-[ext_resource type="Texture2D" uid="uid://cnco35c4g2aiu" path="res://sprites/sat_less.png" id="15_yaehf"]
 [ext_resource type="Texture2D" uid="uid://bwnf673bueqqh" path="res://sprites/window_light.png" id="18_ntx8l"]
 [ext_resource type="AudioStream" uid="uid://cohyjao2ncdco" path="res://sounds/machine_work.wav" id="21_0cbny"]
 [ext_resource type="AudioStream" uid="uid://b31uyqg1xr7il" path="res://sounds/ding.wav" id="21_f6a44"]
@@ -64,6 +62,8 @@
 [ext_resource type="AudioStream" uid="uid://danxagj8hu2sp" path="res://sounds/door3.wav" id="41_rnkwl"]
 [ext_resource type="AudioStream" uid="uid://ch44ej6horo35" path="res://sounds/whoosh.wav" id="47_pjyto"]
 [ext_resource type="Texture2D" uid="uid://bkdic2mp0lm0a" path="res://sprites/paper_in_progress.png" id="48_uatky"]
+[ext_resource type="Texture2D" uid="uid://cfsb74vlpdcmf" path="res://sprites/sat_less_alt.png" id="59_1vm84"]
+[ext_resource type="Texture2D" uid="uid://3t8u7l5hftxt" path="res://sprites/sat_plus_alt.png" id="60_wu3dr"]
 [ext_resource type="Texture2D" uid="uid://fj0bclqymb53" path="res://sprites/hand_pointing.png" id="66_uatky"]
 [ext_resource type="Script" uid="uid://x1atr8adeycy" path="res://scripts/Oscillator.cs" id="67_1vm84"]
 [ext_resource type="Texture2D" uid="uid://bs8eixotgcxo1" path="res://sprites/canvas_border.png" id="67_rqtf5"]
@@ -964,7 +964,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("4_1bvp3")
-icon = ExtResource("15_yaehf")
+icon = ExtResource("59_1vm84")
 expand_icon = true
 
 [node name="Sat-" type="Button" parent="Palette/Palette" unique_id=2125764549]
@@ -982,7 +982,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("4_1bvp3")
-icon = ExtResource("14_2cqfq")
+icon = ExtResource("60_wu3dr")
 expand_icon = true
 
 [node name="Bri+" type="Button" parent="Palette/Palette" unique_id=700208478]

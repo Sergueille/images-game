@@ -29,6 +29,7 @@
 [ext_resource type="Script" uid="uid://sq0d6c0ckgid" path="res://scripts/DialogueManager.cs" id="12_gngh3"]
 [ext_resource type="FontFile" uid="uid://mb2w4x8615u7" path="res://cattos-handwriting.ttf" id="13_0n3wm"]
 [ext_resource type="LabelSettings" uid="uid://dkroxxq6i1t7n" path="res://label_settings.tres" id="13_qnost"]
+[ext_resource type="Shader" uid="uid://c4tvni1wbhcgj" path="res://cloud.gdshader" id="14_1vm84"]
 [ext_resource type="Texture2D" uid="uid://dq0io3kll7tpn" path="res://sprites/sat_plus.png" id="14_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://cnrbjivwv14mo" path="res://sprites/hue_plus.png" id="14_074og"]
 [ext_resource type="Texture2D" uid="uid://bra7qspebsggn" path="res://sprites/hue_less.png" id="14_cegan"]
@@ -91,6 +92,12 @@ colors = PackedColorArray(0.55, 0.242, 0.27279997, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_82xsv"]
 gradient = SubResource("Gradient_cegan")
 fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wu3dr"]
+shader = ExtResource("14_1vm84")
+shader_parameter/amplitude = 0.01
+shader_parameter/spatial_frequency = 3.0
+shader_parameter/time_frequency = 0.25
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qnost"]
 size = Vector2(631.1843, 401.79907)
@@ -315,6 +322,7 @@ offset_bottom = -251.87405
 pivot_offset = Vector2(350.005, 237.51)
 
 [node name="NinePatchRect" type="NinePatchRect" parent="ProfRoom/Desk/Dialogue" unique_id=1351777000]
+material = SubResource("ShaderMaterial_wu3dr")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

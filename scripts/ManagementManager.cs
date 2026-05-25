@@ -36,6 +36,7 @@ public partial class ManagementManager : Node
     [Export] ColorRect fadeInColorRect;
     [Export] SubViewport paintingSaveViewport;
     [Export] public Node2D handPointingDoor;
+    [Export] public Sprite2D blueprintSprite;
 
     [Export] float saveInterval = 5.0f;
     double lastSaveTime = 0.0f;
@@ -62,6 +63,7 @@ public partial class ManagementManager : Node
         paintingView.Visible = false;
         paintingSprite.Visible = false;
         handPointingDoor.Visible = false;
+        blueprintSprite.Visible = false;
         currentMoveableImages = new List<MoveableImage>();
 
         saveData = SaveManager.Load();
@@ -267,7 +269,21 @@ public partial class ManagementManager : Node
                 new DialogueManager.DialogueText { text = "What do you mean, \"you can't draw\"?" },
                 new DialogueManager.DialogueText { text = "Of course, I won't let you on your own." },
                 new DialogueManager.DialogueText { text = "I have built a special device to help you with this job!" },
-                new DialogueManager.DialogueText { text = "It's still a prototype, but it's fully functional." },
+                new DialogueManager.CallFunction { action = () => {
+                    blueprintSprite.Visible = true;
+                    blueprintSprite.Scale = Vector2.Zero;
+                    Tween t = GetTree().CreateTween();
+                    t.TweenProperty(blueprintSprite, "scale", Vector2.One, 0.5f).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
+                } },
+                new DialogueManager.WaitForClick { delay = 1.0f  },
+                new DialogueManager.CallFunction { action = () => {
+                    Tween t = GetTree().CreateTween();
+                    t.TweenProperty(blueprintSprite, "scale", Vector2.Zero, 0.5f).SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Quad);
+                    t.Finished += () => {
+                        blueprintSprite.Visible = true;
+                    };
+                } },
+                new DialogueManager.DialogueText { text = "Impressive, mmh? It's still a prototype, but it's fully functional." },
                 new DialogueManager.DialogueText { text = "Just type in the thing you want to draw, and the machine will do the rest!" },
                 new DialogueManager.DialogueText { text = "But keep in mind that the machine can only handle simple and generic objects." },
                 new DialogueManager.DialogueText { text = "Just give it a word or two, and it should work just fine!" },

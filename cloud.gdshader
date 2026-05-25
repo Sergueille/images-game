@@ -14,7 +14,6 @@ void fragment() {
 		sin((UV.x * spatial_frequency + TIME * time_frequency) * 6.283)
 	);
 	COLOR = texture(TEXTURE, uv);
-	COLOR.a *= 0.9;
 }
 
 //void light() {

@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -53,7 +54,36 @@ public static class SaveManager
 
             GD.Print("> Loaded from file");
 
-            return JsonSerializer.Deserialize<SaveData>(content);
+            // TODO: test
+            try 
+            {
+                return JsonSerializer.Deserialize<SaveData>(content);
+            }
+            catch
+            {
+                GD.PushError("File save corrupted, starting with a fresh save");
+
+                // Try to save at least the painting images
+                try 
+                {   
+                    string backupFolder = saveFileFolder + "/../backup_paintings";
+                    DirAccess.MakeDirAbsolute(backupFolder);
+                    foreach (string filename in DirAccess.GetFilesAt(ManagementManager.paintingImagesSaveFolder))
+                    {
+                        DirAccess.CopyAbsolute(
+                            ProjectSettings.GlobalizePath(ManagementManager.paintingImagesSaveFolder + filename), 
+                            ProjectSettings.GlobalizePath(backupFolder + "/" + filename));
+                    }
+                } 
+                catch (Exception e)
+                {
+                    GD.PushError("Couldn't even make a backup of paintings :( ", e);
+                }
+
+                DirAccess.RemoveAbsolute(ProjectSettings.GlobalizePath(saveFileFolder)); // FIXME: check if recursive
+
+                return GetStartSaveData();
+            }
         }
         else
         {

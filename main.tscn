@@ -64,6 +64,7 @@
 [ext_resource type="Texture2D" uid="uid://bkdic2mp0lm0a" path="res://sprites/paper_in_progress.png" id="48_uatky"]
 [ext_resource type="Texture2D" uid="uid://cfsb74vlpdcmf" path="res://sprites/sat_less_alt.png" id="59_1vm84"]
 [ext_resource type="Texture2D" uid="uid://3t8u7l5hftxt" path="res://sprites/sat_plus_alt.png" id="60_wu3dr"]
+[ext_resource type="Texture2D" uid="uid://cglx4us8v8o53" path="res://sprites/blueprint.png" id="64_wu3dr"]
 [ext_resource type="Texture2D" uid="uid://fj0bclqymb53" path="res://sprites/hand_pointing.png" id="66_uatky"]
 [ext_resource type="Script" uid="uid://x1atr8adeycy" path="res://scripts/Oscillator.cs" id="67_1vm84"]
 [ext_resource type="Texture2D" uid="uid://bs8eixotgcxo1" path="res://sprites/canvas_border.png" id="67_rqtf5"]
@@ -95,7 +96,7 @@ fill_to = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wu3dr"]
 shader = ExtResource("14_1vm84")
-shader_parameter/amplitude = 0.01
+shader_parameter/amplitude = 0.005
 shader_parameter/spatial_frequency = 3.0
 shader_parameter/time_frequency = 0.25
 
@@ -473,7 +474,7 @@ region_rect = Rect2(338, 0, 164, 1000)
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport", "handPointingDoor")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport", "handPointingDoor", "blueprintSprite")]
 script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
@@ -495,6 +496,7 @@ dialogueManager = NodePath("../ProfRoom/Desk/DialogueManager")
 fadeInColorRect = NodePath("../ColorRect")
 paintingSaveViewport = NodePath("../PaintingSave")
 handPointingDoor = NodePath("../HandPointing")
+blueprintSprite = NodePath("../CameraZoomPosition/Node2D/blueprint")
 
 [node name="Whoosh" type="AudioStreamPlayer" parent="Management manager" unique_id=1261691229]
 stream = ExtResource("47_pjyto")
@@ -1129,6 +1131,14 @@ imageSize = 140.0
 
 [node name="CameraZoomPosition" type="Node2D" parent="." unique_id=1941725859]
 position = Vector2(1953, 242)
+
+[node name="Node2D" type="Node2D" parent="CameraZoomPosition" unique_id=889054756]
+scale = Vector2(0.465, 0.465)
+
+[node name="blueprint" type="Sprite2D" parent="CameraZoomPosition/Node2D" unique_id=1016722270]
+visible = false
+z_index = 4096
+texture = ExtResource("64_wu3dr")
 
 [node name="CameraTitleScreenPosition" type="Node2D" parent="." unique_id=709913969]
 position = Vector2(1626, 127)

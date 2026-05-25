@@ -40,6 +40,10 @@ public partial class DialogueManager : Node
         public Action action;
     };
 
+    public class WaitForClick : DialogueItem
+    {
+        public float delay;
+    };
 
     public override async void _Ready()
     {
@@ -85,10 +89,6 @@ public partial class DialogueManager : Node
 
             await HandleDialogueItem(item);
 
-            SetThingVisible(continueButton, true);
-            await ToSignal(continueButton, "pressed");
-            SetThingVisible(continueButton, false);
-
             if (item.unZoom)
             {
                 ManagementManager.i.cameraController.EnableAwkwardZoom();
@@ -116,10 +116,23 @@ public partial class DialogueManager : Node
                 await Wait(wordDelay);
             }
             StopProfessorAnimation();
+
+            SetThingVisible(continueButton, true);
+            await ToSignal(continueButton, "pressed");
+            SetThingVisible(continueButton, false);
         }
         else if (item is CallFunction callFunctionItem)
         {
             callFunctionItem.action();
+        }
+        else if (item is WaitForClick clickItem)
+        {
+            await Wait(clickItem.delay);
+            
+            while (!Input.IsActionJustPressed("click"))
+            {
+                await ToSignal(GetTree(), "process_frame");
+            }
         }
         else { throw new NotImplementedException(); }
     }

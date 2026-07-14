@@ -110,9 +110,14 @@ public partial class DialogueManager : Node
             string[] words = textItem.text.Split(' ');
             textLabel.Text = "";
             
-            foreach (string word in words)
+            int last = -1;
+            for (int i = 0; i < words.Length; i++)
             {
-                textLabel.Text += word + " ";
+                textLabel.Text += words[i] + " ";
+                if (i % 3 == 0)
+                {   
+                    last = Utils.PlayRandomSound(this, "Old", 13, 0.1f, last);
+                }
                 await Wait(wordDelay);
             }
             StopProfessorAnimation();

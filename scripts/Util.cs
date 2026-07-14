@@ -34,14 +34,21 @@ public static class Utils
         player.Play();
     }
     
-    public static void PlayRandomSound(Node parent, string name, int soundCount, float randPitch)
+    public static int PlayRandomSound(Node parent, string name, int soundCount, float randPitch, int lastOne=-1)
     {
         RandomNumberGenerator rand = new RandomNumberGenerator();
         rand.Randomize();
-        int soundId = rand.RandiRange(1, soundCount);
+        int soundId = lastOne;
+        while (soundId == lastOne)
+        {
+            soundId = rand.RandiRange(1, soundCount);
+        }
+
         AudioStreamPlayer player = parent.GetNode<AudioStreamPlayer>(name + soundId.ToString());
         player.PitchScale = 1.0f + rand.RandfRange(-randPitch, randPitch);
         player.Play();
+
+        return soundId;
     }
 }
 

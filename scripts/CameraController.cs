@@ -4,7 +4,7 @@ public partial class CameraController : Camera2D
 {
     bool animating = false;
 
-    [Export] int currentScreen = 0;
+    [Export] public int currentScreen = 0;
     [Export] int screenCount;
     [Export] float screenSize;
     [Export] public float transitionDuration;

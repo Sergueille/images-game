@@ -12,6 +12,7 @@ public partial class ManagementManager : Node
     [Export] FaxManager faxManager;
     [Export] InternetMachine internetMachine;
     [Export] PackedScene moveableImageScene;
+    [Export] MusicManager musicManager;
 
     [Export] TextureRect paintingSprite;
     [Export] Node2D imagesParent;
@@ -73,11 +74,15 @@ public partial class ManagementManager : Node
         }
 
         cameraController.InitPosition();
+        titleScreen.Visible = saveData.state == SaveManager.GameState.TitleScreen;
         if (saveData.state == SaveManager.GameState.TitleScreen)
         {
             cameraController.EnableTitleScreenZoom();
         }
-        titleScreen.Visible = saveData.state == SaveManager.GameState.TitleScreen;
+        else
+        {
+            musicManager.StartPlaying();
+        }
 
         fadeInColorRect.Visible = true;
         Tween t = GetTree().CreateTween();
@@ -250,6 +255,7 @@ public partial class ManagementManager : Node
         Tween t = GetTree().CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Expo);
         t.TweenProperty(titleScreen, "modulate", new Color(1.0f, 1.0f, 1.0f, 0.0f), 3.0f);
         t.Finished += () => {
+            musicManager.StartPlaying();
             titleScreen.Visible = false;
             cameraController.EnableAwkwardZoom();
             dialogueManager.DoDialogue([

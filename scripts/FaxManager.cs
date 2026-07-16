@@ -18,6 +18,7 @@ public partial class FaxManager : Node
     [Export] Node2D paperMask;
     [Export] Label screenTextLabel;
     [Export] float blinkDuration;
+    [Export] CpuParticles2D smoke;
 
     [Export] string queryPrefix = ">/ ";
     [Export] string cursor = "_";
@@ -95,6 +96,7 @@ public partial class FaxManager : Node
                 GetNode<AudioStreamPlayer>("Fan").Play();
                 GetNode<AudioStreamPlayer>("Memory").Play();
                 GetNode<AudioStreamPlayer>("Beeps").Play();
+                smoke.Emitting = true;
                 
                 internetMachine.RequestImage(
                     inputText.ToLower(), 
@@ -103,6 +105,7 @@ public partial class FaxManager : Node
                         GetNode<AudioStreamPlayer>("Memory").Stop();
                         GetNode<AudioStreamPlayer>("Beeps").Stop();
                         GetNode<AudioStreamPlayer>("MemoryEnd").Play();
+                        smoke.Emitting = false;
 
                         Print(img, url); 
                         ClearScreen();
@@ -114,6 +117,7 @@ public partial class FaxManager : Node
                         GetNode<AudioStreamPlayer>("Beeps").Stop();
                         GetNode<AudioStreamPlayer>("MemoryEnd").Play();
                         GetNode<AudioStreamPlayer>("Error").Play();
+                        smoke.Emitting = false;
                         ClearScreen();
                         AddLine("Failed. Check your internet.");
                         SceneTreeTimer t = GetTree().CreateTimer(3.0f); // TODO: blink

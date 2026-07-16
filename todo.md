@@ -2,14 +2,10 @@
 # TODO
 
 - more sounds
-- machine animation
+- machine buttons
 - game end
 - find a title
 - do palette dialogue
-- disable button for current painting, add a "start over" button
-- for already made paintings:
-    - show "edit painting" button
-    - show original
 - skip non intersecting images when changing layer
 
 ## Not-Sure-I-Want-It-Features

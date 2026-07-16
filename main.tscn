@@ -15,6 +15,7 @@
 [ext_resource type="Shader" uid="uid://clhlxo6ekh26o" path="res://shaders/moveable_image.gdshader" id="6_ryguw"]
 [ext_resource type="Texture2D" uid="uid://b4wvons2b1ato" path="res://sprites/professor_room_bigger.png" id="7_4k2k6"]
 [ext_resource type="Texture2D" uid="uid://baadiqdc6av6a" path="res://sprites/wallpaper.png" id="7_b17eg"]
+[ext_resource type="Texture2D" uid="uid://drwdfiwrmfqa" path="res://sprites/smoke.png" id="7_lwnsi"]
 [ext_resource type="Texture2D" uid="uid://c56rj4xijgiuv" path="res://sprites/professor.png" id="9_come4"]
 [ext_resource type="Script" uid="uid://cf76hb4qgscgd" path="res://scripts/CameraController.cs" id="9_d13ii"]
 [ext_resource type="Texture2D" uid="uid://b5e7y2oeklgf8" path="res://sprites/palette.png" id="9_dg77c"]
@@ -109,6 +110,13 @@ shader_parameter/reso_x = 200
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_seu75"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="Curve" id="Curve_41lik"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_jbvwl"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="Gradient" id="Gradient_cegan"]
 offsets = PackedFloat32Array(0)
@@ -246,6 +254,23 @@ material = SubResource("ShaderMaterial_htxhm")
 position = Vector2(-115.000015, -190.49997)
 scale = Vector2(0.866, 0.866)
 texture = SubResource("ViewportTexture_seu75")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Main room/Fax" unique_id=1387387900]
+z_index = -5
+position = Vector2(-44, -164)
+emitting = false
+texture = ExtResource("7_lwnsi")
+lifetime = 2.0
+speed_scale = 0.7
+spread = 20.0
+gravity = Vector2(0, -100)
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+angle_max = 360.0
+scale_amount_min = 0.8
+scale_amount_curve = SubResource("Curve_41lik")
+color = Color(1, 1, 1, 0.77254903)
+color_ramp = SubResource("Gradient_jbvwl")
 
 [node name="wallpaper" type="TextureRect" parent="Main room" unique_id=547702012]
 modulate = Color(1, 1, 1, 0.15686275)
@@ -593,7 +618,7 @@ shape = SubResource("RectangleShape2D_n5t1e")
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "musicManager", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport", "handPointingDoor", "blueprintSprite")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "musicManager", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "paintingViewConfirmButton", "paintingViewReference", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport", "handPointingDoor", "blueprintSprite")]
 script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
@@ -609,6 +634,8 @@ paintingView = NodePath("../Camera2D/PaintingView")
 paintingViewPaintingSelector = NodePath("../Camera2D/PaintingView/PaintingSelector")
 paintingViewTitle = NodePath("../Camera2D/PaintingView/PaintingSelector/Canvas/Label")
 paintingViewAuthor = NodePath("../Camera2D/PaintingView/PaintingSelector/Canvas/Label2")
+paintingViewConfirmButton = NodePath("../Camera2D/PaintingView/Button")
+paintingViewReference = NodePath("../Camera2D/PaintingView/TextureRect")
 canvasSprite = NodePath("../Canvas/Control")
 cameraController = NodePath("../Camera2D")
 titleScreen = NodePath("../TitleScreen")
@@ -622,7 +649,7 @@ blueprintSprite = NodePath("../CameraZoomPosition/Node2D/blueprint")
 stream = ExtResource("47_pjyto")
 volume_db = -13.828
 
-[node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("internetMachine", "paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask", "screenTextLabel")]
+[node name="Fax manager" type="Node" parent="." unique_id=1771737334 node_paths=PackedStringArray("internetMachine", "paperUpPosition", "paperDownPosition", "paperFallenPosition", "paper", "imagesParent", "paperMask", "screenTextLabel", "smoke")]
 script = ExtResource("9_seu75")
 internetMachine = NodePath("../The great internet machine")
 paperUpPosition = NodePath("../Positions/PaperUp")
@@ -634,6 +661,7 @@ moveableImageScene = ExtResource("3_h2yge")
 paperMask = NodePath("../Main room/Fax/FaxMask")
 screenTextLabel = NodePath("../SubViewport/MachineUI/Label")
 blinkDuration = 0.8
+smoke = NodePath("../Main room/Fax/CPUParticles2D")
 printDuration = 2.5
 fallDuration = 0.8
 
@@ -937,6 +965,47 @@ offset_bottom = 911.0
 mouse_filter = 2
 texture = ExtResource("7_b17eg")
 stretch_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D/PaintingView" unique_id=836583062]
+z_index = 500
+anchors_preset = -1
+anchor_left = 0.49500003
+anchor_top = 1.0
+anchor_right = 0.49500003
+anchor_bottom = 1.0
+offset_left = 650.0
+offset_top = 563.0
+offset_right = 1190.0
+offset_bottom = 1063.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.06986749
+scale = Vector2(-1, -1)
+pivot_offset_ratio = Vector2(0.25, 0)
+texture = ExtResource("36_b1qrp")
+expand_mode = 1
+flip_h = true
+flip_v = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Camera2D/PaintingView/TextureRect" unique_id=118108980]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.85962
+offset_top = -14.404892
+offset_right = 19.225708
+offset_bottom = 13.886993
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("67_rqtf5")
+region_rect = Rect2(0, 0, 200, 199)
+patch_margin_left = 33
+patch_margin_top = 40
+patch_margin_right = 32
+patch_margin_bottom = 27
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [node name="Door1" type="AudioStreamPlayer" parent="Camera2D" unique_id=450191736]
 stream = ExtResource("39_6iyjs")

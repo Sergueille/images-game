@@ -26,6 +26,8 @@ public partial class ManagementManager : Node
     [Export] PaintingSelector paintingViewPaintingSelector;
     [Export] Label paintingViewTitle;
     [Export] Label paintingViewAuthor;
+    [Export] Button paintingViewConfirmButton;
+    [Export] TextureRect paintingViewReference;
 
     [Export] float paintingViewShowAnimationAmount = 0.2f;
     [Export] float paintingViewShowAnimationDuration = 0.3f;
@@ -217,6 +219,32 @@ public partial class ManagementManager : Node
         paintingView.Scale = Vector2.One * (1.0f - paintingViewShowAnimationAmount);
         paintingView.Visible = true;
         isShowingPaintingView = true;
+
+        bool imageSaved = saveData.paintings != null 
+                       && saveData.paintings.ContainsKey(painting.id)
+                       && saveData.paintings[painting.id].imageSaved;
+        bool isCurrentPainting = saveData.currentPaintingId == painting.id;
+
+        if (isCurrentPainting)
+        {
+            paintingViewConfirmButton.Text = "Start over";
+        }
+        else if (imageSaved)
+        {
+            paintingViewConfirmButton.Text = "Edit painting";
+
+            Texture2D tex = PaintingFinder.GetPaintingTexture(painting.id);
+            Vector2 sizeVector = tex.GetSize();
+            float paintingRefScale = Mathf.Min(600.0f / sizeVector.X, 500.0f / sizeVector.Y);
+            paintingViewReference.Size = sizeVector * paintingRefScale;        
+            paintingViewReference.Texture = tex;
+        }
+        else
+        {
+            paintingViewConfirmButton.Text = "Start painting!";
+        }
+
+        paintingViewReference.Visible = imageSaved && !isCurrentPainting;
 
         Tween t = GetTree().CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
         t.TweenProperty(paintingView, "scale", Vector2.One, paintingViewShowAnimationDuration);

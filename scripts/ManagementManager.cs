@@ -141,6 +141,42 @@ public partial class ManagementManager : Node
         MoveableImage.mouseOverHandles = false;
     }
 
+    public void SetPresetColor1()
+    {
+        canvasSprite.SetPresetColor(new Color("#6b7461"));
+        MoveableImage.selectedImage = null;
+    }
+
+    public void SetPresetColor2()
+    {
+        canvasSprite.SetPresetColor(new Color("#21190e"));
+        MoveableImage.selectedImage = null;
+    }
+
+    public void SetPresetColor3()
+    {
+        canvasSprite.SetPresetColor(new Color("#6880bf"));
+        MoveableImage.selectedImage = null;
+    }
+
+    public void SetPresetColor4()
+    {
+        canvasSprite.SetPresetColor(new Color("#6f6856"));
+        MoveableImage.selectedImage = null;
+    }
+
+    public void SetPresetColor5()
+    {
+        canvasSprite.SetPresetColor(new Color("#a6c2af"));
+        MoveableImage.selectedImage = null;
+    }
+
+    public void SetPresetColor6()
+    {
+        canvasSprite.SetPresetColor(new Color("#fff"));
+        MoveableImage.selectedImage = null;
+    }
+
     public void HuePlus()
     {
         (MoveableImage.selectedImage?.GetColorControllable() ?? canvasSprite).SetMaterialProperty(ColorControllable.MaterialProperty.Hue, true);

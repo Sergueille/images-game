@@ -83,6 +83,7 @@
 [ext_resource type="Script" uid="uid://x1atr8adeycy" path="res://scripts/Oscillator.cs" id="67_1vm84"]
 [ext_resource type="Texture2D" uid="uid://bs8eixotgcxo1" path="res://sprites/canvas_border.png" id="67_rqtf5"]
 [ext_resource type="Texture2D" uid="uid://csnroh2ldjbi3" path="res://sprites/easel_but_better.png" id="68_1vm84"]
+[ext_resource type="Texture2D" uid="uid://o55jemwktcxt" path="res://sprites/button_round_back_white.png" id="77_53bls"]
 [ext_resource type="Script" uid="uid://b87tqfviog4r" path="res://scripts/MusicManager.cs" id="83_ovcoh"]
 [ext_resource type="AudioStream" uid="uid://c3r383ngr3o13" path="res://sounds/music/fugue_d_min.ogg" id="84_yysqy"]
 [ext_resource type="AudioStream" uid="uid://djbl71rrl7ayk" path="res://sounds/music/fugue_c#.mp3" id="85_n5t1e"]
@@ -162,6 +163,30 @@ font_color = Color(0, 0, 0, 0.5882353)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mhft1"]
 size = Vector2(1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lwnsi"]
+texture = ExtResource("77_53bls")
+modulate_color = Color(0.41960785, 0.45490196, 0.38039216, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_41lik"]
+texture = ExtResource("77_53bls")
+modulate_color = Color(0.12941177, 0.09803922, 0.05490196, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jbvwl"]
+texture = ExtResource("77_53bls")
+modulate_color = Color(0.40784314, 0.5019608, 0.7490196, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sn1fb"]
+texture = ExtResource("77_53bls")
+modulate_color = Color(0.43529412, 0.40784314, 0.3372549, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yvsr8"]
+texture = ExtResource("77_53bls")
+modulate_color = Color(0.6509804, 0.7607843, 0.6862745, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_53bls"]
+texture = ExtResource("77_53bls")
+modulate_color = Color(0.93, 0.93, 0.93, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_seu75"]
 line_spacing = -12.58
@@ -1118,6 +1143,72 @@ theme = ExtResource("4_1bvp3")
 icon = ExtResource("14_vivmo")
 expand_icon = true
 
+[node name="Button" type="Button" parent="Palette/Palette" unique_id=1465435040]
+layout_mode = 0
+offset_left = 22.009949
+offset_top = 205.00995
+offset_right = 56.00995
+offset_bottom = 238.00995
+theme = ExtResource("4_1bvp3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_lwnsi")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_lwnsi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lwnsi")
+
+[node name="Button2" type="Button" parent="Palette/Palette" unique_id=1564973661]
+layout_mode = 0
+offset_left = 51.00995
+offset_top = 235.00995
+offset_right = 85.00995
+offset_bottom = 268.00995
+theme = ExtResource("4_1bvp3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_41lik")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_41lik")
+theme_override_styles/hover = SubResource("StyleBoxTexture_41lik")
+
+[node name="Button3" type="Button" parent="Palette/Palette" unique_id=387059774]
+layout_mode = 0
+offset_left = 92.00995
+offset_top = 250.00995
+offset_right = 126.00995
+offset_bottom = 283.00995
+theme = ExtResource("4_1bvp3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_jbvwl")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jbvwl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jbvwl")
+
+[node name="Button4" type="Button" parent="Palette/Palette" unique_id=1474818966]
+layout_mode = 0
+offset_left = 105.00995
+offset_top = 208.00995
+offset_right = 139.00995
+offset_bottom = 241.00995
+theme = ExtResource("4_1bvp3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_sn1fb")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_sn1fb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_sn1fb")
+
+[node name="Button5" type="Button" parent="Palette/Palette" unique_id=336061215]
+layout_mode = 0
+offset_left = 66.00995
+offset_top = 189.00995
+offset_right = 100.00995
+offset_bottom = 222.00995
+theme = ExtResource("4_1bvp3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_yvsr8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_yvsr8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_yvsr8")
+
+[node name="Button6" type="Button" parent="Palette/Palette" unique_id=319043649]
+layout_mode = 0
+offset_left = 140.00995
+offset_top = 234.00995
+offset_right = 174.00995
+offset_bottom = 267.00995
+theme = ExtResource("4_1bvp3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_53bls")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_53bls")
+theme_override_styles/hover = SubResource("StyleBoxTexture_53bls")
+
 [node name="Positions" type="Node2D" parent="." unique_id=1435294901]
 
 [node name="PaperDown" type="Node2D" parent="Positions" unique_id=969978514]
@@ -1391,7 +1482,7 @@ volume_db = -5.0
 
 [node name="scratch" type="AudioStreamPlayer" parent="MusicManager" unique_id=999865202]
 stream = ExtResource("92_h6isl")
-volume_db = -5.0
+volume_db = -8.0
 
 [connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button" to="ProfRoom/Desk/DialogueManager" method="PaintingDoneButton"]
 [connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button2" to="ProfRoom/Desk/DialogueManager" method="MachineBrokenButton"]
@@ -1412,4 +1503,10 @@ volume_db = -5.0
 [connection signal="pressed" from="Palette/Palette/Sat-" to="Management manager" method="SaturationPlus"]
 [connection signal="pressed" from="Palette/Palette/Bri+" to="Management manager" method="BrightnessLess"]
 [connection signal="pressed" from="Palette/Palette/Bri-" to="Management manager" method="BrightnessPlus"]
+[connection signal="pressed" from="Palette/Palette/Button" to="Management manager" method="SetPresetColor1"]
+[connection signal="pressed" from="Palette/Palette/Button2" to="Management manager" method="SetPresetColor2"]
+[connection signal="pressed" from="Palette/Palette/Button3" to="Management manager" method="SetPresetColor3"]
+[connection signal="pressed" from="Palette/Palette/Button4" to="Management manager" method="SetPresetColor4"]
+[connection signal="pressed" from="Palette/Palette/Button5" to="Management manager" method="SetPresetColor5"]
+[connection signal="pressed" from="Palette/Palette/Button6" to="Management manager" method="SetPresetColor6"]
 [connection signal="pressed" from="TitleScreen/Button" to="Management manager" method="OnTitleScreenStart"]

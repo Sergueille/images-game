@@ -12,6 +12,14 @@ public partial class ColorControllable : Node
 
     public Dictionary<string, float> properties;
 
+    public void SetPresetColor(Color c)
+    {
+        c.ToHsv(out float hue, out float sat, out float val);
+        SetProp("hueShift", hue);
+        SetProp("saturation", sat * 0.7f - 1.0f);
+        SetProp("brightness", val * 2.0f - 1.1f);
+    }
+
     public void SetMaterialProperty(MaterialProperty property, bool plusOrMinus)
     {
         string param = property switch

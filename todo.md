@@ -11,7 +11,6 @@
     - show "edit painting" button
     - show original
 - skip non intersecting images when changing layer
-- buttons to change background color directly
 
 ## Not-Sure-I-Want-It-Features
 

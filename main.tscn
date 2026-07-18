@@ -86,14 +86,16 @@
 [ext_resource type="Texture2D" uid="uid://csnroh2ldjbi3" path="res://sprites/easel_but_better.png" id="68_1vm84"]
 [ext_resource type="Texture2D" uid="uid://o55jemwktcxt" path="res://sprites/button_round_back_white.png" id="77_53bls"]
 [ext_resource type="Script" uid="uid://b87tqfviog4r" path="res://scripts/MusicManager.cs" id="83_ovcoh"]
-[ext_resource type="AudioStream" uid="uid://c3r383ngr3o13" path="res://sounds/music/fugue_d_min.ogg" id="84_yysqy"]
-[ext_resource type="AudioStream" uid="uid://djbl71rrl7ayk" path="res://sounds/music/fugue_c#.mp3" id="85_n5t1e"]
-[ext_resource type="AudioStream" uid="uid://c6nwgnlv7msht" path="res://sounds/music/le_coucou.wav" id="86_h6isl"]
-[ext_resource type="AudioStream" uid="uid://cai88fncetxm8" path="res://sounds/music/prelude_c#.mp3" id="87_53bls"]
+[ext_resource type="AudioStream" uid="uid://cchd23b2qg7db" path="res://sounds/music/fugue_d_min.wav" id="87_jbvwl"]
+[ext_resource type="AudioStream" uid="uid://bjlhcwvvkv7c" path="res://sounds/music/prelude_c#.wav" id="88_jbvwl"]
 [ext_resource type="AudioStream" uid="uid://dentt0rmo3v45" path="res://sounds/music/scarlatti_sonata_d_minor.wav" id="88_lwnsi"]
 [ext_resource type="AudioStream" uid="uid://osp78hkdpiij" path="res://sounds/music/gmnopédie_3.wav" id="89_41lik"]
-[ext_resource type="AudioStream" uid="uid://bscokj0mck8if" path="res://sounds/music/gnossienne_3.ogg" id="90_jbvwl"]
+[ext_resource type="AudioStream" uid="uid://biecysdje6ah8" path="res://sounds/music/prelude_fsharp_minor.wav" id="89_sn1fb"]
+[ext_resource type="AudioStream" uid="uid://bdhprp868ntue" path="res://sounds/music/fugue_c#.wav" id="90_sn1fb"]
+[ext_resource type="AudioStream" uid="uid://drog1s3cxij" path="res://sounds/music/prelude_e_major.wav" id="91_yvsr8"]
 [ext_resource type="AudioStream" uid="uid://ble41v4y28ig0" path="res://sounds/phonograph_scratch.wav" id="92_h6isl"]
+[ext_resource type="AudioStream" uid="uid://bwqvedmr3qf55" path="res://sounds/music/fugue_g_minor.wav" id="93_vieuh"]
+[ext_resource type="AudioStream" uid="uid://gapmju82pdw5" path="res://sounds/music/gnossienne_3.wav" id="95_yvsr8"]
 
 [sub_resource type="Gradient" id="Gradient_efxa6"]
 offsets = PackedFloat32Array(0)
@@ -1037,6 +1039,7 @@ volume_db = -13.828
 [node name="StartUI" type="CanvasLayer" parent="Camera2D" unique_id=460695011]
 
 [node name="Control" type="Control" parent="Camera2D/StartUI" unique_id=1263694614]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1621,12 +1624,12 @@ script = ExtResource("67_1vm84")
 [node name="MusicManager" type="Node" parent="." unique_id=1078874194 node_paths=PackedStringArray("player", "camera", "phonograph")]
 script = ExtResource("83_ovcoh")
 player = NodePath("AudioStreamPlayer")
-songs = Array[AudioStream]([ExtResource("84_yysqy"), ExtResource("85_n5t1e"), ExtResource("86_h6isl"), ExtResource("87_53bls"), ExtResource("88_lwnsi"), ExtResource("89_41lik"), ExtResource("90_jbvwl")])
+songs = Array[AudioStream]([ExtResource("87_jbvwl"), ExtResource("88_jbvwl"), ExtResource("89_sn1fb"), ExtResource("90_sn1fb"), ExtResource("91_yvsr8"), ExtResource("88_lwnsi"), ExtResource("93_vieuh"), ExtResource("89_41lik"), ExtResource("95_yvsr8")])
 camera = NodePath("../Camera2D")
 phonograph = NodePath("../ProfRoom/Phonograph")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MusicManager" unique_id=692236311]
-volume_db = -5.0
+volume_db = -8.0
 
 [node name="scratch" type="AudioStreamPlayer" parent="MusicManager" unique_id=999865202]
 stream = ExtResource("92_h6isl")

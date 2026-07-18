@@ -8,11 +8,11 @@ Font:
 
 
 Music:
-	"le coucou", by Louis-Claude Daquin. Performance by Richard Siegel under CCBY 4.0 licence: https://imslp.org/wiki/Special:ReverseLookup/552240
-	"prelude and fugue in C# major", by Johann Sebastian Bach. Performance by Kimiko Ishizaka under CCBY 4.0: https://imslp.org/wiki/Prelude_and_Fugue_in_C-sharp_major,_BWV_848_(Bach,_Johann_Sebastian)
-	"fugue in D minor", by Johann Sebastian Bach. Performance by Martha Goldstein under EFF open audio licence: https://ks15.imslp.org/files/imglnks/usimg/7/7a/IMSLP305912-PMLP05948-09Efuge_Dmin.ogg
-	"gymnopédie 3" and "gnossienne 3", by Erik Satie.
-	"sonata in D minor" by Domenico Scarlatti.
+	"fugue in D minor", by Johann Sebastian Bach. Performance by Martha Goldstein under EFF open audio license: https://ks15.imslp.org/files/imglnks/usimg/7/7a/IMSLP305912-PMLP05948-09Efuge_Dmin.ogg
+	"prelude in E major" from the "well tempered clavier", by Johann Sebastian Bach. Performance by Kimiko Ishizaka under CC-BY 3.0: https://commons.wikimedia.org/wiki/File:Kimiko_Ishizaka_-_Bach-_Well-Tempered_Clavier,_Book_1_-_17_Prelude_No._9_in_E_major,_BWV_854.flac
+	"prelude and fugue in C# major", "prelude in E major", "prelude & fugue in G minor", "prelude in F# minor" from the "well tempered clavier", by Johann Sebastian Bach. Performance by Kimiko Ishizaka under various licenses: https://commons.wikimedia.org/wiki/Category:Audio_files_of_Open_Well-Tempered_Clavier,_Book_1
+	"gymnopédie 3" and "gnossienne 3", by Erik Satie, public domain recording.
+	"sonata in D minor" by Domenico Scarlatti, public domain recording.
 
 Sound:
 	image stretch: created by bassimat, under CC0: https://freesound.org/people/bassimat/sounds/831455/
@@ -23,4 +23,4 @@ Sound:
 	door: created by InspectorJ, under CC-BY 4.0: https://freesound.org/people/InspectorJ/sounds/271562/
 	keyboard: created by M4taiori, under CC-BY 3.0: und.org/people/M4taiori/sounds/331428/
 	camera movement sound, created by Vilkas_Sound, under CC-BY 4.0: https://freesound.org/people/Vilkas_Sound/sounds/460472/
-	and many other sounds under CC0 I forgot to add here, sorry!
+	and many other public domain sounds I forgot to add here, sorry!

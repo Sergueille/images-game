@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 public partial class MoveableImage : Node2D
@@ -48,6 +50,7 @@ public partial class MoveableImage : Node2D
     bool isRotating = false;
     bool isScaling = false;
     bool isSkewing = false;
+    Image currentImage = null;
 
     bool haveMovedYet = false;
 
@@ -94,6 +97,7 @@ public partial class MoveableImage : Node2D
 
     private void InitInternal(Image image)
     {
+        currentImage = image;
         ImageTexture tex = ImageTexture.CreateFromImage(image);
         sprite.Texture = tex;
 
@@ -121,19 +125,19 @@ public partial class MoveableImage : Node2D
         bool mousePressed = Input.IsMouseButtonPressed(MouseButton.Left);
         if (mousePressed && !mousePressedLastFrame && !mouseOverHandles)
         {
-            hoveredImages.Sort((a, b) => {
+            MoveableImage[] reallyHoveredImages = hoveredImages.Where(i => i.IsPointerReallyOnImage()).ToArray();
+            Array.Sort(reallyHoveredImages, (a, b) => {
                 return b.ZIndex.CompareTo(a.ZIndex);
             });
 
-            if (hoveredImages.Count == 0)
-            {
+            if (reallyHoveredImages.Length == 0) {
                 if (selectedImage == this)
                 {
                     OnDeselected();
                     selectedImage = null;
                 }
             }
-            else if (this == hoveredImages[0])
+            else if (this == reallyHoveredImages[0])
             {
                 if (selectedImage != this)
                 {
@@ -228,6 +232,15 @@ public partial class MoveableImage : Node2D
         }
 
         state.colorProperties = colorControllable.properties;
+    }
+
+    public bool IsPointerReallyOnImage()
+    {
+        if (!hovered) return false;
+
+        Vector2 localCoordinates = sprite.GlobalTransform.AffineInverse() * GetGlobalMousePosition();  // (0, 0) is center, measured in pixels
+        Vector2 pixelCoordinates = localCoordinates + sprite.Texture.GetSize() * 0.5f;
+        return currentImage.GetPixel(Mathf.RoundToInt(pixelCoordinates.X), Mathf.RoundToInt(pixelCoordinates.Y)).A > 0.05;
     }
 
     private void OnMouseEnter()

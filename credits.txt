@@ -1,6 +1,7 @@
 
 Images:
 	Canvas texture: created by V.Hartikainen, under CC-BY 3.0: https://tiled-bg.blogspot.com/2013/02/rough-fabric-seamless-pattern.html
+	all pictures of paintings were provided by Wikimedia Commons: https://commons.wikimedia.org
 
 
 Font: 

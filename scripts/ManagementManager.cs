@@ -111,7 +111,7 @@ public partial class ManagementManager : Node
 
         Vector2 sizeVector = tex.GetSize();
         float maxSize = Mathf.Max(sizeVector.X, sizeVector.Y);
-        float paintingRefScale = Mathf.Min(540.0f / sizeVector.X, 500.0f / sizeVector.Y);
+        float paintingRefScale = Mathf.Min(600.0f / sizeVector.X, 500.0f / sizeVector.Y);
 
         paintingSprite.Size = sizeVector * paintingRefScale;
 
@@ -166,7 +166,7 @@ public partial class ManagementManager : Node
 
     public void SetPresetColor2()
     {
-        canvasSprite.SetPresetColor(new Color("#21190e"));
+        canvasSprite.SetPresetColor(new Color("#1d1812"));
         MoveableImage.selectedImage = null;
     }
 

@@ -1422,12 +1422,9 @@ paintingID = "horatii"
 imageSize = 150.0
 
 [node name="PaintingSelector3" parent="PaintingSelectors" unique_id=593026580 instance=ExtResource("35_0rl1p")]
-position = Vector2(1193.0001, 162.00002)
-rotation = -0.61086524
-scale = Vector2(0.5, 1)
-skew = 0.61086524
+position = Vector2(2377, -391)
 paintingID = "medusa"
-imageSize = 200.0
+imageSize = 220.0
 
 [node name="PaintingSelector4" parent="PaintingSelectors" unique_id=1209720271 instance=ExtResource("35_0rl1p")]
 position = Vector2(1825, -27)
@@ -1475,6 +1472,44 @@ imageSize = 140.0
 position = Vector2(2544, -126)
 paintingID = "torment"
 imageSize = 140.0
+
+[node name="PaintingSelector13" parent="PaintingSelectors" unique_id=75967687 instance=ExtResource("35_0rl1p")]
+position = Vector2(2747, -113)
+rotation = 0.4886922
+scale = Vector2(0.7, 1)
+skew = -0.4886922
+paintingID = "windmill"
+imageSize = 180.0
+
+[node name="PaintingSelector14" parent="PaintingSelectors" unique_id=111000164 instance=ExtResource("35_0rl1p")]
+position = Vector2(2110, -361)
+paintingID = "tea"
+imageSize = 120.0
+
+[node name="PaintingSelector15" parent="PaintingSelectors" unique_id=458355281 instance=ExtResource("35_0rl1p")]
+position = Vector2(1178.0001, 147.00002)
+rotation = -0.61086524
+skew = 0.61086524
+paintingID = "supper"
+imageSize = 190.0
+
+[node name="PaintingSelector16" parent="PaintingSelectors" unique_id=1166503675 instance=ExtResource("35_0rl1p")]
+position = Vector2(1119, -150.00002)
+rotation = -0.5235988
+scale = Vector2(0.8, 1)
+skew = 0.5235988
+paintingID = "belshazzar"
+imageSize = 220.0
+
+[node name="PaintingSelector17" parent="PaintingSelectors" unique_id=2109968006 instance=ExtResource("35_0rl1p")]
+position = Vector2(1736, -359)
+paintingID = "adoration"
+imageSize = 220.0
+
+[node name="PaintingSelector19" parent="PaintingSelectors" unique_id=1518656446 instance=ExtResource("35_0rl1p")]
+position = Vector2(1468, -340)
+paintingID = "painting"
+imageSize = 200.0
 
 [node name="CameraZoomPosition" type="Node2D" parent="." unique_id=1941725859]
 position = Vector2(1953, 242)

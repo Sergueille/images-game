@@ -11,3 +11,10 @@ writing,"https://en.wikipedia.org/wiki/Lady_Writing_a_Letter_with_her_Maid",Lady
 general,"https://en.wikipedia.org/wiki/Portrait_of_a_General",Portrait of a General,Titian
 arles,"https://en.wikipedia.org/wiki/Bedroom_in_Arles",Bedroom in Arles (third version),Vincent van Gogh
 torment,"https://en.wikipedia.org/wiki/The_Torment_of_Saint_Anthony",The Torment of Saint Anthony,Michelangelo
+windmill,"https://en.wikipedia.org/wiki/Landscape_with_a_Windmill",Landscape with a Windmill,Jacob van Ruisdael
+tea,"https://en.wikipedia.org/wiki/Afternoon_Tea_(Bracquemond)",Le goûter,Marie Bracquemond
+supper,https://en.wikipedia.org/wiki/Last_Supper_(Cranach),Last Supper,Lucas Cranach the Younger
+belshazzar,"https://en.wikipedia.org/wiki/Belshazzar%27s_Feast_(Martin)",Belshazzar's Feast,John Martin
+adoration,"https://en.wikipedia.org/wiki/Adoration_of_the_Kings_(Bruegel)",Adoration of the Kings,Pieter Bruegel the Elder
+portinari,"https://en.wikipedia.org/wiki/Portinari_Altarpiece",Portinari Altarpiece,Hugo van der Goes
+painting,"https://en.wikipedia.org/wiki/The_Art_of_Painting",Allegorie op de schilderkunst,Johannes Vermeer

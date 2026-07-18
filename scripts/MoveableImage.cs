@@ -300,19 +300,60 @@ public partial class MoveableImage : Node2D
     public void LayerUp()
     {
         int myIndex = allImages.IndexOf(this);
-        if (myIndex == allImages.Count - 1) { return; }
 
-        allImages[myIndex] = allImages[myIndex + 1];
-        allImages[myIndex + 1] = this;
+        while (myIndex < allImages.Count - 1)
+        {
+            allImages[myIndex] = allImages[myIndex + 1];
+            allImages[myIndex + 1] = this;
+
+            if (allImages[myIndex].IntersectsWith(this)) { break; }
+
+            myIndex += 1;
+        }
     }
 
     public void LayerDown()
     {
         int myIndex = allImages.IndexOf(this);
-        if (myIndex == 0) { return; }
 
-        allImages[myIndex] = allImages[myIndex - 1];
-        allImages[myIndex - 1] = this;
+        while (myIndex > 0)
+        {
+            allImages[myIndex] = allImages[myIndex - 1];
+            allImages[myIndex - 1] = this;
+
+            if (allImages[myIndex].IntersectsWith(this)) { break; }
+
+            myIndex -= 1;
+        }
+    }
+
+    public bool IntersectsWith(MoveableImage other)
+    {
+        return CheckIntersectionOneWay(this, other) || CheckIntersectionOneWay(other, this);
+    }
+
+    private static bool CheckIntersectionOneWay(MoveableImage a, MoveableImage b)
+    {
+        Vector2[] toCheck = [
+          new Vector2(1, 1),  
+          new Vector2(-1, 1),  
+          new Vector2(-1, -1),  
+          new Vector2(1, -1),  
+        ];
+
+        Transform2D transformation = a.sprite.GlobalTransform.AffineInverse() * b.sprite.GlobalTransform;
+
+        foreach (Vector2 v in toCheck)
+        {
+            Vector2 localPos = (transformation * (v * 0.5f * b.currentImage.GetSize())) / (Vector2.One * 0.5f * a.currentImage.GetSize());
+        
+            if (localPos.X > -1.0f && localPos.X < 1.0f && localPos.Y > -1.0f && localPos.Y < 1.0f)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void OnHoverHandle()

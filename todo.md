@@ -6,7 +6,6 @@
 - game end
 - find a title
 - do palette dialogue
-- skip non intersecting images when changing layer
 
 ## Not-Sure-I-Want-It-Features
 

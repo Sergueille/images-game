@@ -28,7 +28,6 @@
 [ext_resource type="Texture2D" uid="uid://dsome76q67sjc" path="res://sprites/machine_room_front.png" id="11_lswn8"]
 [ext_resource type="Texture2D" uid="uid://c6h40nik44aco" path="res://sprites/dialog_bg.png" id="12_0cp0l"]
 [ext_resource type="Script" uid="uid://sq0d6c0ckgid" path="res://scripts/DialogueManager.cs" id="12_gngh3"]
-[ext_resource type="FontFile" uid="uid://mb2w4x8615u7" path="res://cattos-handwriting.ttf" id="13_0n3wm"]
 [ext_resource type="LabelSettings" uid="uid://dkroxxq6i1t7n" path="res://label_settings.tres" id="13_qnost"]
 [ext_resource type="Shader" uid="uid://c4tvni1wbhcgj" path="res://cloud.gdshader" id="14_1vm84"]
 [ext_resource type="Texture2D" uid="uid://cnrbjivwv14mo" path="res://sprites/hue_plus.png" id="14_074og"]
@@ -84,8 +83,11 @@
 [ext_resource type="Script" uid="uid://x1atr8adeycy" path="res://scripts/Oscillator.cs" id="67_1vm84"]
 [ext_resource type="Texture2D" uid="uid://bs8eixotgcxo1" path="res://sprites/canvas_border.png" id="67_rqtf5"]
 [ext_resource type="Texture2D" uid="uid://csnroh2ldjbi3" path="res://sprites/easel_but_better.png" id="68_1vm84"]
+[ext_resource type="Texture2D" uid="uid://ch7kcbc14yas8" path="res://sprites/godot.png" id="71_yvsr8"]
 [ext_resource type="Texture2D" uid="uid://o55jemwktcxt" path="res://sprites/button_round_back_white.png" id="77_53bls"]
+[ext_resource type="Texture2D" uid="uid://c7hlq71j4raqd" path="res://sprites/logo_white.png" id="82_jbvwl"]
 [ext_resource type="Script" uid="uid://b87tqfviog4r" path="res://scripts/MusicManager.cs" id="83_ovcoh"]
+[ext_resource type="Texture2D" uid="uid://bxghlnbxf3lg0" path="res://sprites/drawn_bg.png" id="84_yvsr8"]
 [ext_resource type="AudioStream" uid="uid://cchd23b2qg7db" path="res://sounds/music/fugue_d_min.wav" id="87_jbvwl"]
 [ext_resource type="AudioStream" uid="uid://bjlhcwvvkv7c" path="res://sounds/music/prelude_c#.wav" id="88_jbvwl"]
 [ext_resource type="AudioStream" uid="uid://dentt0rmo3v45" path="res://sounds/music/scarlatti_sonata_d_minor.wav" id="88_lwnsi"]
@@ -97,12 +99,12 @@
 [ext_resource type="AudioStream" uid="uid://bwqvedmr3qf55" path="res://sounds/music/fugue_g_minor.wav" id="93_vieuh"]
 [ext_resource type="AudioStream" uid="uid://gapmju82pdw5" path="res://sounds/music/gnossienne_3.wav" id="95_yvsr8"]
 
-[sub_resource type="Gradient" id="Gradient_efxa6"]
+[sub_resource type="Gradient" id="Gradient_sn1fb"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0.54901963, 0.23921569, 0.27058825, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dg77c"]
-gradient = SubResource("Gradient_efxa6")
+gradient = SubResource("Gradient_sn1fb")
 fill_to = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_htxhm"]
@@ -163,6 +165,32 @@ shader_parameter/brightness = 1.0
 shader_parameter/saturation = -1.0
 shader_parameter/hueShift = 0.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_lwnsi"]
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_41lik"]
+paragraph_spacing = 20.0
+font_size = 30
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vieuh"]
+texture = ExtResource("77_53bls")
+
+[sub_resource type="LabelSettings" id="LabelSettings_sn1fb"]
+paragraph_spacing = 20.0
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_yvsr8"]
+paragraph_spacing = 50.0
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_vieuh"]
+paragraph_spacing = 10.0
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_yjja3"]
+paragraph_spacing = 10.0
+font_size = 40
+
 [sub_resource type="LabelSettings" id="LabelSettings_b1qrp"]
 font_size = 24
 font_color = Color(0, 0, 0, 0.5882353)
@@ -173,16 +201,6 @@ font_color = Color(0, 0, 0, 0.5882353)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mhft1"]
 size = Vector2(1, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_lwnsi"]
-font_size = 50
-
-[sub_resource type="LabelSettings" id="LabelSettings_41lik"]
-paragraph_spacing = 20.0
-font_size = 30
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vieuh"]
-texture = ExtResource("77_53bls")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lwnsi"]
 texture = ExtResource("77_53bls")
@@ -214,18 +232,6 @@ font_size = 30
 font_color = Color(0.40809998, 0.77, 0.4503217, 1)
 outline_size = 5
 outline_color = Color(0.1386, 0.77, 0.2122634, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_wnkbs"]
-line_spacing = -3.0
-font = ExtResource("13_0n3wm")
-font_size = 80
-outline_size = 2
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qnost"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wnkbs"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6a44"]
 
 [node name="Node2D" type="Node2D" unique_id=2114658958]
 
@@ -345,9 +351,15 @@ texture = ExtResource("9_come4")
 z_index = 2
 texture = ExtResource("10_h8e4i")
 
-[node name="DialogueButtons" type="Control" parent="ProfRoom/Desk" unique_id=1912567303]
-z_index = 1200
+[node name="Control" type="Control" parent="ProfRoom/Desk" unique_id=1423020060]
 layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DialogueButtons" type="Control" parent="ProfRoom/Desk/Control" unique_id=1912567303]
+visible = false
+z_index = 1200
 anchors_preset = 0
 offset_left = -353.823
 offset_top = -475.2624
@@ -356,7 +368,7 @@ offset_bottom = -181.40933
 pivot_offset = Vector2(350.005, 237.51)
 theme = ExtResource("4_1bvp3")
 
-[node name="Button" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=1564724187]
+[node name="Button" type="Button" parent="ProfRoom/Desk/Control/DialogueButtons" unique_id=1564724187]
 layout_mode = 0
 offset_left = -1.4992504
 offset_top = 14.992504
@@ -365,7 +377,7 @@ offset_bottom = 118.99251
 text = "I'm done with 
 the painting!"
 
-[node name="Button2" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=452914442]
+[node name="Button2" type="Button" parent="ProfRoom/Desk/Control/DialogueButtons" unique_id=452914442]
 layout_mode = 0
 offset_left = 308.84555
 offset_top = 31.48426
@@ -374,7 +386,7 @@ offset_bottom = 135.48425
 text = "The machine 
 doesn't do anything!"
 
-[node name="Button3" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=72380152]
+[node name="Button3" type="Button" parent="ProfRoom/Desk/Control/DialogueButtons" unique_id=72380152]
 layout_mode = 0
 offset_left = -22.488785
 offset_top = 142.42877
@@ -383,7 +395,7 @@ offset_bottom = 246.42877
 text = "I need help 
 using the palette"
 
-[node name="Button5" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=1107717568]
+[node name="Button5" type="Button" parent="ProfRoom/Desk/Control/DialogueButtons" unique_id=1107717568]
 layout_mode = 0
 offset_left = 20.98954
 offset_top = 262.36884
@@ -391,7 +403,7 @@ offset_right = 265.36746
 offset_bottom = 335.83212
 text = "Nevermind"
 
-[node name="Button4" type="Button" parent="ProfRoom/Desk/DialogueButtons" unique_id=1062178799]
+[node name="Button4" type="Button" parent="ProfRoom/Desk/Control/DialogueButtons" unique_id=1062178799]
 layout_mode = 0
 offset_left = 352.32382
 offset_top = 160.4198
@@ -399,6 +411,33 @@ offset_right = 694.15295
 offset_bottom = 264.4198
 text = "How to get 
 better images?"
+
+[node name="DialogueEnd" type="Control" parent="ProfRoom/Desk/Control" unique_id=901609734]
+z_index = 1200
+anchors_preset = 0
+offset_left = -353.823
+offset_top = -475.2624
+offset_right = 356.8213
+offset_bottom = -181.40933
+pivot_offset = Vector2(350.005, 237.51)
+theme = ExtResource("4_1bvp3")
+
+[node name="Button" type="Button" parent="ProfRoom/Desk/Control/DialogueEnd" unique_id=1935821495]
+layout_mode = 0
+offset_left = 158.92055
+offset_top = 4.497751
+offset_right = 506.74646
+offset_bottom = 146.92654
+text = "I think my
+work is done!"
+
+[node name="Button5" type="Button" parent="ProfRoom/Desk/Control/DialogueEnd" unique_id=924377999]
+layout_mode = 0
+offset_left = 212.89359
+offset_top = 169.41528
+offset_right = 457.2715
+offset_bottom = 242.87857
+text = "Nevermind"
 
 [node name="Dialogue" type="Control" parent="ProfRoom/Desk" unique_id=1194251170]
 z_index = 1200
@@ -464,7 +503,7 @@ textParent = NodePath("../Dialogue")
 textLabel = NodePath("../Dialogue/Label")
 continueButton = NodePath("../Dialogue/Button")
 professor = NodePath("../Professor")
-buttonsParent = NodePath("../DialogueButtons")
+buttonsParent = NodePath("../Control")
 clickPreventionArea = NodePath("../ClickPrevention")
 professorAnimationAmount = 0.05
 professorAnimationDuration = 0.2
@@ -630,7 +669,7 @@ shape = SubResource("RectangleShape2D_n5t1e")
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "musicManager", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "paintingViewConfirmButton", "paintingViewReference", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport", "handPointingDoor", "blueprintSprite", "startNotice")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "musicManager", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "paintingViewConfirmButton", "paintingViewReference", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport", "handPointingDoor", "blueprintSprite", "startNotice", "paintingSelectorsParent", "dialogueButtons", "dialogueEndButtons", "credits")]
 script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
@@ -652,11 +691,15 @@ canvasSprite = NodePath("../Canvas/Control")
 cameraController = NodePath("../Camera2D")
 titleScreen = NodePath("../TitleScreen")
 dialogueManager = NodePath("../ProfRoom/Desk/DialogueManager")
-fadeInColorRect = NodePath("../Camera2D/StartUI/ColorRect")
+fadeInColorRect = NodePath("../StartUI/ColorRect")
 paintingSaveViewport = NodePath("../PaintingSave")
 handPointingDoor = NodePath("../HandPointing")
 blueprintSprite = NodePath("../CameraZoomPosition/Node2D/blueprint")
-startNotice = NodePath("../Camera2D/StartUI/Control")
+startNotice = NodePath("../StartUI/Control")
+paintingSelectorsParent = NodePath("../PaintingSelectors")
+dialogueButtons = NodePath("../ProfRoom/Desk/Control/DialogueButtons")
+dialogueEndButtons = NodePath("../ProfRoom/Desk/Control/DialogueEnd")
+credits = NodePath("../StartUI/Credits")
 
 [node name="Whoosh" type="AudioStreamPlayer" parent="Management manager" unique_id=1261691229]
 stream = ExtResource("47_pjyto")
@@ -826,6 +869,281 @@ texture = ExtResource("10_0odxb")
 position = Vector2(1920, 0)
 texture = ExtResource("11_lswn8")
 
+[node name="StartUI" type="CanvasLayer" parent="." unique_id=460695011]
+
+[node name="Control" type="Control" parent="StartUI" unique_id=1263694614]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="StartUI/Control" unique_id=1239646536]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StartUI/Control" unique_id=200163761]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 208.0
+offset_right = -208.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="StartUI/Control/VBoxContainer" unique_id=129800509]
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "Notice"
+label_settings = SubResource("LabelSettings_lwnsi")
+horizontal_alignment = 1
+
+[node name="Margin" type="Control" parent="StartUI/Control/VBoxContainer" unique_id=74592467]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="StartUI/Control/VBoxContainer" unique_id=45122154]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "The game interacts with third party search engines to provide some images in the game. Just like a regular web search, you are responsible for not deliberatly enter keywords to request illegal content. 
+You also understand that, despite our best effort to filter images, some content might occasionnaly be innapropriate, offensive, or AI-generated. 
+When sharing screenshots of the game to others, keep in mind that some images may be copyrighted."
+label_settings = SubResource("LabelSettings_41lik")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Margin2" type="Control" parent="StartUI/Control/VBoxContainer" unique_id=164930448]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="StartUI/Control/VBoxContainer" unique_id=1206144451]
+custom_minimum_size = Vector2(400, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_1bvp3")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.15487581, 0.15487596, 0.15487641, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_vieuh")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vieuh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vieuh")
+text = "I understand"
+
+[node name="ColorRect" type="ColorRect" parent="StartUI" unique_id=1976928093]
+visible = false
+z_index = 4096
+offset_left = -3288.0
+offset_top = -2567.0
+offset_right = 4662.0
+offset_bottom = 2863.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Credits" type="Control" parent="StartUI" unique_id=2043679665]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 2139.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="StartUI/Credits" unique_id=1236258640]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 1911.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StartUI/Credits" unique_id=961426906]
+custom_minimum_size = Vector2(0, 1000)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin3" type="Control" parent="StartUI/Credits/VBoxContainer" unique_id=1407360949]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="StartUI/Credits/VBoxContainer" unique_id=1098816452]
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+texture = ExtResource("82_jbvwl")
+stretch_mode = 5
+
+[node name="Margin" type="Control" parent="StartUI/Credits/VBoxContainer" unique_id=1495541701]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=419930860]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "A game made by:"
+label_settings = SubResource("LabelSettings_sn1fb")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=326207879]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "Sergueille Bismuth"
+label_settings = SubResource("LabelSettings_yvsr8")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Margin2" type="Control" parent="StartUI/Credits/VBoxContainer" unique_id=826389810]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=246356909]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "Font:"
+label_settings = SubResource("LabelSettings_sn1fb")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label9" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=1340888705]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "\"catto's handwriting\" by Erik Koev, under CC-BY-SA 3.0"
+label_settings = SubResource("LabelSettings_vieuh")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Margin6" type="Control" parent="StartUI/Credits/VBoxContainer" unique_id=1016986052]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=1116984703]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "Music:"
+label_settings = SubResource("LabelSettings_sn1fb")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label5" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=278743893]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "	\"fugue in D minor\", by Johann Sebastian Bach. Performance by Martha Goldstein under EFF open audio license
+	\"prelude in E major\" from the \"well tempered clavier\", by Johann Sebastian Bach. Performance by Kimiko Ishizaka under CC-BY 3.0
+	\"prelude and fugue in C# major\", \"prelude in E major\", \"prelude & fugue in G minor\", \"prelude in F# minor\" from the \"well tempered clavier\", by Johann Sebastian Bach. Performance by Kimiko Ishizaka under various licenses
+	\"gymnopédie 3\" and \"gnossienne 3\", by Erik Satie, public domain recording
+	\"sonata in D minor\" by Domenico Scarlatti, public domain recording"
+label_settings = SubResource("LabelSettings_vieuh")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Margin4" type="Control" parent="StartUI/Credits/VBoxContainer" unique_id=2032950136]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=114369148]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "Sounds:"
+label_settings = SubResource("LabelSettings_sn1fb")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label7" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=932600727]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "All sounds that haven't been recorded by my come from freesound.org
+image stretch: created by bassimat, under CC0
+print: azumarill, under CC0
+ding: created by JohnsonBrandEditing, under CC0
+machine sound: created by jaegrover, under CC0
+error beep: created by EtherAudio, under CC-BY 4.0
+door: created by InspectorJ, under CC-BY 4.0
+keyboard: created by M4taiori, under CC-BY 3.0
+camera movement sound, created by Vilkas_Sound, under CC-BY 4.0
+... and many other public domain sounds I forgot to add here, sorry!"
+label_settings = SubResource("LabelSettings_vieuh")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Margin5" type="Control" parent="StartUI/Credits/VBoxContainer" unique_id=1144385426]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Label10" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=1786770125]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "Images:"
+label_settings = SubResource("LabelSettings_sn1fb")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label11" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=517284907]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "Canvas texture: created by V.Hartikainen, under CC-BY 3.0
+All pictures of paintings were provided by Wikimedia Commons"
+label_settings = SubResource("LabelSettings_vieuh")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Margin7" type="Control" parent="StartUI/Credits/VBoxContainer" unique_id=538552140]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="StartUI/Credits/VBoxContainer" unique_id=1809920455]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+texture = ExtResource("71_yvsr8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Margin8" type="Control" parent="StartUI/Credits/VBoxContainer" unique_id=91906082]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="Label12" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=1903633094]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "By the way, you can find .png versions of the paintings you created in this folder:"
+label_settings = SubResource("LabelSettings_sn1fb")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label13" type="Label" parent="StartUI/Credits/VBoxContainer" unique_id=212579952]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+theme = ExtResource("4_1bvp3")
+text = "/home/sb/.local/share/godot/app_userdata/Images"
+label_settings = SubResource("LabelSettings_yjja3")
+horizontal_alignment = 1
+autowrap_mode = 2
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1914578627 node_paths=PackedStringArray("zoomPosition", "titleScreenZoomPosition")]
 position = Vector2(-1194, 1441)
 script = ExtResource("9_d13ii")
@@ -836,7 +1154,7 @@ transitionDuration = 0.3
 zoomPosition = NodePath("../CameraZoomPosition")
 titleScreenZoomPosition = NodePath("../CameraTitleScreenPosition")
 zoomAmount = 2.0
-titleScreenZoomAmount = 9.0
+titleScreenZoomAmount = 9.5
 zoomTransitionDuration = 0.3
 
 [node name="PaintingView" type="Node2D" parent="Camera2D" unique_id=1691052987]
@@ -1035,85 +1353,6 @@ volume_db = -0.16
 [node name="Whoosh" type="AudioStreamPlayer" parent="Camera2D" unique_id=1004487787]
 stream = ExtResource("47_pjyto")
 volume_db = -13.828
-
-[node name="StartUI" type="CanvasLayer" parent="Camera2D" unique_id=460695011]
-
-[node name="Control" type="Control" parent="Camera2D/StartUI" unique_id=1263694614]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="Camera2D/StartUI/Control" unique_id=1239646536]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Camera2D/StartUI/Control" unique_id=200163761]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 208.0
-offset_right = -208.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="Camera2D/StartUI/Control/VBoxContainer" unique_id=129800509]
-layout_mode = 2
-theme = ExtResource("4_1bvp3")
-text = "Notice"
-label_settings = SubResource("LabelSettings_lwnsi")
-horizontal_alignment = 1
-
-[node name="Margin" type="Control" parent="Camera2D/StartUI/Control/VBoxContainer" unique_id=74592467]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="Camera2D/StartUI/Control/VBoxContainer" unique_id=45122154]
-custom_minimum_size = Vector2(10, 10)
-layout_mode = 2
-theme = ExtResource("4_1bvp3")
-text = "The game interacts with third party search engines to provide some images in the game. Just like a regular web search, you are responsible for not deliberatly enter keywords to request illegal content. 
-You also understand that, despite our best effort to filter images, some content might occasionnaly be innapropriate, offensive, or AI-generated. 
-When sharing screenshots of the game to others, keep in mind that some images may be copyrighted."
-label_settings = SubResource("LabelSettings_41lik")
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="Margin2" type="Control" parent="Camera2D/StartUI/Control/VBoxContainer" unique_id=164930448]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-
-[node name="Button" type="Button" parent="Camera2D/StartUI/Control/VBoxContainer" unique_id=1206144451]
-custom_minimum_size = Vector2(400, 70)
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("4_1bvp3")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0.15487581, 0.15487596, 0.15487641, 1)
-theme_override_styles/normal = SubResource("StyleBoxTexture_vieuh")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_vieuh")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vieuh")
-text = "I understand"
-
-[node name="ColorRect" type="ColorRect" parent="Camera2D/StartUI" unique_id=1976928093]
-visible = false
-z_index = 4096
-offset_left = -3288.0
-offset_top = -2567.0
-offset_right = 4662.0
-offset_bottom = 2863.0
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
 
 [node name="Images container" type="Node2D" parent="." unique_id=342881074]
 
@@ -1523,7 +1762,7 @@ z_index = 4096
 texture = ExtResource("64_wu3dr")
 
 [node name="CameraTitleScreenPosition" type="Node2D" parent="." unique_id=709913969]
-position = Vector2(1626, 127)
+position = Vector2(1625, 128)
 
 [node name="TitleScreen" type="Control" parent="." unique_id=1714307020]
 z_index = 4096
@@ -1536,21 +1775,6 @@ offset_bottom = 1146.0
 scale = Vector2(0.111, 0.111)
 theme = ExtResource("4_1bvp3")
 
-[node name="Label" type="Label" parent="TitleScreen" unique_id=1251633568]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -391.3506
-offset_top = 90.09001
-offset_right = 391.3506
-offset_bottom = 303.09003
-grow_horizontal = 2
-text = "Pas de titre = pas 
-de burger"
-label_settings = SubResource("LabelSettings_wnkbs")
-horizontal_alignment = 1
-
 [node name="Button" type="Button" parent="TitleScreen" unique_id=1537661032]
 layout_mode = 1
 anchors_preset = 7
@@ -1558,16 +1782,36 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -278.0
-offset_top = -213.0
-offset_right = 278.0
-offset_bottom = -93.0
+offset_left = -761.80206
+offset_top = -188.10815
+offset_right = -205.80206
+offset_bottom = -68.108154
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_qnost")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_wnkbs")
-theme_override_styles/hover = SubResource("StyleBoxTexture_f6a44")
+theme = ExtResource("4_1bvp3")
+theme_override_font_sizes/font_size = 60
 text = "Start"
+
+[node name="TextureRect2" type="TextureRect" parent="TitleScreen" unique_id=467377764]
+modulate = Color(0, 0, 0, 0.5882353)
+layout_mode = 0
+offset_left = 9.009201
+offset_top = -306.30637
+offset_right = 995.23566
+offset_bottom = 585.5856
+texture = ExtResource("84_yvsr8")
+
+[node name="TextureRect" type="TextureRect" parent="TitleScreen" unique_id=188022051]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -969.00885
+offset_top = -54.054123
+offset_right = 16.111267
+offset_bottom = 585.5855
+grow_horizontal = 2
+texture = ExtResource("82_jbvwl")
 
 [node name="PaintingSave" type="SubViewport" parent="." unique_id=350155639]
 disable_3d = true
@@ -1670,16 +1914,18 @@ volume_db = -8.0
 stream = ExtResource("92_h6isl")
 volume_db = -8.0
 
-[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button" to="ProfRoom/Desk/DialogueManager" method="PaintingDoneButton"]
-[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button2" to="ProfRoom/Desk/DialogueManager" method="MachineBrokenButton"]
-[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button3" to="ProfRoom/Desk/DialogueManager" method="PaletteHelpButton"]
-[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button5" to="ProfRoom/Desk/DialogueManager" method="CancelButtons"]
-[connection signal="pressed" from="ProfRoom/Desk/DialogueButtons/Button4" to="ProfRoom/Desk/DialogueManager" method="MachineBadButton"]
+[connection signal="pressed" from="ProfRoom/Desk/Control/DialogueButtons/Button" to="ProfRoom/Desk/DialogueManager" method="PaintingDoneButton"]
+[connection signal="pressed" from="ProfRoom/Desk/Control/DialogueButtons/Button2" to="ProfRoom/Desk/DialogueManager" method="MachineBrokenButton"]
+[connection signal="pressed" from="ProfRoom/Desk/Control/DialogueButtons/Button3" to="ProfRoom/Desk/DialogueManager" method="PaletteHelpButton"]
+[connection signal="pressed" from="ProfRoom/Desk/Control/DialogueButtons/Button5" to="ProfRoom/Desk/DialogueManager" method="CancelButtons"]
+[connection signal="pressed" from="ProfRoom/Desk/Control/DialogueButtons/Button4" to="ProfRoom/Desk/DialogueManager" method="MachineBadButton"]
+[connection signal="pressed" from="ProfRoom/Desk/Control/DialogueEnd/Button" to="ProfRoom/Desk/DialogueManager" method="AllDoneButton"]
+[connection signal="pressed" from="ProfRoom/Desk/Control/DialogueEnd/Button5" to="ProfRoom/Desk/DialogueManager" method="CancelButtons"]
 [connection signal="input_event" from="ProfRoom/Desk/Area2D" to="ProfRoom/Desk/DialogueManager" method="DialogueAreaMouseEvent"]
 [connection signal="input_event" from="ProfRoom/Phonograph/Area2D" to="MusicManager" method="OnPhonographInputEvent"]
+[connection signal="pressed" from="StartUI/Control/VBoxContainer/Button" to="Management manager" method="OnNoticeOkButtonPressed"]
 [connection signal="pressed" from="Camera2D/PaintingView/Button" to="Management manager" method="OnPainingViewConfirm"]
 [connection signal="pressed" from="Camera2D/PaintingView/Button2" to="Management manager" method="HidePaintingView"]
-[connection signal="pressed" from="Camera2D/StartUI/Control/VBoxContainer/Button" to="Management manager" method="OnNoticeOkButtonPressed"]
 [connection signal="mouse_entered" from="Palette/Palette" to="Management manager" method="MouseEntersPalette"]
 [connection signal="mouse_exited" from="Palette/Palette" to="Management manager" method="MouseLeavesPalette"]
 [connection signal="pressed" from="Palette/Palette/LayerUp" to="Management manager" method="LayerUp"]

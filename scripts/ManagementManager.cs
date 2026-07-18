@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -41,6 +42,12 @@ public partial class ManagementManager : Node
     [Export] public Node2D handPointingDoor;
     [Export] public Sprite2D blueprintSprite;
     [Export] public Control startNotice;
+    [Export] Node2D paintingSelectorsParent;
+    [Export] Control dialogueButtons;
+    [Export] Control dialogueEndButtons;
+    [Export] Control credits;
+
+    public int PaintingCount { get; private set; }
 
     [Export] float saveInterval = 5.0f;
     double lastSaveTime = 0.0f;
@@ -70,6 +77,8 @@ public partial class ManagementManager : Node
         blueprintSprite.Visible = false;
         currentMoveableImages = new List<MoveableImage>();
 
+        PaintingCount = paintingSelectorsParent.GetChildCount();
+
         saveData = SaveManager.Load();
         if (saveData.currentPaintingId != null && saveData.currentPaintingId != "")
         {
@@ -92,6 +101,7 @@ public partial class ManagementManager : Node
         fadeInColorRect.Visible = true;
         Tween t = GetTree().CreateTween();
         t.TweenProperty(fadeInColorRect, "color", new Color(0.0f, 0.0f, 0.0f, 0.0f), 2.0f);
+        credits.Visible = false;
     }
 
     public override void _Process(double delta)
@@ -100,6 +110,19 @@ public partial class ManagementManager : Node
         {
             lastSaveTime = Time.GetUnixTimeFromSystem();
             SaveCurrentPainting();
+        }
+
+
+        bool allPaintingsMaybeDone = saveData.paintings != null && saveData.paintings.Count >= PaintingCount - 1;
+        if (allPaintingsMaybeDone)
+        {
+            dialogueButtons.Visible = false;
+            dialogueEndButtons.Visible = true;
+        }
+        else
+        { 
+            dialogueButtons.Visible = true;
+            dialogueEndButtons.Visible = false;        
         }
     }
     
@@ -308,7 +331,7 @@ public partial class ManagementManager : Node
         SaveManager.Save(saveData);
     }
 
-    private void SetNoCurrentPainting()
+    public void SetNoCurrentPainting()
     {
         SaveCurrentPainting();
 
@@ -320,7 +343,7 @@ public partial class ManagementManager : Node
         }
 
         currentMoveableImages.Clear();
-        saveData.currentPaintingId = "";
+        saveData.currentPaintingId = null;
         paintingSprite.Visible = false;
     }
 
@@ -343,6 +366,7 @@ public partial class ManagementManager : Node
                 new DialogueManager.DialogueText { text = "If I remind correctly, it was because I needed to hire someone to help me move my art collection in my new house, right?" },
                 new DialogueManager.DialogueText { text = "But, actually, I changed my mind." },
                 new DialogueManager.DialogueText { text = "Those paintings are way too old and begin to deteriorate." },
+                new DialogueManager.DialogueText { text = "You know, all of them are original copies, so they have seen the centuries pass." },
                 new DialogueManager.DialogueText { text = "I'm afraid I will have to throw them away." },
                 new DialogueManager.DialogueText { text = "So, now I need someone to make reproductions of my paintings for my collection." },
                 new DialogueManager.DialogueText { text = "Nothing exceptional of course! As you can see..." },
@@ -475,5 +499,34 @@ public partial class ManagementManager : Node
         }
 
         canvasColorControllable.ApplyProperties(saveData.paintings[saveData.currentPaintingId].backgroundColorProperties);
+    }
+
+    public void CreditsRoll()
+    {
+        musicManager.doNotStartNewTracks = true;
+        fadeInColorRect.Visible = true;
+        fadeInColorRect.Color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        Tween t = GetTree().CreateTween();
+        t.TweenProperty(fadeInColorRect, "color", new Color(0.0f, 0.0f, 0.0f, 1.0f), 2.0f);
+        t.TweenProperty(fadeInColorRect, "color", new Color(0.0f, 0.0f, 0.0f, 0.0f), 2.0f);
+        GetTree().CreateTimer(2.0f).Timeout += () =>
+        {
+            credits.Visible = true;
+
+            Tween volumeTween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Linear);
+            volumeTween.TweenProperty(musicManager, "volumeOverride", 0.0, 45.0f);
+        };
+
+        GetTree().CreateTimer(4.0f).Timeout += () =>
+        {
+            float maxY = credits.Size.Y;
+            Debug.Print(maxY.ToString());
+            Tween creditsTween = GetTree().CreateTween().SetTrans(Tween.TransitionType.Linear);
+            creditsTween.TweenProperty(credits, "position", new Vector2(0.0f, -maxY), 45.0f);
+            creditsTween.Finished += () =>
+            {
+                GetTree().Quit();
+            };
+        };
     }
 }

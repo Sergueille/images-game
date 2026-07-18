@@ -237,6 +237,7 @@ public partial class MoveableImage : Node2D
     public bool IsPointerReallyOnImage()
     {
         if (!hovered) return false;
+        if (!haveMovedYet) return true;
 
         Vector2 localCoordinates = sprite.GlobalTransform.AffineInverse() * GetGlobalMousePosition();  // (0, 0) is center, measured in pixels
         Vector2 pixelCoordinates = localCoordinates + sprite.Texture.GetSize() * 0.5f;

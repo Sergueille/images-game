@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://b3ukeiumcspjo"]
+
+[ext_resource type="Texture2D" uid="uid://baadiqdc6av6a" path="res://sprites/wallpaper.png" id="1_10hqe"]
+[ext_resource type="Texture2D" uid="uid://c47waujdrpdoh" path="res://sprites/logo.png" id="2_135x7"]
+[ext_resource type="Texture2D" uid="uid://bl5k4mbc8h3qb" path="res://sprites/logo_back.png" id="3_gvim3"]
+
+[sub_resource type="Gradient" id="Gradient_efxa6"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.54901963, 0.23921569, 0.27058825, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_135x7"]
+gradient = SubResource("Gradient_efxa6")
+fill_to = Vector2(1, 1)
+
+[node name="Studio" type="Node2D" unique_id=593358104]
+
+[node name="Wall2" type="Sprite2D" parent="." unique_id=36085370]
+z_index = -1500
+position = Vector2(-13.000025, 3.9999924)
+scale = Vector2(30.40625, 20.617188)
+texture = SubResource("GradientTexture2D_135x7")
+
+[node name="wallpaper" type="TextureRect" parent="." unique_id=419472012]
+modulate = Color(1, 1, 1, 0.15686275)
+z_index = -1499
+offset_left = -1012.0
+offset_top = -669.0
+offset_right = 3902.9995
+offset_bottom = 2778.4998
+scale = Vector2(0.4, 0.4)
+mouse_filter = 2
+texture = ExtResource("1_10hqe")
+stretch_mode = 1
+
+[node name="Logo" type="Sprite2D" parent="." unique_id=1643289801]
+position = Vector2(-446, 307)
+texture = ExtResource("2_135x7")
+
+[node name="LogoBack" type="Sprite2D" parent="Logo" unique_id=576614118]
+z_index = -1
+texture = ExtResource("3_gvim3")

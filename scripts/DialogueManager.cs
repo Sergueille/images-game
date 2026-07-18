@@ -238,7 +238,33 @@ public partial class DialogueManager : Node
     {
         HideButtons();
         DoDialogue([
-           new DialogueText { text = "Dialogue coming soon™!" },
+           new DialogueText { text = "Trouble using the palette?" },
+           new DialogueText { text = "The way it works can indeed be a bit confusing. Here is a recap:" },
+           new DialogueText { text = "You can change the color of objects in three ways: you can change the hue, the saturation or the brightness." },
+           new DialogueText { text = "Changing the hue will change the global color of the object, a blue image will become red, or green for instance." },
+           new DialogueText { text = "Saturation controls how much color there is in the image. At its minimum, the image will be black and white." },
+           new DialogueText { text = "And the brightness corresponds to, mmh..., the brightness." },
+           new DialogueText { text = "For the background, there are colors ready to be used directly." },
+           new DialogueText { text = "But if you didn't select any image, you can also use the rest of the palette to change the color of the background at your will!" },
+        ]);
+    }
+
+    public void AllDoneButton()
+    {
+        HideButtons();
+        ManagementManager.i.SetNoCurrentPainting();
+        DoDialogue([
+           new DialogueText { text = "You're finished, really? Wonderful!" }, 
+           new DialogueText { text = "I saw you took some liberty while reproducing some of the paintings..." }, 
+           new DialogueText { text = "I was skeptical at first but I'm definitely satisfied with how it looks." }, 
+           new DialogueText { text = "You made a great job!", unZoom = true }, 
+           new DialogueText { text = "I can finally enjoy these new, fresh paintings and throw away the old ones!" }, 
+           new DialogueText { text = "A waste, these original copies, you say? Well, maybe you want to take them with you?" }, 
+           new DialogueText { text = "They're worthless to me now, but they could make a fine decoration for your appartment!" }, 
+           new DialogueText { text = "Great, that gets rid of it for me!" }, 
+           new DialogueText { text = "Anyway, I have to say goodbye now because I have golf half an hour." }, 
+           new DialogueText { text = "Thanks again!" }, 
+           new CallFunction { action = () => { ManagementManager.i.CreditsRoll(); } }
         ]);
     }
 

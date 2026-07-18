@@ -13,10 +13,16 @@ public partial class MusicManager : Node
     int currentSong = 0;
     bool preventPhonographClick = false;
 
+    public bool doNotStartNewTracks = false;
+    public float volumeOverride = 1.0f;
+
+    float baseVolume;
+
 
     public override void _Ready()
     {
         player.Finished += OnPlayerFinished;
+        baseVolume = player.VolumeLinear;
     }
 
     public override void _Process(double deltaTime)
@@ -29,6 +35,8 @@ public partial class MusicManager : Node
         {
             player.Bus = "Music room";
         }
+
+        player.VolumeLinear = baseVolume * volumeOverride;
     }
 
     public void StartPlaying()
@@ -39,6 +47,8 @@ public partial class MusicManager : Node
 
     public void PlayNextSong()
     {
+        if (doNotStartNewTracks) return;
+
         currentSong += 1;
         currentSong %= songs.Length;
 

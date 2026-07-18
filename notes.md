@@ -16,3 +16,6 @@ SELECT ?item ?article1 ?pic ?name WHERE {
   ?article3 schema:isPartOf <https://de.wikipedia.org/>.
 }
 ```
+
+tableau l'île des morts böcklin
+

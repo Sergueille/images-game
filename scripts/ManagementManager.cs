@@ -40,6 +40,7 @@ public partial class ManagementManager : Node
     [Export] SubViewport paintingSaveViewport;
     [Export] public Node2D handPointingDoor;
     [Export] public Sprite2D blueprintSprite;
+    [Export] public Control startNotice;
 
     [Export] float saveInterval = 5.0f;
     double lastSaveTime = 0.0f;
@@ -79,10 +80,12 @@ public partial class ManagementManager : Node
         titleScreen.Visible = saveData.state == SaveManager.GameState.TitleScreen;
         if (saveData.state == SaveManager.GameState.TitleScreen)
         {
+            startNotice.Visible = true;
             cameraController.EnableTitleScreenZoom();
         }
         else
         {
+            startNotice.Visible = false;
             musicManager.StartPlaying();
         }
 
@@ -121,6 +124,18 @@ public partial class ManagementManager : Node
         {
             saveData.paintings[paintingId] = new SaveManager.PaintingState();
         }
+    }
+
+    public void OnNoticeOkButtonPressed()
+    {
+        fadeInColorRect.Visible = true;
+        fadeInColorRect.Color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+
+        Tween t = GetTree().CreateTween();
+        t.TweenProperty(fadeInColorRect, "color", new Color(0.0f, 0.0f, 0.0f, 1.0f), 2.0f);
+        t.TweenProperty(fadeInColorRect, "color", new Color(0.0f, 0.0f, 0.0f, 0.0f), 2.0f);
+
+        GetTree().CreateTimer(2.0f).Timeout += () => startNotice.Visible = false;
     }
 
     public void LayerUp()

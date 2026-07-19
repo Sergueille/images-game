@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://d1os60hn51iwp" path="res://sprites/skew.png" id="7_26cav"]
 [ext_resource type="AudioStream" uid="uid://1bsbjovjqmjm" path="res://sounds/stretch.wav" id="8_dls66"]
 [ext_resource type="AudioStream" uid="uid://ddnu2dev1o55s" path="res://sounds/select.wav" id="8_lf6y6"]
+[ext_resource type="AudioStream" uid="uid://2eoad2wt4d4r" path="res://sounds/image_move.wav" id="9_bxlu4"]
+[ext_resource type="AudioStream" uid="uid://b67ubyx8slcmb" path="res://sounds/creak.wav" id="9_nvn10"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xvbv8"]
 size = Vector2(160, 160)
@@ -27,7 +29,7 @@ size = Vector2(30, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_26cav"]
 size = Vector2(15, 30)
 
-[node name="MoveableImage" type="Node2D" unique_id=1020111675 node_paths=PackedStringArray("sprite", "rotateHandle", "scaleHandle", "skewHandle", "scalingNode", "selectionShape", "colorControllable", "stretchPlayer")]
+[node name="MoveableImage" type="Node2D" unique_id=1020111675 node_paths=PackedStringArray("sprite", "rotateHandle", "scaleHandle", "skewHandle", "scalingNode", "selectionShape", "colorControllable", "stretchPlayer", "movePlayer", "skewPlayer")]
 script = ExtResource("1_1uxoq")
 sprite = NodePath("Scaling/Node2D/ImageSprite")
 rotateHandle = NodePath("RotateHandle")
@@ -37,6 +39,8 @@ scalingNode = NodePath("Scaling")
 selectionShape = NodePath("Scaling/Area2D/CollisionShape2D")
 colorControllable = NodePath("Scaling/Node2D")
 stretchPlayer = NodePath("Stretch")
+movePlayer = NodePath("Move")
+skewPlayer = NodePath("Skew")
 
 [node name="Scaling" type="Node2D" parent="." unique_id=308461973]
 
@@ -106,6 +110,12 @@ debug_color = Color(0.48199743, 0.43719783, 1, 0.41960785)
 
 [node name="Select" type="AudioStreamPlayer" parent="." unique_id=465949687]
 stream = ExtResource("8_lf6y6")
+
+[node name="Skew" type="AudioStreamPlayer" parent="." unique_id=1818398578]
+stream = ExtResource("9_nvn10")
+
+[node name="Move" type="AudioStreamPlayer" parent="." unique_id=2116898024]
+stream = ExtResource("9_bxlu4")
 
 [node name="Stretch" type="AudioStreamPlayer" parent="." unique_id=1526264344]
 stream = ExtResource("8_dls66")

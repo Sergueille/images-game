@@ -41,6 +41,8 @@ public partial class MoveableImage : Node2D
     [Export] CollisionShape2D selectionShape;
     [Export] ColorControllable colorControllable;
     [Export] AudioStreamPlayer stretchPlayer;
+    [Export] AudioStreamPlayer movePlayer;
+    [Export] AudioStreamPlayer skewPlayer;
 
     Vector2 handlePlacementMultiplier;
     
@@ -53,6 +55,9 @@ public partial class MoveableImage : Node2D
     Image currentImage = null;
 
     bool haveMovedYet = false;
+
+    double deltaMovementAccumulator = 0.0f;
+    const double deltaMovementAccumulatorVariationSpeed = 7.0f;
 
     int layer = 0;
 
@@ -152,6 +157,8 @@ public partial class MoveableImage : Node2D
         if (mousePressed && selectedImage == this)
         {
             Vector2 delta = mousePosition - lastMousePosition;
+            double deltaMovement;
+            double speedMultiplier;
             
             if (isRotating)
             {
@@ -159,25 +166,38 @@ public partial class MoveableImage : Node2D
                 float angleAfter = (mousePosition - Position).Angle();
 
                 Rotate(angleAfter - angleBefore);
+
+                speedMultiplier = 3;
+                deltaMovement = Mathf.Abs(angleAfter - angleBefore) / deltaTime;
+                movePlayer.VolumeDb = deltaMovementAccumulator == 0.0f ? -1000.0f : (deltaMovementAccumulator > 3.0f ? -3.0f  : ((float)deltaMovementAccumulator - 3.0f) / 3.0f * 20.0f) -3.0f;
             }
             else if (isScaling)
             {
                 Vector2 scaleDelta = new Vector2(delta.Dot(Transform.X), delta.Dot(Transform.Y + Mathf.Tan(state.skew) * Transform.X)) * 2 / imageDefaultSize / handlePlacementMultiplier;
                 state.scale += scaleDelta;
 
-                double len = scaleDelta.Length() / deltaTime;
-                stretchPlayer.VolumeDb = len == 0.0f ? -1000.0f : (len > 20.0f ? 0.0f : ((float)len - 20.0f) / 20.0f * 20.0f);
+                deltaMovement = scaleDelta.Length() / deltaTime;
+                speedMultiplier = 10;
+                stretchPlayer.VolumeDb = deltaMovementAccumulator == 0.0f ? -1000.0f : (deltaMovementAccumulator > 10.0f ? -5.0f : ((float)deltaMovementAccumulator - 10.0f) / 10.0f * 20.0f - 5.0f);
             }
             else if (isSkewing)
             {
                 float newSkew = Mathf.Atan(2.0f * delta.Dot(Transform.Y) / imageDefaultSize / handlePlacementMultiplier.X / state.scale.X + Mathf.Tan(state.skew));
                 if (newSkew > skewMax * Mathf.Pi / 180) { newSkew = skewMax * Mathf.Pi / 180; }
                 if (newSkew < -skewMax * Mathf.Pi / 180) { newSkew = -skewMax * Mathf.Pi / 180; }
+                deltaMovement = Mathf.Abs(newSkew - state.skew) / deltaTime;
                 state.skew = newSkew;
+
+                speedMultiplier = 5;
+                skewPlayer.VolumeDb = deltaMovementAccumulator == 0.0f ? -1000.0f : (deltaMovementAccumulator > 5.0f ? 0.0f : ((float)deltaMovementAccumulator - 5.0f) / 5.0f * 20.0f);
             }
             else
             {
                 Position += delta;
+
+                speedMultiplier = 1000;
+                deltaMovement = delta.Length() / deltaTime;
+                movePlayer.VolumeDb = deltaMovementAccumulator == 0.0f ? -1000.0f : (deltaMovementAccumulator > 1000.0f ? -3.0f : ((float)deltaMovementAccumulator - 1000.0f) / 1000.0f * 20.0f) -3.0f ;
 
                 if (delta != Vector2.Zero)
                 {
@@ -185,10 +205,19 @@ public partial class MoveableImage : Node2D
                     haveMovedYet = true;
                 }
             }
+
+            Debug.Print($"{deltaMovementAccumulator}, {deltaMovement}");
+
+            double direction = deltaMovementAccumulator < deltaMovement ? 1.0 : -1.0;
+            double max = Mathf.Abs(deltaMovementAccumulator - deltaMovement);
+            deltaMovementAccumulator += Mathf.Clamp(direction * deltaTime * deltaMovementAccumulatorVariationSpeed * speedMultiplier, -max, max);
         }
         else
         {
             stretchPlayer.VolumeDb = -1000.0f;
+            movePlayer.VolumeDb = -1000.0f;
+            skewPlayer.VolumeDb = -1000.0f;
+            deltaMovementAccumulator = 0.0f;
         }
 
         state.position = Position;
@@ -260,6 +289,10 @@ public partial class MoveableImage : Node2D
     {
         stretchPlayer.Play();
         stretchPlayer.VolumeDb = -1000.0f;
+        movePlayer.Play();
+        movePlayer.VolumeDb = -1000.0f;
+        skewPlayer.Play();
+        skewPlayer.VolumeDb = -1000.0f;
         Vector2 baseScale = sprite.Scale;
         Tween tween = GetTree().CreateTween();
         tween.TweenProperty(sprite, "scale", new Vector2(1.0f + squishAmount, 1.0f - squishAmount) * baseScale, squishDuration / 3.0f);
@@ -272,6 +305,8 @@ public partial class MoveableImage : Node2D
     private void OnDeselected()
     {
         stretchPlayer.Stop(); 
+        movePlayer.Stop(); 
+        skewPlayer.Stop(); 
     }
 
     private void OnRotateInput(Node node, InputEvent inputEvent, int id)

@@ -1,11 +1,7 @@
 
 # TODO
 
-- more sounds
-- machine buttons
-- game end
-- find a title
-- do palette dialogue
+- nothing??
 
 ## Not-Sure-I-Want-It-Features
 

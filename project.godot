@@ -10,9 +10,15 @@ config_version=5
 
 [application]
 
-config/name="Images"
+config/name="A peculiar Restoration"
+config/version="beta-2"
 run/main_scene="uid://btnbmdmwipk35"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+
+[audio]
+
+buses/default_bus_layout="uid://byumtfclllkkq"
 
 [display]
 

@@ -627,14 +627,14 @@ texture = ExtResource("7_b17eg")
 stretch_mode = 1
 
 [node name="WindowLight" type="Sprite2D" parent="ProfRoom" unique_id=1944912720]
-modulate = Color(1, 1, 1, 0.15686275)
+modulate = Color(1, 1, 1, 0.27450982)
 z_index = 900
 material = SubResource("CanvasItemMaterial_ntx8l")
 position = Vector2(1665, -142)
 texture = ExtResource("18_ntx8l")
 
 [node name="WindowLight2" type="Sprite2D" parent="ProfRoom" unique_id=1497182288]
-modulate = Color(1, 1, 1, 0.15686275)
+modulate = Color(1, 1, 1, 0.27450982)
 z_index = 900
 material = SubResource("CanvasItemMaterial_ntx8l")
 position = Vector2(1132.5, -48)
@@ -645,7 +645,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 341, 1000)
 
 [node name="WindowLight3" type="Sprite2D" parent="ProfRoom" unique_id=2141060506]
-modulate = Color(1, 1, 1, 0.15686275)
+modulate = Color(1, 1, 1, 0.27450982)
 z_index = 900
 material = SubResource("CanvasItemMaterial_ntx8l")
 position = Vector2(1354, -146)
@@ -669,7 +669,7 @@ shape = SubResource("RectangleShape2D_n5t1e")
 script = ExtResource("1_ig7tw")
 requestTimeout = 10.0
 
-[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "musicManager", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "paintingViewConfirmButton", "paintingViewReference", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport", "handPointingDoor", "blueprintSprite", "startNotice", "paintingSelectorsParent", "dialogueButtons", "dialogueEndButtons", "credits")]
+[node name="Management manager" type="Node" parent="." unique_id=1391169462 node_paths=PackedStringArray("faxManager", "internetMachine", "musicManager", "paintingSprite", "imagesParent", "canvas", "canvasColorControllable", "paintingView", "paintingViewPaintingSelector", "paintingViewTitle", "paintingViewAuthor", "paintingViewConfirmButton", "paintingViewReference", "canvasSprite", "cameraController", "titleScreen", "dialogueManager", "fadeInColorRect", "paintingSaveViewport", "handPointingDoor", "blueprintSprite", "startNotice", "paintingSelectorsParent", "dialogueButtons", "dialogueEndButtons", "credits", "creditsSavePath")]
 script = ExtResource("2_0xm2m")
 faxManager = NodePath("../Fax manager")
 internetMachine = NodePath("../The great internet machine")
@@ -700,6 +700,7 @@ paintingSelectorsParent = NodePath("../PaintingSelectors")
 dialogueButtons = NodePath("../ProfRoom/Desk/Control/DialogueButtons")
 dialogueEndButtons = NodePath("../ProfRoom/Desk/Control/DialogueEnd")
 credits = NodePath("../StartUI/Credits")
+creditsSavePath = NodePath("../StartUI/Credits/VBoxContainer/Label13")
 
 [node name="Whoosh" type="AudioStreamPlayer" parent="Management manager" unique_id=1261691229]
 stream = ExtResource("47_pjyto")
@@ -1795,10 +1796,10 @@ text = "Start"
 [node name="TextureRect2" type="TextureRect" parent="TitleScreen" unique_id=467377764]
 modulate = Color(0, 0, 0, 0.5882353)
 layout_mode = 0
-offset_left = 9.009201
-offset_top = -306.30637
-offset_right = 995.23566
-offset_bottom = 585.5856
+offset_left = 9.0086355
+offset_top = -36.036095
+offset_right = 945.9461
+offset_bottom = 774.7748
 texture = ExtResource("84_yvsr8")
 
 [node name="TextureRect" type="TextureRect" parent="TitleScreen" unique_id=188022051]
@@ -1806,10 +1807,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -969.00885
-offset_top = -54.054123
-offset_right = 16.111267
-offset_bottom = 585.5855
+offset_left = -978.0179
+offset_top = -36.036102
+offset_right = 7.102234
+offset_bottom = 603.6035
 grow_horizontal = 2
 texture = ExtResource("82_jbvwl")
 

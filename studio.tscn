@@ -16,8 +16,8 @@ fill_to = Vector2(1, 1)
 
 [node name="Wall2" type="Sprite2D" parent="." unique_id=36085370]
 z_index = -1500
-position = Vector2(-13.000025, 3.9999924)
-scale = Vector2(30.40625, 20.617188)
+position = Vector2(2749, 1851.625)
+scale = Vector2(116.71875, 78.35547)
 texture = SubResource("GradientTexture2D_135x7")
 
 [node name="wallpaper" type="TextureRect" parent="." unique_id=419472012]
@@ -25,8 +25,8 @@ modulate = Color(1, 1, 1, 0.15686275)
 z_index = -1499
 offset_left = -1012.0
 offset_top = -669.0
-offset_right = 3902.9995
-offset_bottom = 2778.4998
+offset_right = 17657.998
+offset_bottom = 11783.499
 scale = Vector2(0.4, 0.4)
 mouse_filter = 2
 texture = ExtResource("1_10hqe")

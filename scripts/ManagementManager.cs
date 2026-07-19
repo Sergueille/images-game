@@ -46,6 +46,7 @@ public partial class ManagementManager : Node
     [Export] Control dialogueButtons;
     [Export] Control dialogueEndButtons;
     [Export] Control credits;
+    [Export] Label creditsSavePath;
 
     public int PaintingCount { get; private set; }
 
@@ -102,6 +103,7 @@ public partial class ManagementManager : Node
         Tween t = GetTree().CreateTween();
         t.TweenProperty(fadeInColorRect, "color", new Color(0.0f, 0.0f, 0.0f, 0.0f), 2.0f);
         credits.Visible = false;
+        creditsSavePath.Text = System.IO.Path.Combine(ProjectSettings.GlobalizePath(SaveManager.saveFileFolder), "paintings");
     }
 
     public override void _Process(double delta)
@@ -189,7 +191,7 @@ public partial class ManagementManager : Node
 
     public void SetPresetColor2()
     {
-        canvasSprite.SetPresetColor(new Color("#1d1812"));
+        canvasSprite.SetPresetColor(new Color("#131110"));
         MoveableImage.selectedImage = null;
     }
 

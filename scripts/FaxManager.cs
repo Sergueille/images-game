@@ -26,15 +26,19 @@ public partial class FaxManager : Node
     [Export] float printDuration = 1.0f;
     [Export] float fallDuration = 1.0f;
 
+    [Export] Control keyboardHint;
+
     string screenText = "";
 
     bool acceptInput = true;
     string inputText = "";
     Key keyPressedLastFrame;
+    bool shouldShowHint = true;
     
 
     public override void _Ready()
     {
+        keyboardHint.Visible = false;
         SetReady();
     }
 
@@ -135,6 +139,12 @@ public partial class FaxManager : Node
                 );
             }
         }
+
+        if (keyPressed != Key.None)
+        {
+            shouldShowHint = false;
+            keyboardHint.Visible = false;
+        }
         
         keyPressedLastFrame = keyPressed;
 
@@ -223,5 +233,17 @@ public partial class FaxManager : Node
         AddLine(queryPrefix);
     }
 
+    public void ScreenTap()
+    {
+        if (shouldShowHint)
+        {
+            shouldShowHint = false;
+            keyboardHint.Visible = true;
+            keyboardHint.Scale = Vector2.Zero;
+            GetTree().CreateTween().TweenProperty(keyboardHint, "scale", Vector2.One, 0.3f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
+        }
+
+        Utils.PlaySound(this, "Tap", 0.1f);
+    }
 }
 

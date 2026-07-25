@@ -23,5 +23,6 @@ Sound:
 	error beep: created by EtherAudio, under CC-BY 4.0: https://freesound.org/people/EtherAudio/sounds/750933/
 	door: created by InspectorJ, under CC-BY 4.0: https://freesound.org/people/InspectorJ/sounds/271562/
 	keyboard: created by M4taiori, under CC-BY 3.0: und.org/people/M4taiori/sounds/331428/
-	camera movement sound, created by Vilkas_Sound, under CC-BY 4.0: https://freesound.org/people/Vilkas_Sound/sounds/460472/
+	camera movement sound: created by Vilkas_Sound, under CC-BY 4.0: https://freesound.org/people/Vilkas_Sound/sounds/460472/
+	machine screen clock: created by ceich93, under CC0: https://freesound.org/people/ceich93/sounds/333788/
 	and many other public domain sounds I forgot to add here, sorry!

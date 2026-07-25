@@ -689,7 +689,7 @@ paintingViewConfirmButton = NodePath("../Camera2D/PaintingView/Button")
 paintingViewReference = NodePath("../Camera2D/PaintingView/TextureRect")
 canvasSprite = NodePath("../Canvas/Control")
 cameraController = NodePath("../Camera2D")
-titleScreen = NodePath("../TitleScreen")
+titleScreen = NodePath("../StartUI/TitleScreen")
 dialogueManager = NodePath("../ProfRoom/Desk/DialogueManager")
 fadeInColorRect = NodePath("../StartUI/ColorRect")
 paintingSaveViewport = NodePath("../PaintingSave")
@@ -872,8 +872,56 @@ texture = ExtResource("11_lswn8")
 
 [node name="StartUI" type="CanvasLayer" parent="." unique_id=460695011]
 
+[node name="TitleScreen" type="Control" parent="StartUI" unique_id=1714307020]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_1bvp3")
+
+[node name="Button" type="Button" parent="StartUI/TitleScreen" unique_id=1537661032]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -797.83813
+offset_top = -188.10815
+offset_right = -241.83813
+offset_bottom = -68.108154
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_1bvp3")
+theme_override_font_sizes/font_size = 60
+text = "Start"
+
+[node name="TextureRect2" type="TextureRect" parent="StartUI/TitleScreen" unique_id=467377764]
+modulate = Color(0, 0, 0, 0.5882353)
+layout_mode = 0
+offset_left = -18.99095
+offset_top = -41.0
+offset_right = 836.8655
+offset_bottom = 751.7928
+texture = ExtResource("84_yvsr8")
+
+[node name="TextureRect" type="TextureRect" parent="StartUI/TitleScreen" unique_id=188022051]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -988.0
+offset_top = -13.972981
+offset_right = -100.004395
+offset_bottom = 562.6037
+grow_horizontal = 2
+texture = ExtResource("82_jbvwl")
+
 [node name="Control" type="Control" parent="StartUI" unique_id=1263694614]
 visible = false
+z_index = 10
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1765,55 +1813,6 @@ texture = ExtResource("64_wu3dr")
 [node name="CameraTitleScreenPosition" type="Node2D" parent="." unique_id=709913969]
 position = Vector2(1625, 128)
 
-[node name="TitleScreen" type="Control" parent="." unique_id=1714307020]
-z_index = 4096
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1518.0
-offset_top = 66.00001
-offset_right = 3438.0
-offset_bottom = 1146.0
-scale = Vector2(0.111, 0.111)
-theme = ExtResource("4_1bvp3")
-
-[node name="Button" type="Button" parent="TitleScreen" unique_id=1537661032]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -761.80206
-offset_top = -188.10815
-offset_right = -205.80206
-offset_bottom = -68.108154
-grow_horizontal = 2
-grow_vertical = 0
-theme = ExtResource("4_1bvp3")
-theme_override_font_sizes/font_size = 60
-text = "Start"
-
-[node name="TextureRect2" type="TextureRect" parent="TitleScreen" unique_id=467377764]
-modulate = Color(0, 0, 0, 0.5882353)
-layout_mode = 0
-offset_left = 9.0086355
-offset_top = -36.036095
-offset_right = 945.9461
-offset_bottom = 774.7748
-texture = ExtResource("84_yvsr8")
-
-[node name="TextureRect" type="TextureRect" parent="TitleScreen" unique_id=188022051]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -978.0179
-offset_top = -36.036102
-offset_right = 7.102234
-offset_bottom = 603.6035
-grow_horizontal = 2
-texture = ExtResource("82_jbvwl")
-
 [node name="PaintingSave" type="SubViewport" parent="." unique_id=350155639]
 disable_3d = true
 render_target_update_mode = 0
@@ -1924,6 +1923,7 @@ volume_db = -8.0
 [connection signal="pressed" from="ProfRoom/Desk/Control/DialogueEnd/Button5" to="ProfRoom/Desk/DialogueManager" method="CancelButtons"]
 [connection signal="input_event" from="ProfRoom/Desk/Area2D" to="ProfRoom/Desk/DialogueManager" method="DialogueAreaMouseEvent"]
 [connection signal="input_event" from="ProfRoom/Phonograph/Area2D" to="MusicManager" method="OnPhonographInputEvent"]
+[connection signal="pressed" from="StartUI/TitleScreen/Button" to="Management manager" method="OnTitleScreenStart"]
 [connection signal="pressed" from="StartUI/Control/VBoxContainer/Button" to="Management manager" method="OnNoticeOkButtonPressed"]
 [connection signal="pressed" from="Camera2D/PaintingView/Button" to="Management manager" method="OnPainingViewConfirm"]
 [connection signal="pressed" from="Camera2D/PaintingView/Button2" to="Management manager" method="HidePaintingView"]
@@ -1943,4 +1943,3 @@ volume_db = -8.0
 [connection signal="pressed" from="Palette/Palette/Button4" to="Management manager" method="SetPresetColor4"]
 [connection signal="pressed" from="Palette/Palette/Button5" to="Management manager" method="SetPresetColor5"]
 [connection signal="pressed" from="Palette/Palette/Button6" to="Management manager" method="SetPresetColor6"]
-[connection signal="pressed" from="TitleScreen/Button" to="Management manager" method="OnTitleScreenStart"]

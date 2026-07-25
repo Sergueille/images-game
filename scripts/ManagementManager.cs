@@ -91,7 +91,6 @@ public partial class ManagementManager : Node
         if (saveData.state == SaveManager.GameState.TitleScreen)
         {
             startNotice.Visible = true;
-            cameraController.EnableTitleScreenZoom();
         }
         else
         {
@@ -155,6 +154,8 @@ public partial class ManagementManager : Node
     {
         fadeInColorRect.Visible = true;
         fadeInColorRect.Color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+
+        cameraController.EnableTitleScreenZoom();
 
         Tween t = GetTree().CreateTween();
         t.TweenProperty(fadeInColorRect, "color", new Color(0.0f, 0.0f, 0.0f, 1.0f), 2.0f);
@@ -366,8 +367,9 @@ public partial class ManagementManager : Node
                 new DialogueManager.DialogueText { text = "Hey! Are you still paying attention?" },
                 new DialogueManager.DialogueText { text = "I was telling you about my little advert I put in the journal." },
                 new DialogueManager.DialogueText { text = "If I remind correctly, it was because I needed to hire someone to help me move my art collection in my new house, right?" },
-                new DialogueManager.DialogueText { text = "But, actually, I changed my mind." },
-                new DialogueManager.DialogueText { text = "Those paintings are way too old and begin to deteriorate." },
+                new DialogueManager.DialogueText { text = "Thank you so much for accepting the job!" },
+                new DialogueManager.DialogueText { text = "But, actually, I have to tell you that I changed my mind, these painting won't go anywhere." },
+                new DialogueManager.DialogueText { text = "They're way too old and they begin to deteriorate." },
                 new DialogueManager.DialogueText { text = "You know, all of them are original copies, so they have seen the centuries pass." },
                 new DialogueManager.DialogueText { text = "I'm afraid I will have to throw them away." },
                 new DialogueManager.DialogueText { text = "So, now I need someone to make reproductions of my paintings for my collection." },

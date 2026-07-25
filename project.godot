@@ -11,10 +11,13 @@ config_version=5
 [application]
 
 config/name="A peculiar Restoration"
-config/version="beta-2"
+config/version="beta-3"
 run/main_scene="uid://btnbmdmwipk35"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/stretch_mode=0
+boot_splash/image="uid://s5p3536r8jn0"
+config/icon="uid://bh7mcqfe8ekqh"
 
 [audio]
 

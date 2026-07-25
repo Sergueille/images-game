@@ -15,6 +15,8 @@ public partial class CameraController : Camera2D
     [Export] float titleScreenZoomAmount;
     [Export] float zoomTransitionDuration;
 
+    Tween titleScreenZoomTween;
+
     Vector2 positionBeforeZoom;
     public bool isZooming = false;
 
@@ -92,13 +94,18 @@ public partial class CameraController : Camera2D
     {
         positionBeforeZoom = Position;
         titleScreenZoom = true;
-        Zoom = titleScreenZoomAmount * Vector2.One;
+        Zoom = titleScreenZoomAmount * Vector2.One * 0.95f;
         Position = titleScreenZoomPosition.Position;
         isZooming = true;
+
+        titleScreenZoomTween = GetTree().CreateTween();
+        titleScreenZoomTween.TweenProperty(this, "zoom", titleScreenZoomAmount * 1.1f * Vector2.One, 25).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
     }
 
     public void EnableAwkwardZoom()
     {
+        if (titleScreenZoomTween != null) titleScreenZoomTween.Pause();
+
         if (!isZooming && !titleScreenZoom) { positionBeforeZoom = Position; }
 
         if (!isZooming || titleScreenZoom) { Utils.PlaySound(this, "Whoosh", 0.2f); }

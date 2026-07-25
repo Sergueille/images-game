@@ -17,7 +17,7 @@ public partial class ColorControllable : Node
         c.ToHsv(out float hue, out float sat, out float val);
         SetProp("hueShift", hue);
         SetProp("saturation", sat * 0.7f - 1.0f);
-        SetProp("brightness", val * 2.0f - 1.1f);
+        SetProp("brightness", val > 0.95f ? 1.0f : val * 2.0f - 1.1f);
     }
 
     public void SetMaterialProperty(MaterialProperty property, bool plusOrMinus)

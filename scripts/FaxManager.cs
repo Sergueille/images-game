@@ -26,6 +26,8 @@ public partial class FaxManager : Node
     [Export] float printDuration = 1.0f;
     [Export] float fallDuration = 1.0f;
 
+    [Export] int maxQueryLength = 22;
+
     [Export] Control keyboardHint;
 
     string screenText = "";
@@ -45,6 +47,8 @@ public partial class FaxManager : Node
 
     public override void _Process(double delta)
     {
+        if (ManagementManager.i.cameraController.currentScreen != 0) { return; }
+
         Key keyPressed = Key.None;
 
         bool shouldShowCursor = (Time.GetUnixTimeFromSystem() % blinkDuration) > blinkDuration * 0.5f;
@@ -60,8 +64,12 @@ public partial class FaxManager : Node
 
                 if (keyPressedLastFrame != (Key)i)
                 {
-                    inputText += (char)i;
                     Utils.PlayRandomSound(this, "Key", 5, 0.2f);
+
+                    if (inputText.Length < maxQueryLength)
+                    {
+                        inputText += (char)i;
+                    }
                 }
             }
         }

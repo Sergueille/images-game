@@ -31,7 +31,7 @@ void fragment() {
 	vec3 res_color = shifted* (1.0 + saturation) + projection * (1.0 + brightness);
 	vec2 grugeUV = vec2(world_position.x, world_position.y) / 600.0;
 	
-	float grungeVal = (0.8 - texture(grunge, grugeUV).r) * 1.0 * (1.6 - dot(res_color, res_color));
+	float grungeVal = (0.8 - texture(grunge, grugeUV).r) * 0.8 * (1.6 - dot(res_color, res_color));
 	
 	COLOR = vec4(res_color + grungeVal, color.a);
 }

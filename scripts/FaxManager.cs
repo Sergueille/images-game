@@ -1,7 +1,5 @@
 
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Godot;
 
 
@@ -123,7 +121,7 @@ public partial class FaxManager : Node
                         ClearScreen();
                         AddLine("Done. Please take sheet");
                     }, 
-                    () => {
+                    (failureReason) => {
                         GetNode<AudioStreamPlayer>("Fan").Stop();
                         GetNode<AudioStreamPlayer>("Memory").Stop();
                         GetNode<AudioStreamPlayer>("Beeps").Stop();
@@ -131,7 +129,16 @@ public partial class FaxManager : Node
                         GetNode<AudioStreamPlayer>("Error").Play();
                         smoke.Emitting = false;
                         ClearScreen();
-                        AddLine("Failed. Check your internet.");
+
+                        string message = failureReason switch
+                        {
+                            InternetMachine.FailureReason.BadWord => "Bad word.",
+                            InternetMachine.FailureReason.NoResults => "No results found.",
+                            InternetMachine.FailureReason.SearchEngineDidNotRespond => "Failed. Check your internet.",
+                            _ => throw new System.NotImplementedException()
+                        };
+
+                        AddLine(message);
                         SceneTreeTimer t = GetTree().CreateTimer(3.0f); // TODO: blink
                         t.Timeout += () =>
                         {

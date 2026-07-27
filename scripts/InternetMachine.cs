@@ -27,7 +27,7 @@ public partial class InternetMachine : Node
     [Export] public float requestTimeout = 5.0f;
 
     private Action<Image, string> onCompleted;
-    private Action onFailure;
+    private Action<FailureReason> onFailure;
     private Action<string> onLog;
     private ImageFilter[] filters;
     private ImageFilter[] lastChanceFilters;
@@ -40,7 +40,9 @@ public partial class InternetMachine : Node
 
     private Dictionary<string, string> cookies;
 
-    public void RequestImage(string query, Action<Image, string> onCompleted, Action onFailure, ImageFilter[] filters, ImageFilter[] lastChanceFilters, Action<string> onLog)
+    public enum FailureReason { BadWord, NoResults, SearchEngineDidNotRespond }
+
+    public void RequestImage(string query, Action<Image, string> onCompleted, Action<FailureReason> onFailure, ImageFilter[] filters, ImageFilter[] lastChanceFilters, Action<string> onLog)
     {
         CancelAllRequests();
 
@@ -52,14 +54,21 @@ public partial class InternetMachine : Node
         this.onLog = onLog;
         this.filters = filters;
         this.lastChanceFilters = lastChanceFilters;
-        isBusy = true;
 
+        bool queryBad = query.Split(" ").Any(w => BadWordsList.BAD_WORDS.Contains(w));
+        if (queryBad)
+        {
+            onFailure(FailureReason.BadWord);
+            return;
+        }
+  
+        isBusy = true;
         lastChanceImages = new List<(Image, string)>();
 
         string fullQuery = $"https://www.bing.com/images/search?q={queryEscaped}&qft=%20filterui%3Aphoto-transparent";
 
         GD.Print(fullQuery);
-        DoRequest(fullQuery, 3, HandleSearchPageResult, () => { onFailure(); }, true);
+        DoRequest(fullQuery, 3, HandleSearchPageResult, () => { onFailure(FailureReason.SearchEngineDidNotRespond); isBusy = false; }, true);
     }
 
     private void HandleSearchPageResult(byte[] body)
@@ -78,7 +87,7 @@ public partial class InternetMachine : Node
         if (matches.Length == 0)
         {
             onLog("0 results");
-            onFailure();
+            onFailure(FailureReason.NoResults);
             isBusy = false;
         }
 
@@ -100,7 +109,7 @@ public partial class InternetMachine : Node
             }
             else
             {
-                onFailure(); 
+                onFailure(FailureReason.NoResults); 
                 isBusy = false;
                 return; 
             }
